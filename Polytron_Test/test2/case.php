@@ -36,7 +36,7 @@ if (isset($_REQUEST['op'])) {
         require_once 'delete.php';
     } else if ($operation == "insert") {
         require_once 'insert.php';
-    } else if($operation == "exupdate"){
+    } else if ($operation == "exupdate") {
         require_once 'update.php';
     }
 } else {
@@ -74,7 +74,7 @@ if (isset($_REQUEST['op'])) {
 
 <body>
     <h1 class="center mb-5 p-4" style="border-bottom: solid 5px black;">Database Master Karyawan</h1>
-    <form action="http://localhost/Polytron_Test/test2/case.php?op=search" method="POST">
+    <form action="case.php?op=search" method="POST">
         <div class="mb-3 d-flex justify-content-center shadow-sm card p-2 mx-auto px-4 py-3 bg-lightyellow" style="flex-direction: column; max-width: 40%;">
             <h3 class="w-100">Cari Karyawan</h3>
             <div>
@@ -103,32 +103,32 @@ if (isset($_REQUEST['op'])) {
         <div class="col-md-4">
             <?php
             $url = "";
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "update"){
-                        $id = $_REQUEST['id'];
-                        $url = "http://localhost/Polytron_Test/test2/case.php?op=exupdate&id=$id";
-                    }else{
-                        $url = "http://localhost/Polytron_Test/test2/case.php?op=insert";
-                    }
+            if (isset($_REQUEST['op']) && $_REQUEST['op'] == "update") {
+                $id = $_REQUEST['id'];
+                $url = "case.php?op=exupdate&id=$id";
+            } else {
+                $url = "case.php?op=insert";
+            }
             ?>
-            <form action="<?php echo $url?>" method="POST" class="w-100 mx-auto mb-3 p-5" style="background-color: lightblue;">
+            <form action="<?php echo $url ?>" method="POST" class="w-100 mx-auto mb-3 p-5" style="background-color: lightblue;">
                 <h1 class="mb-5">
-                <?php
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "update"){
+                    <?php
+                    if (isset($_REQUEST['op']) && $_REQUEST['op'] == "update") {
                         echo "Update Karyawan";
-                    }else{
+                    } else {
                         echo "Tambah Karyawan";
                     }
-                ?>
+                    ?>
                 </h1>
                 <?php
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "update"){
-                        require_once 'fetch_single.php';
-                    }
+                if (isset($_REQUEST['op']) && $_REQUEST['op'] == "update") {
+                    require_once 'fetch_single.php';
+                }
                 ?>
 
                 <div class="mb-3">
                     <label for="nik" class="form-label">Masukan NIK</label>
-                    <input type="text" class="form-control" id="nik" name="nik" aria-describedby="emailHelp" value="<?php echo $nik?>">
+                    <input type="text" class="form-control" id="nik" name="nik" aria-describedby="emailHelp" value="<?php echo $nik ?>">
 
                     <?php
                     if ($error_message_nik != null) {
@@ -143,7 +143,7 @@ if (isset($_REQUEST['op'])) {
 
                 <div class="mb-3">
                     <label for="tglMasuk" class="form-label">Masukan Tanggal Masuk</label>
-                    <input type="date" min="<?php echo date('Y-m-d') ?>" class="form-control" id="tglMasuk" name="tglMasuk" aria-describedby="emailHelp" value="<?php echo $tanggal_masuk?>">
+                    <input type="date" min="<?php echo date('Y-m-d') ?>" class="form-control" id="tglMasuk" name="tglMasuk" aria-describedby="emailHelp" value="<?php echo $tanggal_masuk ?>">
                     <?php
                     if ($error_message_tanggal != null) {
                     ?>
@@ -157,7 +157,7 @@ if (isset($_REQUEST['op'])) {
 
                 <div class="mb-3">
                     <label for="nama" class="form-label">Masukan Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" aria-describedby="emailHelp" value="<?php echo $nama?>">
+                    <input type="text" class="form-control" id="nama" name="nama" aria-describedby="emailHelp" value="<?php echo $nama ?>">
                     <?php
                     if ($error_message_nama != null) {
                     ?>
@@ -171,7 +171,7 @@ if (isset($_REQUEST['op'])) {
 
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Masukan Alamat</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat" aria-describedby="emailHelp" value="<?php echo $alamat?>">
+                    <input type="text" class="form-control" id="alamat" name="alamat" aria-describedby="emailHelp" value="<?php echo $alamat ?>">
                     <?php
                     if ($error_message_alamat != null) {
                     ?>
@@ -185,7 +185,7 @@ if (isset($_REQUEST['op'])) {
 
                 <div class="mb-3">
                     <label for="kota" class="form-label">Masukan Kota</label>
-                    <input type="text" class="form-control" id="kota" name="kota" aria-describedby="emailHelp" value="<?php echo $kota?>">
+                    <input type="text" class="form-control" id="kota" name="kota" aria-describedby="emailHelp" value="<?php echo $kota ?>">
                     <?php
                     if ($error_message_kota != null) {
                     ?>
@@ -199,7 +199,7 @@ if (isset($_REQUEST['op'])) {
 
                 <div class="mb-3">
                     <label for="gelar" class="form-label">Masukan Gelar</label>
-                    <input type="text" list="gelar-list" class="form-control" id="gelar" name="gelar" value="<?php echo $gelar?>">
+                    <input type="text" list="gelar-list" class="form-control" id="gelar" name="gelar" value="<?php echo $gelar ?>">
                     <datalist id="gelar-list">
                         <option value="sma">SMA</option>
                         <option value="smk">SMK</option>
@@ -224,8 +224,8 @@ if (isset($_REQUEST['op'])) {
                     <label for="gender" class="form-label">Pilih Gender</label>
                     <select name="gender" id="gender" class="p-2">
                         <option value="">- Pilih Gender -</option>
-                        <option value="L" <?php echo ($gender == "L") ? "selected" : ''?>>Laki - Laki</option>
-                        <option value="P" <?php echo ($gender == "P") ? "selected" : ''?>>Perempuan</option>
+                        <option value="L" <?php echo ($gender == "L") ? "selected" : '' ?>>Laki - Laki</option>
+                        <option value="P" <?php echo ($gender == "P") ? "selected" : '' ?>>Perempuan</option>
                     </select>
                     <?php
                     if ($error_message_gender != null) {
@@ -238,35 +238,35 @@ if (isset($_REQUEST['op'])) {
                     ?>
                 </div>
 
-                <?php 
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "update"){
-                ?>
-                <div class="mb-3">
-                    <label for="tglMasuk" class="form-label">Masukan Tanggal Keluar</label>
-                    <input type="date" min="<?php echo date('Y-m-d', strtotime(date('Y-m-d')."+1 months")) ?>" class="form-control" id="tglKeluar" name="tglKeluar" aria-describedby="emailHelp" value="<?php echo $tanggal_keluar?>">
-                    <?php
-                    if ($error_message_tanggal != null) {
-                    ?>
-                        <div class="text text-danger">
-                            <?php echo $error_message_tanggal ?>
-                        </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-                
                 <?php
-                    }
+                if (isset($_REQUEST['op']) && $_REQUEST['op'] == "update") {
+                ?>
+                    <div class="mb-3">
+                        <label for="tglMasuk" class="form-label">Masukan Tanggal Keluar</label>
+                        <input type="date" min="<?php echo date('Y-m-d', strtotime(date('Y-m-d') . "+1 months")) ?>" class="form-control" id="tglKeluar" name="tglKeluar" aria-describedby="emailHelp" value="<?php echo $tanggal_keluar ?>">
+                        <?php
+                        if ($error_message_tanggal != null) {
+                        ?>
+                            <div class="text text-danger">
+                                <?php echo $error_message_tanggal ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+
+                <?php
+                }
                 ?>
 
                 <button type="submit" class="btn btn-primary">
-                <?php
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "update"){
+                    <?php
+                    if (isset($_REQUEST['op']) && $_REQUEST['op'] == "update") {
                         echo "UPDATE";
-                    }else{
+                    } else {
                         echo "TAMBAH";
                     }
-                ?>
+                    ?>
                 </button>
             </form>
         </div>
@@ -292,28 +292,28 @@ if (isset($_REQUEST['op'])) {
                 <tbody>
                     <?php
                     // Get Data from Database
-                    if(isset($_REQUEST['op']) && $_REQUEST['op'] == "search" && (isset($_POST['name']) || isset($_POST['date']) )){
-                        if(isset($_POST['name'])){
+                    if (isset($_REQUEST['op']) && $_REQUEST['op'] == "search" && (isset($_POST['name']) || isset($_POST['date'])) && ($_POST['name'] != null || $_POST['date'] != null)) {
+                        if (isset($_POST['name'])) {
                             $nama = $_POST['name'];
-                        }else{
+                        } else {
                             $nama = "";
                         }
 
-                        if(isset($_POST['date'])){
+                        if (isset($_POST['date'])) {
                             $tanggal = $_POST['date'];
-                        }else{
+                        } else {
                             $tanggal = "";
                         }
-                    
+
                         $date = date("Y-m-d");
-                        if($nama == null){
-                            $sql = "SELECT * FROM karyawan WHERE TglMasuk = '$tanggal' AND (TglKeluar IS NULL)";
-                        } else if ($tanggal == null){
-                            $sql = "SELECT * FROM karyawan WHERE Nama LIKE '%$nama%' AND (TglKeluar IS NULL)";
-                        } else{
-                            $sql = "SELECT * FROM karyawan WHERE Nama LIKE '%$nama%' AND TglMasuk = '$tanggal' AND (TglKeluar IS NULL)";
-                        }            
-                    }else{
+                        if ($nama == null) {
+                            $sql = "SELECT * FROM karyawan WHERE TglMasuk = '$tanggal' AND (TglKeluar IS NULL OR TglKeluar > '$date')";
+                        } else if ($tanggal == null) {
+                            $sql = "SELECT * FROM karyawan WHERE Nama LIKE '%$nama%' AND (TglKeluar IS NULL OR TglKeluar > '$date');";
+                        } else {
+                            $sql = "SELECT * FROM karyawan WHERE Nama LIKE '%$nama%' AND TglMasuk = '$tanggal' AND (TglKeluar IS NULL OR TglKeluar > '$date')";
+                        }
+                    } else {
                         $sql = "SELECT * FROM karyawan";
                     }
 
@@ -330,14 +330,14 @@ if (isset($_REQUEST['op'])) {
                         $gender = $data['Gender'];
                         if ($data['TglKeluar'] != null) {
                             $tgl_keluar = date('d-m-Y', strtotime($data['TglKeluar']));
-                        } 
+                        }
                     ?>
                         <tr>
                             <th scope="col">
                                 <?php
-                                    if($tgl_keluar > date('d-m-Y') || $tgl_keluar == null){
+                                if ($tgl_keluar > date('d-m-Y') || $tgl_keluar == null) {
                                 ?>
-                                    <form action="http://localhost/Polytron_Test/test2/case.php?op=update&id=<?php echo $id?>&tgl=<?php echo $tgl_keluar?>" method="POST">
+                                    <form action="case.php?op=update&id=<?php echo $id ?>&tgl=<?php echo $tgl_keluar ?>" method="POST">
                                         <button type="submit" class="btn btn-warning">Update</button>
                                     </form>
                                 <?php } ?>
@@ -352,9 +352,9 @@ if (isset($_REQUEST['op'])) {
                             <th scope="col"><?php echo $gender == "L" ? "LAKI-LAKI" : "PEREMPUAN" ?></th>
                             <th scope="col">
                                 <?php
-                                    if($tgl_keluar > date('d-m-Y') || $tgl_keluar == null){
+                                if ($tgl_keluar > date('d-m-Y') || $tgl_keluar == null) {
                                 ?>
-                                    <form action="http://localhost/Polytron_Test/test2/case.php?op=delete&id=<?php echo $id ?>&tgl=<?php echo $tanggal_keluar?>" method="POST">
+                                    <form action="case.php?op=delete&id=<?php echo $id ?>&tgl=<?php echo $tanggal_keluar ?>" method="POST">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 <?php } ?>
@@ -369,36 +369,36 @@ if (isset($_REQUEST['op'])) {
 
             <h1>Daftar Gelar dan Gender</h1>
             <hr>
-            <?php 
-                    $sql = "SELECT Gelar,
+            <?php
+            $sql = "SELECT Gelar,
                             COUNT(CASE WHEN Gender = 'L' THEN 1 END) AS 'Laki-Laki',
                             COUNT(CASE WHEN Gender = 'P' THEN 1 END) AS 'Perempuan'
                             FROM karyawan
                             GROUP BY Gelar;";
-                $query_execute = mysqli_query($connect, $sql);
+            $query_execute = mysqli_query($connect, $sql);
             ?>
             <table class="table table-secondary">
                 <thead>
                     <tr>
-                    <th scope="col">Gelar</th>
-                    <th scope="col">Laki-Laki</th>
-                    <th scope="col">Perempuan</th>
+                        <th scope="col">Gelar</th>
+                        <th scope="col">Laki-Laki</th>
+                        <th scope="col">Perempuan</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-                    while($data = mysqli_fetch_array($query_execute)){
-                ?>
-                    <tr>
-                        <th scope="col"><?php echo $data['Gelar']?></th>
-                        <th scope="col"><?php echo $data['Laki-Laki']?></th>
-                        <th scope="col"><?php echo $data['Perempuan']?></th>
-                    </tr>
-                <?php
+                    <?php
+                    while ($data = mysqli_fetch_array($query_execute)) {
+                    ?>
+                        <tr>
+                            <th scope="col"><?php echo $data['Gelar'] ?></th>
+                            <th scope="col"><?php echo $data['Laki-Laki'] ?></th>
+                            <th scope="col"><?php echo $data['Perempuan'] ?></th>
+                        </tr>
+                    <?php
                     }
-                ?>
+                    ?>
                 </tbody>
-                </table>
+            </table>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

@@ -43,4 +43,3 @@ $sql = "INSERT INTO karyawan (NIK, TglMasuk, Nama, Alamat, Kota, Gelar, Gender, 
 ('123456789015', '$date', 'TEST123', 'JALAN TENNIS', 'BEKASI', 'D4',  'P', '2024-06-18')
 ";
 $result = mysqli_query($connect, $sql);
-?>
