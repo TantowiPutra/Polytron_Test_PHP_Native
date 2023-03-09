@@ -1,0 +1,21 @@
+table, th, td, thead, tbody {
+    border: 1px solid black;
+}
+
+.center{
+    margin: auto;
+}
+
+thead{
+    font-weight: bolder;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.fit-content{
+    max-width: fit-content;
+    padding: 20px;
+    border: solid 1px black;
+}

@@ -1,0 +1,25 @@
+.center{
+    margin: auto;
+}
+
+.bg-red{
+    background-color: red;
+}
+
+.fit-content{
+    max-width: fit-content;
+    padding: 20px;
+    border: solid 1px black;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.fw-normal{
+    font-weight: normal;
+}
+
+.fw-red{
+    color: red;
+}
