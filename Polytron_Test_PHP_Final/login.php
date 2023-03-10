@@ -1,6 +1,10 @@
 <?php
     require_once 'koneksi.php';
     $isInvalid = "";
+    session_start();
+    if(isset($_SESSION['isLogin'])){
+        header('Location: dashboard.php');
+    }
 
     if(isset($_POST['name']) && isset($_POST['password'])){
         if(strlen($_POST['name'] > 0 || strlen($_POST['password']) > 0)){

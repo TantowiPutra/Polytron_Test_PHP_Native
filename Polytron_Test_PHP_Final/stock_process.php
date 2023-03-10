@@ -1,4 +1,8 @@
 <?php
+    session_start();
+    if(!isset($_SESSION['isLogin'])){
+        header('Location: login.php');
+    }
     $transaction_type = $_POST['tipe_transaksi'];
     $proof = $_POST['bukti'];
     $location = $_POST['lokasi'];
@@ -13,8 +17,7 @@
     // Diasumsukan setiap produk memiliki kode dan nama produk yang unik.
     require_once 'koneksi.php';
 
-    // Tangkap user_id
-    session_start();
+    // Tangkap user_id 
     $user_id = $_SESSION['id'];
 
     $sql = "SELECT * 
@@ -34,20 +37,14 @@
             echo "Produk sudah ada";
         }else{
             // Jika produk yang spesifik tidak tersedia, cek validitas nama dan kode produk baru yang akan diinput karena harus unique. Jika tidak unique, tampilkan error message.
-            $sql_code = "SELECT * 
+            $sql = "SELECT * 
                     FROM items
-                    WHERE item_code = '$item_code'
+                    WHERE item_code = '$item_code' || item_name = '$item_name'
                  ";
-            
-            $sql_name = "SELECT *
-                    FROM items
-                    WHERE item_name = '$item_name'
-                  ";
 
-            $result1 = mysqli_query($connect, $sql_code);
-            $result2 = mysqli_query($connect, $sql_name);
+            $result = mysqli_query($connect, $sql);
             
-            if(mysqli_num_rows($result1) > 0 || mysqli_num_rows($result2) > 0){
+            if(mysqli_num_rows($result) > 0){
                 echo "Input tidak valid";
             }else{
                 // Tambah Produk ke Tabel Produk
@@ -66,6 +63,16 @@
                                 VALUES
                                     ('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id');
                         ";
+                $result = mysqli_query($connect, $sql);
+                if(!$result){
+                    echo "Failed to run query3";
+                }
+
+                // Tambah stock produk ke tabel stock_product
+                $date = date('Y-m-d', strtotime($transaction_time)); // Ambil hanya date dari waktu yang di input oleh user
+                $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, saldo, tgl_masuk)
+                        VALUES('$location', '$item_code', '$quantity', '$date')
+                ";
                 $result = mysqli_query($connect, $sql);
                 if(!$result){
                     echo "Failed to run query3";

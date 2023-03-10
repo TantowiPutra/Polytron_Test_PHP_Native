@@ -1,4 +1,6 @@
 <?php
+// Tes Commit
+
 //  Drop All Table
 $connect->query('SET foreign_key_checks = 0');
 if ($result = $connect->query("SHOW TABLES"))

@@ -44,7 +44,7 @@
     <hr style="margin-bottom: 30px; margin-top: 30px;">
 
     <!-- Menampilkan data Transaksi -->
-    <div class="center">
+    <div class="center" style="margin-bottom: 300px;">
         <h1 class="text-align-center">Product Stock</h1>
        <table cellpadding="30px" class="center">
         <thead>
