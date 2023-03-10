@@ -89,7 +89,7 @@ $sql = "CREATE TABLE item_stocks (
         FK_locationcode VARCHAR(50) NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
         saldo BIGINT(50) NOT NULL,
-        tgl_masuk DATE NOT NULL,
+        tgl_masuk DATETIME NOT NULL,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
@@ -102,9 +102,9 @@ if(!$result){
 }
 
 $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo) 
-        VALUES ('GBJ01', 'PS-PLD24T500', '2018-05-16', 30),
-        ('GBJ02', 'PS-PLD24T600', '2018-05-16', 30),
-        ('GBJ03', 'PS-PLD24T700', '2018-05-16', 30)
+        VALUES ('GBJ01', 'PS-PLD24T500', '2018-05-16 10:00:00', 30),
+        ('GBJ02', 'PS-PLD24T600', '2018-05-16 10:00:00', 30),
+        ('GBJ03', 'PS-PLD24T700', '2018-05-16 10:00:00', 30)
 ";
 
 $result = mysqli_query($connect, $sql);
@@ -117,7 +117,7 @@ $sql = "CREATE TABLE transaction_history(
         id INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE,
         bukti VARCHAR(50) NOT NULL UNIQUE,
         FK_locationcode VARCHAR(50) NOT NULL,
-        transaction_time TIMESTAMP NOT NULL,
+        transaction_time DATETIME NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
         tgl_masuk DATE NOT NULL,
         quantity BIGINT(50) NOT NULL,
