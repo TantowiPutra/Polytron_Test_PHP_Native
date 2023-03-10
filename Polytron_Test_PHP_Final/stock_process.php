@@ -52,7 +52,7 @@
             }else{
                 // Tambah Produk ke Tabel Produk
                 $sql = "INSERT INTO items(item_code, item_name)
-                        VALUES('$item_name', '$item_code')
+                        VALUES('$item_code', '$item_name')
                 ";
 
                 $result = mysqli_query($connect, $sql);
@@ -61,23 +61,15 @@
                 }
 
                 // Tambah history penambahan ke transaction_history
-                // $sql = "INSERT INTO transaction_history
-                //                     (bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk, quantity, prog, FK_user)
-                //                 VALUES
-                //                     ('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id');
-                //         ";
-                // $result = mysqli_query($connect, $sql);
-                // if(!$result){
-                //     echo "Failed to run query3";
-                //     echo $proof. "<br>";
-                //     echo $location. "<br>";
-                //     echo $transaction_time. "<br>";
-                //     echo $item_code. "<br>";
-                //     echo $transaction_time. "<br>";
-                //     echo $quantity. "<br>";
-                //     echo $transaction_type. "<br>";
-                //     echo $user_id. "<br>";
-                // }
+                $sql = "INSERT INTO transaction_history
+                                    (bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk, quantity, prog, FK_user)
+                                VALUES
+                                    ('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id');
+                        ";
+                $result = mysqli_query($connect, $sql);
+                if(!$result){
+                    echo "Failed to run query3";
+                }
 
             }
 
