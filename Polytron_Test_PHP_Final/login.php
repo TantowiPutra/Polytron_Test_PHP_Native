@@ -13,10 +13,14 @@
                 echo "Query Gagal";
             }
 
+            $fetch_assoc = mysqli_fetch_assoc($result);
             if(mysqli_num_rows($result) > 0){
                 session_start();
                 $_SESSION['username'] = $username;
                 $_SESSION['password'] = $password;
+                $_SESSION['address'] = $fetch_assoc['address'];
+                $_SESSION['gender'] = $fetch_assoc['gender'];
+                $_SESSION['id'] = $fetch_assoc['id'];
                 $_SESSION['isLogin'] = true;
                 header('Location: dashboard.php');
             }else{

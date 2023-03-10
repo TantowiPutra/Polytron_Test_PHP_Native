@@ -27,9 +27,9 @@
 <body>
     <h1 class="text-align-center">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center">Welcome Back, <?php echo $username?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 35%; margin: auto;">
-        <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
-        <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
+    <div style="display: flex; justify-content: space-between; max-width: 50%; margin: auto;">
+        <a href="transaction_history.php" style="margin-right: 25px;"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
+        <a href="product_stock.php"><button style="padding: 10px; margin-right: 25px;">CEK STOK BARANG</button></a>
         <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
@@ -49,7 +49,7 @@
                             Jenis Transaksi: 
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="T" required>
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="T" required checked="checked">
                             <label for="masuk">Masuk</label>
                             <input type="radio" name="tipe_transaksi" id="keluar" value="K" required>
                             <label for="keluar">Keluar</label>
@@ -60,7 +60,7 @@
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required>
+                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required value="TAMBAH00">
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -72,7 +72,7 @@
                             <?php
                                     while($data = mysqli_fetch_array($result)){
                                 ?>   
-                                    <option value="<?php echo $data['location_code']?>"><?php echo $data['location_code']?></option>
+                                    <option value="<?php echo $data['location_code']?>" selected><?php echo $data['location_code']?></option>
                                 <?php
                                 }
                                 ?>
@@ -84,7 +84,7 @@
                         Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{9}" required>
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{9}" required value="PS-PLD24T500">
                             <datalist id="itemcode">
                                 <?php while($data = mysqli_fetch_array($result2)) {?>
                                     <option value="<?php echo $data['item_code']?>"><?php echo $data['item_code']?></option>
@@ -99,7 +99,7 @@
                         Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="item_name" name="namabarang" id="namabarang" required>
+                            <input list="item_name" name="namabarang" id="namabarang" required value="CINEMAX LED">
                             <datalist id="item_name">
                                 <?php while($data = mysqli_fetch_array($result2)) {?>
                                     <option value="<?php echo $data['item_name']?>"><?php echo $data['item_name']?></option>
@@ -114,7 +114,7 @@
                         Tgl Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="datetime-local" name="tanggal_transaksi" id="tanggal_transaksi" required>
+                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -122,7 +122,7 @@
                         Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1" required>
+                            <input type="number" name="quantity" id="quantity" min="1" required value="10">
                         </td>
                     </tr>
                 </tbody>
