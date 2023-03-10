@@ -305,6 +305,9 @@ if (isset($_REQUEST['op'])) {
                             $tanggal = "";
                         }
 
+                        // Remove Special Characters
+                        $nama = preg_replace('/[^A-Za-z0-9\-]/', '', $nama);
+
                         $date = date("Y-m-d");
                         if ($nama == null) {
                             $sql = "SELECT * FROM karyawan WHERE TglMasuk = '$tanggal' AND (TglKeluar IS NULL OR TglKeluar > '$date')";

@@ -28,7 +28,8 @@ $sql = "CREATE TABLE karyawan (
     Gelar VARCHAR(50) NOT NULL,
     Gender VARCHAR(50) NOT NULL,
     TglKeluar DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";
 
 $result = mysqli_query($connect, $sql);
