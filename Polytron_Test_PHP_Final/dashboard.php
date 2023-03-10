@@ -49,9 +49,9 @@
                             Jenis Transaksi: 
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="T">
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="T" required>
                             <label for="masuk">Masuk</label>
-                            <input type="radio" name="tipe_transaksi" id="keluar" value="K">
+                            <input type="radio" name="tipe_transaksi" id="keluar" value="K" required>
                             <label for="keluar">Keluar</label>
                         </td>
                     </tr>
@@ -60,7 +60,7 @@
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()">
+                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -68,16 +68,15 @@
                         Lokasi:
                         </td>
                         <td style="border: none;">
-                            <input list="location" name="lokasi" id="lokasi">
-                            <datalist id="location">
-                                <?php
+                            <select name="lokasi" id="lokasi">
+                            <?php
                                     while($data = mysqli_fetch_array($result)){
                                 ?>   
-                                    <option value="<?php echo $data['location_code']?>">
+                                    <option value="<?php echo $data['location_code']?>"><?php echo $data['location_code']?></option>
                                 <?php
                                 }
                                 ?>
-                            </datalist>
+                            </select>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -85,7 +84,14 @@
                         Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="kodebarang" id="kodebarang" pattern="[P][S]-.{9}">
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{9}" required>
+                            <datalist id="itemcode">
+                                <?php while($data = mysqli_fetch_array($result2)) {?>
+                                    <option value="<?php echo $data['item_code']?>"><?php echo $data['item_code']?></option>
+                                <?php 
+                                    }
+                                ?>
+                            </datalist>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -93,7 +99,14 @@
                         Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="namabarang" id="namabarang">
+                            <input list="item_name" name="namabarang" id="namabarang" required>
+                            <datalist id="item_name">
+                                <?php while($data = mysqli_fetch_array($result2)) {?>
+                                    <option value="<?php echo $data['item_name']?>"><?php echo $data['item_name']?></option>
+                                <?php 
+                                    }
+                                ?>
+                            </datalist>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -101,7 +114,7 @@
                         Tgl Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="datetime-local" name="tanggal_transaksi" id="tanggal_transaksi">
+                            <input type="datetime-local" name="tanggal_transaksi" id="tanggal_transaksi" required>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -109,7 +122,7 @@
                         Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1">
+                            <input type="number" name="quantity" id="quantity" min="1" required>
                         </td>
                     </tr>
                 </tbody>
@@ -125,9 +138,9 @@
         function formatCheck(){
             if(document.getElementById('masuk').checked || document.getElementById('keluar').checked){
                 if(document.getElementById('masuk').checked){
-                    document.getElementById('bukti').pattern = "[tT][aA][mM][bB][aA][hH][0-9][0-9]$";
+                    document.getElementById('bukti').pattern = "[tT][aA][mM][bB][aA][hH][0-9][0-9]{1,}";
                 }else{
-                    document.getElementById('bukti').pattern = "[kK][uU][rR][aA][nN][gG][0-9][0-9]$";
+                    document.getElementById('bukti').pattern = "[kK][uU][rR][aA][nN][gG][0-9][0-9]{1,}";
                 }
             }
         }

@@ -63,7 +63,7 @@
                     <td><?php echo $data['item_code']?></td>
                     <td><?php echo $data['item_name']?></td>
                     <td><?php echo $data['saldo']?></td>
-                    <td><?php echo $data['tgl_masuk']?></td>
+                    <td><?php echo date('d/m/Y', strtotime($data['tgl_masuk']))?></td>
                 </tr>
             <?php } ?>
         </tbody>
