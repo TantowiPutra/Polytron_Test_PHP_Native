@@ -27,9 +27,9 @@
 <body>
     <h1 class="text-align-center">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center">Welcome Back, <?php echo $username?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 50%; margin: auto;">
-        <a href="transaction_history.php" style="margin-right: 25px;"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
-        <a href="product_stock.php"><button style="padding: 10px; margin-right: 25px;">CEK STOK BARANG</button></a>
+    <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
+        <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
+        <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
         <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
@@ -42,6 +42,15 @@
             padding: 20px;
         ">
             <h2 class="text-align-center">Maintenance Stock</h2>
+            <?php
+                if(isset($_SESSION['isInvalid'])){
+                    if(strlen($_SESSION['isInvalid']) > 0){
+            ?>
+                <h4 class="text-align-center" style="color: red;">
+                    <?php echo $_SESSION['isInvalid']?>
+                </h4>
+
+            <?php }} $_SESSION['isInvalid'] = "";?>
             <table style="border: none;" cellpadding="10px">
                 <tbody>
                     <tr style="border: none;">

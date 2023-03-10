@@ -115,7 +115,7 @@ if(!$result){
 // Create Table Transaction History
 $sql = "CREATE TABLE transaction_history(
         id INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE,
-        bukti VARCHAR(50) NOT NULL,
+        bukti VARCHAR(50) NOT NULL UNIQUE,
         FK_locationcode VARCHAR(50) NOT NULL,
         transaction_time TIMESTAMP NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
