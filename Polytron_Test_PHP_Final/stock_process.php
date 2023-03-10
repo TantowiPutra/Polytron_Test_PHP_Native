@@ -127,6 +127,6 @@
             }
         }
     }else if($transaction_type == "K"){ // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
-    
+        
     }
 ?>
