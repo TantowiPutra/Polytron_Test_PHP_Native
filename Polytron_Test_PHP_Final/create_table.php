@@ -3,11 +3,9 @@
 
 //  Drop All Table
 $connect->query('SET foreign_key_checks = 0');
-if ($result = $connect->query("SHOW TABLES"))
-{
-    while($row = $result->fetch_array(MYSQLI_NUM))
-    {
-        $connect->query('DROP TABLE IF EXISTS '.$row[0]);
+if ($result = $connect->query("SHOW TABLES")) {
+    while ($row = $result->fetch_array(MYSQLI_NUM)) {
+        $connect->query('DROP TABLE IF EXISTS ' . $row[0]);
     }
 }
 $connect->query('SET foreign_key_checks = 1');
@@ -24,7 +22,7 @@ $sql = "CREATE TABLE users (
     )";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -35,7 +33,7 @@ $sql = "INSERT INTO users (username, password, address, gender)
         ('Terrence', 'terrence123', 'Pondok Lestari', 'P')";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -48,13 +46,13 @@ $sql = "CREATE TABLE locations(
     )";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
 $sql = "INSERT INTO locations(location_code) VALUES ('GBJ01'), ('GBJ02'), ('GBJ03')";
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -69,7 +67,7 @@ $sql = "CREATE TABLE items(
 ";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -79,7 +77,7 @@ $sql = "INSERT INTO items(item_code, item_name)
               ('PS-PLD24T700', 'PENTAB EX');";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -97,7 +95,7 @@ $sql = "CREATE TABLE item_stocks (
     )";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -112,14 +110,14 @@ $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo)
 ";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
 // Create Table Transaction History
 $sql = "CREATE TABLE transaction_history(
         id INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE,
-        bukti VARCHAR(50) NOT NULL UNIQUE,
+        bukti VARCHAR(50) NOT NULL,
         FK_locationcode VARCHAR(50) NOT NULL,
         transaction_time DATETIME NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
@@ -136,7 +134,7 @@ $sql = "CREATE TABLE transaction_history(
 ";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
 
@@ -150,6 +148,6 @@ $sql = "INSERT INTO transaction_history(bukti, transaction_time, FK_locationcode
         ";
 
 $result = mysqli_query($connect, $sql);
-if(!$result){
+if (!$result) {
     echo "Failed to run query";
 }
