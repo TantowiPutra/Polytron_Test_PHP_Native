@@ -9,8 +9,8 @@
     if(isset($_POST['name']) && isset($_POST['password'])){
         if(strlen($_POST['name'] > 0 || strlen($_POST['password']) > 0)){
             // Mencari data user menggunakan query
-            $username = $_POST['name'];
-            $password = $_POST['password'];
+            $username = addslashes($_POST['name']);
+            $password = addslashes($_POST['password']);
             $sql = "SELECT * FROM users WHERE BINARY username = '$username' && BINARY password = '$password'";
             $result = mysqli_query($connect, $sql);
             if(!$result){

@@ -102,7 +102,11 @@ if(!$result){
 }
 
 $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo) 
-        VALUES ('GBJ01', 'PS-PLD24T500', '2018-05-16 10:00:00', 30),
+        VALUES 
+        ('GBJ01', 'PS-PLD24T500', '2018-05-16 10:00:00', 30),
+        ('GBJ01', 'PS-PLD24T500', '2018-05-17 10:00:00', 60),
+        ('GBJ01', 'PS-PLD24T500', '2018-05-18 10:00:00', 90),
+        ('GBJ01', 'PS-PLD24T500', '2018-05-19 10:00:00', 120),
         ('GBJ02', 'PS-PLD24T600', '2018-05-16 10:00:00', 30),
         ('GBJ03', 'PS-PLD24T700', '2018-05-16 10:00:00', 30)
 ";
@@ -149,4 +153,3 @@ $result = mysqli_query($connect, $sql);
 if(!$result){
     echo "Failed to run query";
 }
-?>
