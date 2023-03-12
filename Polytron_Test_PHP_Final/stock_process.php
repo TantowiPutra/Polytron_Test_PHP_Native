@@ -229,10 +229,9 @@ if ($transaction_type == "T") {
                     echo "here";
                     break;
                 }
-
-                // $_SESSION['isInvalid'] = "Produk Berhasil Dikurangi!";
-                // header('Location: dashboard.php');
             }
+            $_SESSION['isInvalid'] = "Produk Berhasil Dikurangi!";
+            header('Location: dashboard.php');
         } else {
             $_SESSION['isInvalid'] = "Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)";
             header('Location: dashboard.php');
