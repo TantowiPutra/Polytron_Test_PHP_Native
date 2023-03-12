@@ -17,6 +17,7 @@ $sql = "SELECT * FROM item_stocks ist
                 JOIN 
                     items i 
                     ON ist.FK_itemcode = i.item_code
+        ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
     ";
 
 // Menampilkan total stok untuk tiap barang untuk tiap lokasi

@@ -135,6 +135,7 @@ if ($transaction_type == "T") {
             if (!$result) {
                 echo "Query Gagal3";
             }
+
             $_SESSION['isInvalid'] = "Produk Baru Berhasil di Input!";
             header('Location: dashboard.php');
         }
@@ -178,12 +179,51 @@ if ($transaction_type == "T") {
             ";
 
             $result = mysqli_query($connect, $sql);
-            while($data = mysqli_fetch_array($result)){
-                $quantity = $data['saldo'];
-                
+            $quantity_temp = 0;
+            $quantity_temp_2 = 0;
+            while ($data = mysqli_fetch_array($result)) {
+                $quantity_db = $data['saldo'];
+                $stock_id = $data['id'];
+                $tgl_masuk = date('Y-m-d H:i:s', strtotime($data['tgl_masuk']));
+                //  Apabila stok yang diminta > dari stok kuantitas pada database
+                if ($quantity > $quantity_db) {
+                    $quantity_temp = 0;
+                    $quantity_temp_2 = $quantity_db;
+                    $quantity = $quantity - $quantity_db;
+                } else if ($quantity <= $quantity_db) { // Jika kuantitas yang diminta lebih kecil sama dengan stok pada db
+                    $quantity_temp = $quantity_db - $quantity;
+                    $quantity_temp_2 = $quantity;
+                    $quantity = 0;
+                }
+
+                // Query update table item_stocks
+                $sql = "UPDATE item_stocks
+                            SET saldo = '$quantity_temp'
+                        WHERE id = '$stock_id'
+                ";
+
+                $result = mysqli_query($connect, $sql);
+                if (!$result) {
+                    echo "Query Gagal";
+                } else {
+                    // Insert ke Transaction History
+                    $sql = "INSERT INTO transaction_history(bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk,   quantity, prog, FK_user)
+                    VALUES('$proof', '$location', '$transaction_time', '$item_code', '$tgl_masuk', '$quantity_temp_2', '$transaction_type', '$user_id')
+                    ";
+
+                    $result = mysqli_query($connect, $sql);
+                    if (!$result) {
+                        echo "Query Gagal3";
+                    }
+                }
+
+                if ($quantity == 0) {
+                    echo "here";
+                    break;
+                }
+                // $_SESSION['isInvalid'] = "Produk Berhasil Dikurangi!";
+                // header('Location: dashboard.php');
             }
-
-
         } else {
             $_SESSION['isInvalid'] = "Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)";
             header('Location: dashboard.php');
