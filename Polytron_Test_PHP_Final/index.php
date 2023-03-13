@@ -1,7 +1,7 @@
 <?php
     // Deklarasi sql sebagai variabel global
     $sql = "";
-    
+
     session_start();
     if(isset($_SESSION['isLogin'])){
         header('Location: dashboard.php');

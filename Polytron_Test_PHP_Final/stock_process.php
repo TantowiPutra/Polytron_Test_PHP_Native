@@ -27,12 +27,15 @@ $sql = "SELECT * FROM transaction_history
             WHERE bukti = '$proof'
     ";
 
+echo "$proof";
+
 $result = mysqli_query($connect, $sql);
 
 // Jika ada, redirect
 if (mysqli_num_rows($result) > 0) {
     $_SESSION['isInvalid'] = "Kode Bukti Sudah Terdaftar!";
     header('Location: dashboard.php');
+    die();
 }
 
 // Print debug 

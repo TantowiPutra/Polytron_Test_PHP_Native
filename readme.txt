@@ -1,8 +1,8 @@
 updated_at dan created_at menggunakan DATETIME
 primary key set menggunakan id
-field id menggunakan bigint dan atribute unsigned
+*field id menggunakan bigint dan atribute unsigned
 column pada datase harus menggunakan bahasa yang konsisten
-validasi kode bukti belum sesuai
+*validasi kode bukti belum sesuai
 format validasi tanggal dan input harus dalam dmY
 kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 nama produk tidak perlu unique
