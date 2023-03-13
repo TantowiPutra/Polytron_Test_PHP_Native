@@ -10,7 +10,7 @@ prog dibuat komplit (bukan inisial dari proses)
 *ignore extra space pada akhir dan awal kata
 validasi panjang karakter yang di input menyesuaikan dengan ukuran varchar pada database
 *bug number format tidak boleh negatif
-seluruh field secara default uppercase agar konsisten
+*seluruh field secara default uppercase agar konsisten
 tabel Stok Produk Total berubah mengikuti filter yang diberikan
 tambahkan approvement apabila melakukan penambahan produk baru
 tambahkan filter sesuai dengan kriteria soal

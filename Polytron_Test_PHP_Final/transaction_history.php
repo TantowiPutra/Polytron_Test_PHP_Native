@@ -17,22 +17,12 @@ $sql = "SELECT * FROM
                 JOIN locations c
                     ON th.FK_locationcode = c.location_code
                 JOIN users u
-                    ON th.FK_user = u.id
+                    ON th.FK_user = u.id 
     ";
 
 if(isset($_POST['search_bukti'])){
     $search = addslashes($_POST['search_bukti']);
-
-    $sql = "SELECT * FROM
-    transaction_history th 
-        JOIN items i
-            ON th.FK_itemcode = i.item_code
-        JOIN locations c
-            ON th.FK_locationcode = c.location_code
-        JOIN users u
-            ON th.FK_user = u.id
-    WHERE bukti LIKE '%$search%'
-    ";
+    $sql = $sql . "WHERE bukti LIKE '%$search%'";
 }
 
 $result = mysqli_query($connect, $sql);
