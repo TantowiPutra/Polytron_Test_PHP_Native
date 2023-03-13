@@ -111,7 +111,7 @@ if (!$result) {
                         <td>
                             <?php echo date('d/m/Y', strtotime($date_input)) ?>
                         </td>
-                        <td style="text-align: right;"><?php echo ($prog == "K") ? "-$quantity" : "$quantity" ?></td>
+                        <td style="text-align: right;"><?php echo number_format(($prog == "K") ? "-$quantity" : "$quantity") ?></td>
                         <td>
                             <?php
                             if ($prog == "T") {

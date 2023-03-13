@@ -138,7 +138,7 @@ $result2 = mysqli_query($connect, $sql);
                             Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="255">
+                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="9999999">
                         </td>
                     </tr>
                 </tbody>
