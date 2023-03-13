@@ -46,7 +46,7 @@ if (mysqli_num_rows($result) > 0) {
 // Tangkap user_id untuk pendataan setiap transaksi
 $user_id = $_SESSION['id'];
 
-if ($transaction_type == "T") {
+if ($transaction_type == "TAMBAH") {
     // Cek apakah brang yang akan di input sudah ada sebelumnya atau belum
     $sql = "SELECT * 
                 FROM items WHERE item_code = '$item_code' 
@@ -151,7 +151,7 @@ if ($transaction_type == "T") {
             }
         }
     }
-} else if ($transaction_type == "K") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
+} else if ($transaction_type == "KURANG") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
     $sql = "SELECT SUM(balance) AS total_item
                 FROM item_stocks 
                 WHERE FK_locationcode = '$location' AND

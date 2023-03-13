@@ -6,9 +6,9 @@ primary key set menggunakan id
 format validasi tanggal dan input harus dalam dmY
 kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 nama produk tidak perlu unique
-prog dibuat komplit (bukan inisial dari proses)
+-prog dibuat komplit (bukan inisial dari proses)
 *ignore extra space pada akhir dan awal kata
-validasi panjang karakter yang di input menyesuaikan dengan ukuran varchar pada database
+*validasi panjang karakter yang di input menyesuaikan dengan ukuran varchar pada database
 *bug number format tidak boleh negatif
 *seluruh field secara default uppercase agar konsisten
 tabel Stok Produk Total berubah mengikuti filter yang diberikan

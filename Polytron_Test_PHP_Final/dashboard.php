@@ -49,7 +49,7 @@ $result2 = mysqli_query($connect, $sql);
             max-width: fit-content;
             margin: auto;
             padding: 20px;
-        " class="shadow card"> 
+        " class="shadow card">
             <h2 class="text-align-center">Maintenance Stock</h2>
             <?php
             if (isset($_SESSION['isInvalid'])) {
@@ -69,9 +69,9 @@ $result2 = mysqli_query($connect, $sql);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="T" required checked="checked">
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required checked="checked">
                             <label for="masuk">Masuk</label>
-                            <input type="radio" name="tipe_transaksi" id="keluar" value="K" required>
+                            <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required>
                             <label for="keluar">Keluar</label>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@ $result2 = mysqli_query($connect, $sql);
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required placeholder="TAMBAH00" max="255">
+                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required placeholder="TAMBAH00" max="50">
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -106,7 +106,8 @@ $result2 = mysqli_query($connect, $sql);
                         <td style="border: none;">
                             <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50">
                             <datalist id="itemcode">
-                                <?php while ($data = mysqli_fetch_array($result2)) { echo $data['item_code']?>
+                                <?php while ($data = mysqli_fetch_array($result2)) {
+                                    echo $data['item_code'] ?>
                                     <option value="<?php echo $data['item_code'] ?>"><?php echo $data['item_code'] ?></option>
                                 <?php } ?>
                             </datalist>
@@ -121,7 +122,7 @@ $result2 = mysqli_query($connect, $sql);
                             <datalist id="itemname">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_name'] ?>">
-                                <?php } ?>
+                                    <?php } ?>
                             </datalist>
                         </td>
                     </tr>
