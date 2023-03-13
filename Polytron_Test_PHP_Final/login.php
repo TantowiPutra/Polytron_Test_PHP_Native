@@ -67,7 +67,7 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
                         Username :
                     </td>
                     <td>
-                        <input type="text" name="name" id="name">
+                        <input type="text" name="name" id="name" max="255" placeholder="ex. Tantowi">
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +75,7 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
                         Password :
                     </td>
                     <td>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" max="255" placeholder="ex. towi123">
                     </td>
                 </tr>
             </table>

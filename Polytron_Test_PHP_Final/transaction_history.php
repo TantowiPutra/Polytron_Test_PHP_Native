@@ -20,6 +20,21 @@ $sql = "SELECT * FROM
                     ON th.FK_user = u.id
     ";
 
+if(isset($_POST['search_bukti'])){
+    $search = addslashes($_POST['search_bukti']);
+
+    $sql = "SELECT * FROM
+    transaction_history th 
+        JOIN items i
+            ON th.FK_itemcode = i.item_code
+        JOIN locations c
+            ON th.FK_locationcode = c.location_code
+        JOIN users u
+            ON th.FK_user = u.id
+    WHERE bukti LIKE '%$search%'
+    ";
+}
+
 $result = mysqli_query($connect, $sql);
 
 if (!$result) {
@@ -45,6 +60,13 @@ if (!$result) {
         <a href="dashboard.php"><button style="padding: 10px;">KEMBALI</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
+
+    <div class="center" style="text-align: center;">
+        <form action="transaction_history.php" method="POST">
+            <input type="text" name = "search_bukti" id="search_bukti">
+            <button type="submit">CARI BUKTI</button>
+        </form>
+    </div>
 
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 300px;">

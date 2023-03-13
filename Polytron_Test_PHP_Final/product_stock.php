@@ -35,12 +35,35 @@ $sql2 = "SELECT FK_locationcode,
             ORDER BY FK_locationcode
     ";
 
+// Query untuk search
+if(isset($_POST['search_location']) && $_POST['search_location'] != null){
+    $search = $_POST['search_location'];
+
+    $sql = "SELECT * FROM item_stocks ist
+                JOIN 
+                    locations l 
+                    ON ist.FK_locationcode = l.location_code
+                JOIN 
+                    items i 
+                    ON ist.FK_itemcode = i.item_code
+            WHERE FK_locationcode = '$search' AND saldo != '0'
+            ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
+    ";
+}
+
 $result = mysqli_query($connect, $sql);
 $result_count = mysqli_query($connect, $sql2);
 
 if (!$result) {
-    echo "Query Gagal";
+    echo "Query Gagal 1";
 }
+
+$sql_search = "SELECT * FROM locations";
+$search_result = mysqli_query($connect, $sql_search);
+if (!$result) {
+    echo "Query Gagal 2";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +84,21 @@ if (!$result) {
         <a href="dashboard.php"><button style="padding: 10px;">KEMBALI</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
+    <div style="text-align: center;">
+        <form action="product_stock.php" method="POST">
+            <select name="search_location" id="search_location">
+                <option value="">Search All</option>
+                <?php 
+                    while($data = mysqli_fetch_array($search_result)){
+                ?>
+                    <option value="<?php echo $data['location_code']?>"><?php echo $data['location_code']?></option>
+                <?php
+                    }
+                ?>
+            </select>
+            <button type="submit">CARI LOKASI</button>
+        </form>
+    </div>
 
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 30px;">
