@@ -24,11 +24,12 @@ $result2 = mysqli_query($connect, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1 class="text-align-center">Polytron Product Stock Management System</h1>
-    <h3 class="text-align-center">Welcome Back, <?php echo $username ?> &#128513;</h3>
+    <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
+    <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
     <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
         <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
@@ -42,7 +43,7 @@ $result2 = mysqli_query($connect, $sql);
             max-width: fit-content;
             margin: auto;
             padding: 20px;
-        ">
+        " class="shadow card"> 
             <h2 class="text-align-center">Maintenance Stock</h2>
             <?php
             if (isset($_SESSION['isInvalid'])) {
@@ -97,7 +98,7 @@ $result2 = mysqli_query($connect, $sql);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{9}" required value="PS-PLD24T500">
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required value="PS-PLD24T500">
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_code'] ?>"><?php echo $data['item_code'] ?></option>
@@ -158,6 +159,7 @@ $result2 = mysqli_query($connect, $sql);
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>

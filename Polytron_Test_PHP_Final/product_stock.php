@@ -36,10 +36,11 @@ $sql2 = "SELECT FK_locationcode,
     ";
 
 // Query untuk search
-if(isset($_POST['search_location']) && $_POST['search_location'] != null){
-    $search = $_POST['search_location'];
+if(isset($_POST['search_location'])){
+    if($_POST['search_location'] != null){
+        $search = $_POST['search_location'];
 
-    $sql = "SELECT * FROM item_stocks ist
+        $sql = "SELECT * FROM item_stocks ist
                 JOIN 
                     locations l 
                     ON ist.FK_locationcode = l.location_code
@@ -48,7 +49,8 @@ if(isset($_POST['search_location']) && $_POST['search_location'] != null){
                     ON ist.FK_itemcode = i.item_code
             WHERE FK_locationcode = '$search' AND saldo != '0'
             ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
-    ";
+        ";
+    }
 }
 
 $result = mysqli_query($connect, $sql);
@@ -75,14 +77,18 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Stock</title>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1 class="text-align-center">Product Stock</h1>
-    <h3 class="text-align-center">Stok Produk</h3>
-    <div style="display: flex; justify-content: center; margin: auto;">
+    <h1 class="text-align-center mb-4">Product Stock</h1>
+    <h3 class="text-align-center mb-4">Stok Produk</h3>
+    <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
+        <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a href="dashboard.php"><button style="padding: 10px;">KEMBALI</button></a>
+        <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
     </div>
+
     <hr style="margin-bottom: 30px; margin-top: 30px;">
     <div style="text-align: center;">
         <form action="product_stock.php" method="POST">
@@ -102,8 +108,8 @@ if (!$result) {
 
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 30px;">
-        <h1 class="text-align-center">Product Stock</h1>
-        <table cellpadding="30px" class="center">
+        <h1 class="text-align-center mt-4">Product Stock</h1>
+        <table cellpadding="30px" class="center shadow table-striped table" style="max-width: 80%;">
             <thead>
                 <tr>
                     <td>Lokasi</td>
@@ -129,7 +135,7 @@ if (!$result) {
 
     <div class="center" style="margin-bottom: 200px;">
         <h1 class="text-align-center">Stok Produk Total</h1>
-        <table cellpadding="30px" class="center">
+        <table cellpadding="30px" class="center shadow table-striped table" style="max-width: 80%;">
             <thead>
                 <tr>
                     <td>Kode Lokasi</td>
