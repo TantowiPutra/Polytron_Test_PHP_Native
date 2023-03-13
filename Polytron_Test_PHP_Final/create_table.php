@@ -17,7 +17,7 @@ $sql = "CREATE TABLE users (
         password VARCHAR(50) NOT NULL,
         address VARCHAR(50) NOT NULL,
         gender VARCHAR(2) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
@@ -41,7 +41,7 @@ if (!$result) {
 $sql = "CREATE TABLE locations(
         id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
         location_code VARCHAR(50) NOT NULL PRIMARY KEY,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
@@ -61,7 +61,7 @@ $sql = "CREATE TABLE items(
         id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
         item_code VARCHAR(50) PRIMARY KEY,
         item_name VARCHAR(50) UNIQUE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
 ";
@@ -90,7 +90,7 @@ $sql = "CREATE TABLE item_stocks (
         tgl_masuk DATETIME NOT NULL,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
@@ -125,7 +125,7 @@ $sql = "CREATE TABLE transaction_history(
         quantity BIGINT(50) NOT NULL,
         prog VARCHAR(25) NOT NULL,
         FK_user BIGINT(50) UNSIGNED NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),

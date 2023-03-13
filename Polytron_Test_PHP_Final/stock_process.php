@@ -14,13 +14,13 @@ $item_name = $_POST['namabarang'];
 $transaction_time = date('Y-m-d H:i:s', strtotime($_POST['tanggal_transaksi']));
 $quantity = $_POST['quantity'];
 
-$transaction_time = addslashes($transaction_time);
-$proof = addslashes($proof);
-$location = addslashes($location);
-$item_code = addslashes($item_code);
-$item_name = addslashes($item_name);
-$transaction_time = addslashes($transaction_time);
-$quantity = addslashes($quantity);
+$transaction_time = trim(addslashes($transaction_time));
+$proof = trim(addslashes($proof));
+$location = trim(addslashes($location));
+$item_code = trim(addslashes($item_code));
+$item_name = trim(addslashes($item_name));
+$transaction_time = trim(addslashes($transaction_time));
+$quantity = trim(addslashes($quantity));
 
 // Cek apakah kode bukti sudah ada atau belum (harus unique)
 $sql = "SELECT * FROM transaction_history
