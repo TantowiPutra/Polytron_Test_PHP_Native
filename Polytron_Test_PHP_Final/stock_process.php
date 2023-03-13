@@ -204,11 +204,11 @@ if ($transaction_type == "T") {
                         WHERE id = '$stock_id'
                 ";
 
-                echo "Stock_id: " . "$stock_id" . "<br>";
-                echo "Quantity: " . "$quantity" . "<br>";
-                echo "Quantity DB: " . "$quantity_db" . "<br>";
-                echo "Quantity sisa stok: " . "$quantity_temp" . "<br>";
-                echo "Quantity transaksi: " . "$quantity_temp_2" . "<br>";
+                // echo "Stock_id: " . "$stock_id" . "<br>";
+                // echo "Quantity: " . "$quantity" . "<br>";
+                // echo "Quantity DB: " . "$quantity_db" . "<br>";
+                // echo "Quantity sisa stok: " . "$quantity_temp" . "<br>";
+                // echo "Quantity transaksi: " . "$quantity_temp_2" . "<br>";
 
                 $result2 = mysqli_query($connect, $sql);
                 if (!$result2) {
