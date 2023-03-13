@@ -13,7 +13,7 @@ require_once 'koneksi.php';
 $sql2 = "SELECT FK_locationcode,
                     FK_itemcode,
                     item_name,
-                    SUM(saldo) AS total_stock
+                    SUM(balance) AS total_stock
                     FROM item_stocks ist
                 JOIN 
                     locations l
@@ -32,12 +32,12 @@ $sql = "SELECT * FROM item_stocks ist
                 JOIN 
                     items i 
                     ON ist.FK_itemcode = i.item_code
-        ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
+        ORDER BY ist.FK_locationcode, ist.date_input ASC
     ";
 
 // Query untuk search
-if(isset($_POST['search_location'])){
-    if($_POST['search_location'] != null){
+if (isset($_POST['search_location'])) {
+    if ($_POST['search_location'] != null) {
         $search = $_POST['search_location'];
 
         $sql = "SELECT * FROM item_stocks ist
@@ -47,8 +47,8 @@ if(isset($_POST['search_location'])){
                 JOIN 
                     items i 
                     ON ist.FK_itemcode = i.item_code
-            WHERE FK_locationcode = '$search' AND saldo != '0'
-            ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
+            WHERE FK_locationcode = '$search' AND balance > '0'
+            ORDER BY ist.FK_locationcode, ist.date_input ASC
         ";
     }
 }
@@ -94,12 +94,12 @@ if (!$result) {
         <form action="product_stock.php" method="POST">
             <select name="search_location" id="search_location">
                 <option value="">Search All</option>
-                <?php 
-                    while($data = mysqli_fetch_array($search_result)){
-                ?>
-                    <option value="<?php echo $data['location_code']?>"><?php echo $data['location_code']?></option>
                 <?php
-                    }
+                while ($data = mysqli_fetch_array($search_result)) {
+                ?>
+                    <option value="<?php echo $data['location_code'] ?>"><?php echo $data['location_code'] ?></option>
+                <?php
+                }
                 ?>
             </select>
             <button type="submit">CARI LOKASI</button>
@@ -125,8 +125,8 @@ if (!$result) {
                         <td><?php echo $data['location_code'] ?></td>
                         <td><?php echo $data['item_code'] ?></td>
                         <td><?php echo $data['item_name'] ?></td>
-                        <td style="text-align: right;"><?php echo number_format($data['saldo']) ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($data['tgl_masuk'])) ?></td>
+                        <td style="text-align: right;"><?php echo number_format($data['balance']) ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($data['date_input'])) ?></td>
                     </tr>
                 <?php } ?>
             </tbody>

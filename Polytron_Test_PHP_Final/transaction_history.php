@@ -82,11 +82,11 @@ if (!$result) {
             <tbody>
                 <?php
                 while ($data = mysqli_fetch_array($result)) {
-                    $bukti = $data['bukti'];
+                    $bukti = $data['proof'];
                     $time = $data['transaction_time'];
                     $lokasi = $data['location_code'];
                     $item_code = $data['item_code'];
-                    $date_input = $data['tgl_masuk'];
+                    $date_input = $data['date_input'];
                     $quantity = $data['quantity'];
                     $prog = $data['prog'];
                     $operator = $data['username'];

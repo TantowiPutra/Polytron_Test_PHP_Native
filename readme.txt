@@ -1,7 +1,7 @@
 *updated_at dan created_at menggunakan DATETIME
 primary key set menggunakan id
 *field id menggunakan bigint dan atribute unsigned
-column pada datase harus menggunakan bahasa yang konsisten
+*column pada datase harus menggunakan bahasa yang konsisten
 *validasi kode bukti belum sesuai
 format validasi tanggal dan input harus dalam dmY
 kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
@@ -21,3 +21,7 @@ error message dibuat position fixed agar tidak merubah tampilan form
 IMPORTANT: 
 menampilkan error yang jelas
 query dibuat lebih efektif
+
+list kata indo:
+1. bukti
+2. tgl_masuk

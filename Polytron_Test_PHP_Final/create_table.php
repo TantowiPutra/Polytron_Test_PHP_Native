@@ -86,8 +86,8 @@ $sql = "CREATE TABLE item_stocks (
         id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE, 
         FK_locationcode VARCHAR(50) NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
-        saldo BIGINT(50) NOT NULL,
-        tgl_masuk DATETIME NOT NULL,
+        balance BIGINT(50) NOT NULL,
+        date_input DATETIME NOT NULL,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
@@ -99,7 +99,7 @@ if (!$result) {
     echo "Failed to run query 7";
 }
 
-$sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo) 
+$sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, date_input, balance) 
         VALUES 
         ('GBJ01', 'PS-PLD24T500', '2018-05-16 10:00:00', 30),
         ('GBJ01', 'PS-PLD24T500', '2018-05-17 10:00:00', 60),
@@ -117,11 +117,11 @@ if (!$result) {
 // Create Table Transaction History
 $sql = "CREATE TABLE transaction_history(
         id BIGINT(50) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        bukti VARCHAR(50) NOT NULL,
+        proof VARCHAR(50) NOT NULL,
         FK_locationcode VARCHAR(50) NOT NULL,
         transaction_time DATETIME NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
-        tgl_masuk DATE NOT NULL,
+        date_input DATE NOT NULL,
         quantity BIGINT(50) NOT NULL,
         prog VARCHAR(25) NOT NULL,
         FK_user BIGINT(50) UNSIGNED NOT NULL,
@@ -138,7 +138,7 @@ if (!$result) {
     echo "Failed to run query 9";
 }
 
-$sql = "INSERT INTO transaction_history(bukti, transaction_time, FK_locationcode, FK_itemcode, tgl_masuk, quantity, prog, FK_user) VALUES
+$sql = "INSERT INTO transaction_history(proof, transaction_time, FK_locationcode, FK_itemcode, date_input, quantity, prog, FK_user) VALUES
         ('TAMBAH01','2018-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 60, 'TAMBAH', '1'),
         ('KURANG02','2019-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 30, 'KURANG', '2'),
         ('TAMBAH03','2018-05-16 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 60, 'TAMBAH', '3'),

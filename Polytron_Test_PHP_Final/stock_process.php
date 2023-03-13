@@ -24,7 +24,7 @@ $quantity = strtoupper(trim(addslashes($quantity)));
 
 // Cek apakah kode bukti sudah ada atau belum (harus unique)
 $sql = "SELECT * FROM transaction_history
-            WHERE bukti = '$proof'
+            WHERE proof = '$proof'
     ";
 
 echo "$proof";
@@ -60,7 +60,7 @@ if ($transaction_type == "T") {
 
     if (mysqli_num_rows($result) > 0) { // Barang Terdaftar
         // Cek tanggal terakhir produk yang sama pernah ditambah untuk lokasi tersebut
-        $sql = "SELECT MAX(tgl_masuk) AS tanggal
+        $sql = "SELECT MAX(date_input) AS tanggal
                     FROM item_stocks 
                     WHERE 
                         FK_locationcode = '$location' AND
@@ -75,7 +75,7 @@ if ($transaction_type == "T") {
         if ($date_input > $date_db) {
             // Jika date input lebih besar dari date input data yang pernah dilakukan untuk lokasi tersebut 
             // dengan data produk yang sama, maka dapat input
-            $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, saldo, tgl_masuk)
+            $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
                         VALUES('$location', '$item_code', '$quantity', '$transaction_time')
                 ";
             $result = mysqli_query($connect, $sql);
@@ -84,7 +84,7 @@ if ($transaction_type == "T") {
             }
 
             // Insert ke Transaction History
-            $sql = "INSERT INTO transaction_history(bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk,   quantity, prog, FK_user)
+            $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,  quantity, prog, FK_user)
                 VALUES('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
                 ";
 
@@ -122,7 +122,7 @@ if ($transaction_type == "T") {
             }
 
             // Query insert ke tabel item stocks
-            $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, saldo, tgl_masuk)
+            $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
                         VALUES('$location', '$item_code', '$quantity', '$transaction_time')
                 ";
             $result = mysqli_query($connect, $sql);
@@ -132,7 +132,7 @@ if ($transaction_type == "T") {
             }
 
             // Insert ke Transaction History
-            $sql = "INSERT INTO transaction_history(bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk,   quantity, prog, FK_user)
+            $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,   quantity, prog, FK_user)
                 VALUES('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
                 ";
 
@@ -142,17 +142,17 @@ if ($transaction_type == "T") {
                 $flag = false;
             }
 
-            if($flag == true){
+            if ($flag == true) {
                 $_SESSION['isInvalid'] = "Produk Baru Berhasil di Input!";
                 header('Location: dashboard.php');
-            }else{
+            } else {
                 $_SESSION['isInvalid'] = "Produk Gagal di Input! terdapat perubahan pada database!";
                 header('Location: dashboard.php');
             }
         }
     }
 } else if ($transaction_type == "K") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
-    $sql = "SELECT SUM(saldo) AS total_item
+    $sql = "SELECT SUM(balance) AS total_item
                 FROM item_stocks 
                 WHERE FK_locationcode = '$location' AND
                       FK_itemcode = '$item_code'
@@ -162,7 +162,7 @@ if ($transaction_type == "T") {
     $fetch_array = mysqli_fetch_assoc($result_find_delete);
     if ($fetch_array['total_item'] && $fetch_array['total_item'] >= $quantity) {
         // Cek tanggal terakhir produk yang sama pernah ditambah untuk lokasi tersebut
-        $sql = "SELECT MAX(tgl_masuk) AS tanggal
+        $sql = "SELECT MAX(date_input) AS tanggal
                     FROM item_stocks 
                     WHERE 
                         FK_locationcode = '$location' AND
@@ -186,18 +186,18 @@ if ($transaction_type == "T") {
                             FK_locationcode = '$location' AND
                             FK_itemcode = '$item_code' AND
                             item_name = '$item_name' AND
-                            saldo > '0'
-                    ORDER BY tgl_masuk ASC
+                            balance > '0'
+                    ORDER BY date_input ASC
             ";
 
             $result = mysqli_query($connect, $sql);
             $quantity_temp = 0;
             $quantity_temp_2 = 0;
             while ($data = mysqli_fetch_array($result)) {
-                $quantity_db = $data['saldo'];
+                $quantity_db = $data['balance'];
                 $stock_id = $data['idx'];
 
-                $tgl_masuk = date('Y-m-d H:i:s', strtotime($data['tgl_masuk']));
+                $tgl_masuk = date('Y-m-d H:i:s', strtotime($data['date_input']));
                 //  Apabila stok yang diminta > dari stok kuantitas pada database
                 if ($quantity > $quantity_db) {
                     $quantity_temp = 0;
@@ -211,7 +211,7 @@ if ($transaction_type == "T") {
 
                 // Query update table item_stocks
                 $sql = "UPDATE item_stocks
-                            SET saldo = '$quantity_temp'
+                            SET balance = '$quantity_temp'
                         WHERE id = '$stock_id'
                 ";
 
@@ -227,7 +227,7 @@ if ($transaction_type == "T") {
                 }
 
                 // Insert ke Transaction History
-                $sql = "INSERT INTO transaction_history(bukti, FK_locationcode, transaction_time, FK_itemcode, tgl_masuk,   quantity, prog, FK_user)
+                $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,   quantity, prog, FK_user)
                 VALUES('$proof', '$location', '$transaction_time', '$item_code', '$tgl_masuk', '$quantity_temp_2', '$transaction_type', '$user_id')
                 ";
 
