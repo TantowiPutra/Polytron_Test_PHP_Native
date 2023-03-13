@@ -10,7 +10,7 @@
 
 <body>
 	<h1>Soal No.4</h1>
-	<form action="http://localhost/Polytron_Test/test1/4.php" method="POST">
+	<form action="4.php" method="POST">
 		<p style="display: inline-block; width: 80px;">Angka : </p>
 		<input type="text" name="angka" id="angka">
 		<button type="SUBMIT">CHECK</button>

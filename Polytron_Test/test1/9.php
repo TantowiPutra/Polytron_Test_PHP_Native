@@ -10,7 +10,7 @@
 
 <body>
     <h1>Soal No.9</h1>
-    <form action="http://localhost/Polytron_Test/test1/9.php" method="POST">
+    <form action="9.php" method="POST">
         <p style="display: inline-block; width: 50px;">Input : </p>
         <input type="text" name="input" id="input">
         <button type="SUBMIT">CHECK</button>

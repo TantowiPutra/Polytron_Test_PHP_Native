@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="http://localhost/Polytron_Test/test1/2.php" method="POST">
+    <form action="2.php" method="POST">
         <h1>Soal No.2</h1>
         <div>
             <p style="display: inline-block; width: 80px;">Tanggal : </p>

@@ -10,7 +10,7 @@
 
 <body>
     <h1>Soal No.1</h1>
-    <form action="http://localhost/Polytron_Test/test1/1.php" method="POST">
+    <form action="1.php" method="POST">
         <div>
             <p style="display: inline-block; width: 80px;">Kalimat : </p>
             <input type="text" id="kalimat" name="kalimat">
@@ -32,7 +32,7 @@
         $count = 0;
 
         for ($i = 0; $i < strlen($kalimat); $i++) {
-            if($kalimat[$i] == $abjad){
+            if ($kalimat[$i] == $abjad) {
                 $count += 1;
             }
         }

@@ -10,7 +10,7 @@
 
 <body>
     <h1>Soal No.7</h1>
-    <form action="http://localhost/Polytron_Test/test1/7.php" method="POST">
+    <form action="7.php" method="POST">
         <p style="display: inline-block; width: 80px;">Nilai Awal : </p>
         <input type="text" name="digit" id="digit">
         <div>
@@ -95,7 +95,7 @@
                     $third_digit_index = addDigit($third_digit_index);
                     if (isLimit($third_digit) == true) {
                         $fourth_digit_index = addDigit($fourth_digit_index);
-                        if(isLimit($fourth_digit) == true){
+                        if (isLimit($fourth_digit) == true) {
                             $first_digit_index = 0;
                             $second_digit_index = 0;
                             $third_digit_index = 0;
@@ -104,7 +104,7 @@
                         }
                     }
                 }
-            } 
+            }
             $first_digit_index = addDigit($first_digit_index);
         }
     }

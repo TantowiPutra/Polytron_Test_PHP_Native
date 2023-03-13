@@ -10,7 +10,7 @@
 
 <body>
     <h1>Soal No.5</h1>
-    <form action="http://localhost/Polytron_Test/test1/5.php" method="POST">
+    <form action="5.php" method="POST">
         <p style="display: inline-block; width: 80px;">Iterasi : </p>
         <input type="text" name="angka" id="angka">
         <button type="SUBMIT">CHECK</button>
