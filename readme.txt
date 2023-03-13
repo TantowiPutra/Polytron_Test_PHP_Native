@@ -1,5 +1,5 @@
 *updated_at dan created_at menggunakan DATETIME
-primary key set menggunakan id
+*primary key set menggunakan id
 *field id menggunakan bigint dan atribute unsigned
 *column pada datase harus menggunakan bahasa yang konsisten
 *validasi kode bukti belum sesuai
@@ -25,3 +25,4 @@ query dibuat lebih efektif
 list kata indo:
 1. bukti
 2. tgl_masuk
+3. saldo

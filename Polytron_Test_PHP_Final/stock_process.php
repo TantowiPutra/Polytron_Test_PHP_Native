@@ -27,8 +27,6 @@ $sql = "SELECT * FROM transaction_history
             WHERE proof = '$proof'
     ";
 
-echo "$proof";
-
 $result = mysqli_query($connect, $sql);
 
 // Jika ada, redirect
@@ -39,7 +37,13 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Print debug 
-// echo $transaction_type . "<br>" . $proof . "<br>". $location ."<br>".$item_code ."<br>".$item_name ."<br>".$transaction_time."<br>".$quantity . "<br>";
+// echo $transaction_type . "<br>" . $proof . "<br>" . $location . "<br>" . $item_code . "<br>" . $item_name . "<br>" . $transaction_time . "<br>" . $quantity . "<br>";
+
+// Transaction type = TAMBAH
+// proof = TAMBAH00
+// location = 1
+// Item_code = PS-PLD500
+// Nama_Item = CINEMAX LED
 
 // Diasumsukan setiap produk memiliki kode dan nama produk yang unik.
 
@@ -59,6 +63,7 @@ if ($transaction_type == "TAMBAH") {
     }
 
     if (mysqli_num_rows($result) > 0) { // Barang Terdaftar
+        echo "Here";
         // Cek tanggal terakhir produk yang sama pernah ditambah untuk lokasi tersebut
         $sql = "SELECT MAX(date_input) AS tanggal
                     FROM item_stocks 
@@ -75,8 +80,19 @@ if ($transaction_type == "TAMBAH") {
         if ($date_input > $date_db) {
             // Jika date input lebih besar dari date input data yang pernah dilakukan untuk lokasi tersebut 
             // dengan data produk yang sama, maka dapat input
+
+            // Query untuk mendapatkan id inputan
+            $sql = "SELECT * 
+                    FROM items WHERE item_code = '$item_code' 
+                               AND item_name = '$item_name'
+                    LIMIT 1;
+            ";
+            $result = mysqli_query($connect, $sql);
+            $mysqli_assoc = mysqli_fetch_assoc($result);
+            $item_id = $mysqli_assoc['id'];
+
             $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
-                        VALUES('$location', '$item_code', '$quantity', '$transaction_time')
+                        VALUES('$location', '$item_id', '$quantity', '$transaction_time')
                 ";
             $result = mysqli_query($connect, $sql);
             if (!$result) {
@@ -85,7 +101,7 @@ if ($transaction_type == "TAMBAH") {
 
             // Insert ke Transaction History
             $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,  quantity, prog, FK_user)
-                VALUES('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
+                VALUES('$proof', '$location', '$transaction_time', '$item_id', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
                 ";
 
             $result = mysqli_query($connect, $sql);
@@ -121,9 +137,18 @@ if ($transaction_type == "TAMBAH") {
                 $flag = false;
             }
 
+            $sql = "SELECT * 
+                    FROM items WHERE item_code = '$item_code' 
+                               AND item_name = '$item_name'
+                    LIMIT 1;
+            ";
+            $result = mysqli_query($connect, $sql);
+            $mysqli_assoc = mysqli_fetch_assoc($result);
+            $item_id = $mysqli_assoc['id'];
+
             // Query insert ke tabel item stocks
             $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
-                        VALUES('$location', '$item_code', '$quantity', '$transaction_time')
+                        VALUES('$location', '$item_id', '$quantity', '$transaction_time')
                 ";
             $result = mysqli_query($connect, $sql);
             if (!$result) {
@@ -133,7 +158,7 @@ if ($transaction_type == "TAMBAH") {
 
             // Insert ke Transaction History
             $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,   quantity, prog, FK_user)
-                VALUES('$proof', '$location', '$transaction_time', '$item_code', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
+                VALUES('$proof', '$location', '$transaction_time', '$item_id', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
                 ";
 
             $result = mysqli_query($connect, $sql);
@@ -152,10 +177,19 @@ if ($transaction_type == "TAMBAH") {
         }
     }
 } else if ($transaction_type == "KURANG") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
+    $sql = "SELECT * 
+                    FROM items WHERE item_code = '$item_code' 
+                               AND item_name = '$item_name'
+                    LIMIT 1;
+            ";
+    $result = mysqli_query($connect, $sql);
+    $mysqli_assoc = mysqli_fetch_assoc($result);
+    $item_id = $mysqli_assoc['id'];
+
     $sql = "SELECT SUM(balance) AS total_item
                 FROM item_stocks 
                 WHERE FK_locationcode = '$location' AND
-                      FK_itemcode = '$item_code'
+                      FK_itemcode = '$item_id'
         ";
 
     $result_find_delete = mysqli_query($connect, $sql);
@@ -166,7 +200,7 @@ if ($transaction_type == "TAMBAH") {
                     FROM item_stocks 
                     WHERE 
                         FK_locationcode = '$location' AND
-                        FK_itemcode = '$item_code'
+                        FK_itemcode = '$item_id'
             ";
 
         $result = mysqli_query($connect, $sql);
@@ -181,10 +215,10 @@ if ($transaction_type == "TAMBAH") {
             // Pertama kali masuk
             $sql = "SELECT *, ist.id AS idx
                     FROM item_stocks ist
-                        JOIN items i ON ist.FK_itemcode = i.item_code
+                        JOIN items i ON ist.FK_itemcode = i.id
                         WHERE
                             FK_locationcode = '$location' AND
-                            FK_itemcode = '$item_code' AND
+                            FK_itemcode = '$item_id' AND
                             item_name = '$item_name' AND
                             balance > '0'
                     ORDER BY date_input ASC
@@ -193,9 +227,17 @@ if ($transaction_type == "TAMBAH") {
             $result = mysqli_query($connect, $sql);
             $quantity_temp = 0;
             $quantity_temp_2 = 0;
+            // echo mysqli_num_rows($result);
+            // die();
             while ($data = mysqli_fetch_array($result)) {
                 $quantity_db = $data['balance'];
                 $stock_id = $data['idx'];
+
+                // Debug
+                // echo "Quantity: " . "$quantity" . "<br>";
+                // echo "Quantity DB: " . "$quantity_db" . "<br>";
+                // echo "Stock_id" . "$stock_id" . "<br>";
+                // die();
 
                 $tgl_masuk = date('Y-m-d H:i:s', strtotime($data['date_input']));
                 //  Apabila stok yang diminta > dari stok kuantitas pada database
@@ -228,7 +270,7 @@ if ($transaction_type == "TAMBAH") {
 
                 // Insert ke Transaction History
                 $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,   quantity, prog, FK_user)
-                VALUES('$proof', '$location', '$transaction_time', '$item_code', '$tgl_masuk', '$quantity_temp_2', '$transaction_type', '$user_id')
+                VALUES('$proof', '$location', '$transaction_time', '$item_id', '$tgl_masuk', '$quantity_temp_2', '$transaction_type', '$user_id')
                 ";
 
                 $result2 = mysqli_query($connect, $sql);
@@ -241,6 +283,7 @@ if ($transaction_type == "TAMBAH") {
                     break;
                 }
             }
+
             $_SESSION['isInvalid'] = "Produk Berhasil Dikurangi!";
             header('Location: dashboard.php');
         } else {

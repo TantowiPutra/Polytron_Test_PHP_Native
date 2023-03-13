@@ -39,8 +39,8 @@ if (!$result) {
 
 // Create Table Location
 $sql = "CREATE TABLE locations(
-        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
-        location_code VARCHAR(50) NOT NULL PRIMARY KEY,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE PRIMARY KEY,
+        location_code VARCHAR(50) NOT NULL UNIQUE,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
@@ -58,8 +58,8 @@ if (!$result) {
 
 // Create Table Items
 $sql = "CREATE TABLE items(
-        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
-        item_code VARCHAR(50) PRIMARY KEY,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE PRIMARY KEY,
+        item_code VARCHAR(50) UNIQUE,
         item_name VARCHAR(50) UNIQUE,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -72,9 +72,9 @@ if (!$result) {
 }
 
 $sql = "INSERT INTO items(item_code, item_name) 
-        VALUES('PS-PLD24T500', 'CINEMAX LED'), 
-              ('PS-PLD24T600', 'ELECTRIC MOTOR'), 
-              ('PS-PLD24T700', 'PENTAB EX');";
+        VALUES('PS-PLD500', 'CINEMAX LED'), 
+              ('PS-PLD600', 'ELECTRIC MOTOR'), 
+              ('PS-PLD700', 'PENTAB EX');";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
@@ -83,13 +83,13 @@ if (!$result) {
 
 // Create Table Item Stock
 $sql = "CREATE TABLE item_stocks (
-        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE, 
-        FK_locationcode VARCHAR(50) NOT NULL,
-        FK_itemcode VARCHAR(50) NOT NULL,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE PRIMARY KEY, 
+        FK_locationcode BIGINT(50) UNSIGNED NOT NULL,
+        FK_itemcode BIGINT(50) UNSIGNED NOT NULL,
         balance BIGINT(50) NOT NULL,
         date_input DATETIME NOT NULL,
-        FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
-        FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
+        FOREIGN KEY(`FK_itemcode`) REFERENCES items(`id`),
+        FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`id`),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
@@ -101,12 +101,12 @@ if (!$result) {
 
 $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, date_input, balance) 
         VALUES 
-        ('GBJ01', 'PS-PLD24T500', '2018-05-16 10:00:00', 30),
-        ('GBJ01', 'PS-PLD24T500', '2018-05-17 10:00:00', 60),
-        ('GBJ01', 'PS-PLD24T500', '2018-05-18 10:00:00', 90),
-        ('GBJ01', 'PS-PLD24T500', '2018-05-19 10:00:00', 120),
-        ('GBJ02', 'PS-PLD24T600', '2018-05-16 10:00:00', 30),
-        ('GBJ03', 'PS-PLD24T700', '2018-05-16 10:00:00', 30)
+        ('1', '1', '2018-05-16 10:00:00', 30),
+        ('1', '1', '2018-05-17 10:00:00', 60),
+        ('1', '1', '2018-05-18 10:00:00', 90),
+        ('1', '1', '2018-05-19 10:00:00', 120),
+        ('2', '2', '2018-05-16 10:00:00', 30),
+        ('3', '3', '2018-05-16 10:00:00', 30)
 ";
 
 $result = mysqli_query($connect, $sql);
@@ -118,17 +118,17 @@ if (!$result) {
 $sql = "CREATE TABLE transaction_history(
         id BIGINT(50) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         proof VARCHAR(50) NOT NULL,
-        FK_locationcode VARCHAR(50) NOT NULL,
+        FK_locationcode BIGINT(50) UNSIGNED NOT NULL,
         transaction_time DATETIME NOT NULL,
-        FK_itemcode VARCHAR(50) NOT NULL,
+        FK_itemcode BIGINT(50) UNSIGNED NOT NULL,
         date_input DATE NOT NULL,
         quantity BIGINT(50) NOT NULL,
         prog VARCHAR(25) NOT NULL,
         FK_user BIGINT(50) UNSIGNED NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
-        FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
+        FOREIGN KEY(`FK_itemcode`) REFERENCES items(`id`),
+        FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`id`),
         FOREIGN KEY(`FK_user`) REFERENCES users(`id`)
     )
 ";
@@ -139,12 +139,12 @@ if (!$result) {
 }
 
 $sql = "INSERT INTO transaction_history(proof, transaction_time, FK_locationcode, FK_itemcode, date_input, quantity, prog, FK_user) VALUES
-        ('TAMBAH01','2018-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 60, 'TAMBAH', '1'),
-        ('KURANG02','2019-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 30, 'KURANG', '2'),
-        ('TAMBAH03','2018-05-16 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 60, 'TAMBAH', '3'),
-        ('KURANG04','2019-05-09 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 30, 'KURANG', '4'),
-        ('TAMBAH05','2018-05-16 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 60, 'TAMBAH', '1'),
-        ('KURANG06','2019-05-03 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 30, 'KURANG', '2')
+        ('TAMBAH01','2018-05-16 10:00:00', '1', '1', '2018-05-16', 60, 'TAMBAH', '1'),
+        ('KURANG02','2019-05-16 10:00:00', '1', '1', '2018-05-16', 30, 'KURANG', '2'),
+        ('TAMBAH03','2018-05-16 10:00:00', '2', '2', '2018-05-16', 60, 'TAMBAH', '3'),
+        ('KURANG04','2019-05-09 10:00:00', '2', '2', '2018-05-16', 30, 'KURANG', '4'),
+        ('TAMBAH05','2018-05-16 10:00:00', '3', '3', '2018-05-16', 60, 'TAMBAH', '1'),
+        ('KURANG06','2019-05-03 10:00:00', '3', '3', '2018-05-16', 30, 'KURANG', '2')
         ";
 
 $result = mysqli_query($connect, $sql);

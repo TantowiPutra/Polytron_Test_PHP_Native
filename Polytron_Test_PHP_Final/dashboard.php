@@ -14,10 +14,6 @@ $result = mysqli_query($connect, $sql);
 
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
-
-// while($data = mysqli_fetch_array($result2)){
-//     echo $data['item_code'];
-// }
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +88,7 @@ $result2 = mysqli_query($connect, $sql);
                                 <?php
                                 while ($data = mysqli_fetch_array($result)) {
                                 ?>
-                                    <option value="<?php echo $data['location_code'] ?>"><?php echo $data['location_code'] ?></option>
+                                    <option value="<?php echo $data['id'] ?>"><?php echo $data['location_code'] ?></option>
                                 <?php
                                 }
                                 ?>

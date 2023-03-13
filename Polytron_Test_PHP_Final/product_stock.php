@@ -13,26 +13,28 @@ require_once 'koneksi.php';
 $sql2 = "SELECT FK_locationcode,
                     FK_itemcode,
                     item_name,
-                    SUM(balance) AS total_stock
+                    SUM(balance) AS total_stock,
+                    l.location_code AS location_code,
+                    i.item_code AS item_code
                     FROM item_stocks ist
                 JOIN 
                     locations l
-                    ON ist.FK_locationcode = l.location_code
+                    ON ist.FK_locationcode = l.id
                 JOIN items i
-                    ON ist.FK_itemcode = i.item_code
+                    ON ist.FK_itemcode = i.id
             GROUP BY FK_locationcode, FK_itemcode
             ORDER BY FK_locationcode
     ";
 
 // Tangkap Data Item Stock
-$sql = "SELECT * FROM item_stocks ist
+$sql = "SELECT *
+        FROM item_stocks ist
                 JOIN 
                     locations l 
-                    ON ist.FK_locationcode = l.location_code
+                    ON ist.FK_locationcode = l.id
                 JOIN 
                     items i 
-                    ON ist.FK_itemcode = i.item_code
-        ORDER BY ist.FK_locationcode, ist.date_input ASC
+                    ON ist.FK_itemcode = i.id
     ";
 
 // Query untuk search
@@ -40,20 +42,16 @@ if (isset($_POST['search_location'])) {
     if ($_POST['search_location'] != null) {
         $search = $_POST['search_location'];
 
-        $sql = "SELECT * FROM item_stocks ist
-                JOIN 
-                    locations l 
-                    ON ist.FK_locationcode = l.location_code
-                JOIN 
-                    items i 
-                    ON ist.FK_itemcode = i.item_code
-            WHERE FK_locationcode = '$search' AND balance > '0'
-            ORDER BY ist.FK_locationcode, ist.date_input ASC
-        ";
+        $sql = $sql . "WHERE location_code = '$search' AND balance > '0'";
     }
 }
 
+$sql = $sql . "ORDER BY i.item_name, ist.date_input ASC";
+
+// Query Product_Stock
 $result = mysqli_query($connect, $sql);
+
+// Query Product_Stock Total
 $result_count = mysqli_query($connect, $sql2);
 
 if (!$result) {
@@ -147,8 +145,8 @@ if (!$result) {
             <tbody>
                 <?php while ($data = mysqli_fetch_array($result_count)) { ?>
                     <tr>
-                        <td><?php echo $data['FK_locationcode'] ?></td>
-                        <td><?php echo $data['FK_itemcode'] ?></td>
+                        <td><?php echo $data['location_code'] ?></td>
+                        <td><?php echo $data['item_code'] ?></td>
                         <td><?php echo $data['item_name'] ?></td>
                         <td style="text-align: right;"><?php echo number_format($data['total_stock']) ?></td>
                     </tr>

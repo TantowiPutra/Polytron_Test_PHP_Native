@@ -13,17 +13,17 @@ require_once 'koneksi.php';
 $sql = "SELECT * FROM
             transaction_history th 
                 JOIN items i
-                    ON th.FK_itemcode = i.item_code
+                    ON th.FK_itemcode = i.id
                 JOIN locations c
-                    ON th.FK_locationcode = c.location_code
+                    ON th.FK_locationcode = c.id
                 JOIN users u
                     ON th.FK_user = u.id 
     ";
 
-if(isset($_POST['search_bukti'])){
+if (isset($_POST['search_bukti'])) {
     $search = addslashes($_POST['search_bukti']);
-    $sql = $sql . "WHERE bukti LIKE '%$search%'";
-}
+    $sql = $sql . "WHERE proof LIKE '%$search%'";
+}   
 
 $result = mysqli_query($connect, $sql);
 
@@ -56,7 +56,7 @@ if (!$result) {
 
     <div class="center mb-4" style="text-align: center;">
         <form action="transaction_history.php" method="POST">
-            <input type="text" name = "search_bukti" id="search_bukti">
+            <input type="text" name="search_bukti" id="search_bukti">
             <button type="submit">CARI BUKTI</button>
         </form>
     </div>
@@ -100,7 +100,7 @@ if (!$result) {
                         </td>
                         <td><?php echo $lokasi ?></td>
                         <td><?php echo $item_code ?></td>
-                        <td><?php echo $item_name?></td>
+                        <td><?php echo $item_name ?></td>
                         <td>
                             <?php echo date('d/m/Y', strtotime($date_input)) ?>
                         </td>
