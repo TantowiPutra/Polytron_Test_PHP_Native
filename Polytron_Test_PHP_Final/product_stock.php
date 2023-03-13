@@ -9,17 +9,6 @@ $password = $_SESSION['password'];
 
 require_once 'koneksi.php';
 
-// Tangkap Data Transaction History
-$sql = "SELECT * FROM item_stocks ist
-                JOIN 
-                    locations l 
-                    ON ist.FK_locationcode = l.location_code
-                JOIN 
-                    items i 
-                    ON ist.FK_itemcode = i.item_code
-        ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
-    ";
-
 // Menampilkan total stok untuk tiap barang untuk tiap lokasi
 $sql2 = "SELECT FK_locationcode,
                     FK_itemcode,
@@ -33,6 +22,17 @@ $sql2 = "SELECT FK_locationcode,
                     ON ist.FK_itemcode = i.item_code
             GROUP BY FK_locationcode, FK_itemcode
             ORDER BY FK_locationcode
+    ";
+
+// Tangkap Data Item Stock
+$sql = "SELECT * FROM item_stocks ist
+                JOIN 
+                    locations l 
+                    ON ist.FK_locationcode = l.location_code
+                JOIN 
+                    items i 
+                    ON ist.FK_itemcode = i.item_code
+        ORDER BY ist.FK_locationcode, ist.tgl_masuk ASC
     ";
 
 // Query untuk search

@@ -12,7 +12,7 @@ $connect->query('SET foreign_key_checks = 1');
 
 // Create Table User
 $sql = "CREATE TABLE users (
-        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        id BIGINT(50) AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(50) NOT NULL UNIQUE,
         password VARCHAR(50) NOT NULL,
         address VARCHAR(50) NOT NULL,
@@ -39,7 +39,7 @@ if (!$result) {
 
 // Create Table Location
 $sql = "CREATE TABLE locations(
-        id INT(11) AUTO_INCREMENT UNIQUE,
+        id BIGINT(50) AUTO_INCREMENT UNIQUE,
         location_code VARCHAR(50) NOT NULL PRIMARY KEY,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -58,7 +58,7 @@ if (!$result) {
 
 // Create Table Items
 $sql = "CREATE TABLE items(
-        id INT(11) AUTO_INCREMENT UNIQUE,
+        id BIGINT(50) AUTO_INCREMENT UNIQUE,
         item_code VARCHAR(50) PRIMARY KEY,
         item_name VARCHAR(50) UNIQUE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
@@ -83,7 +83,7 @@ if (!$result) {
 
 // Create Table Item Stock
 $sql = "CREATE TABLE item_stocks (
-        id INT(11) AUTO_INCREMENT UNIQUE, 
+        id BIGINT(50) AUTO_INCREMENT UNIQUE, 
         FK_locationcode VARCHAR(50) NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
         saldo BIGINT(50) NOT NULL,
@@ -116,7 +116,7 @@ if (!$result) {
 
 // Create Table Transaction History
 $sql = "CREATE TABLE transaction_history(
-        id INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE,
+        id BIGINT(50) AUTO_INCREMENT PRIMARY KEY UNIQUE,
         bukti VARCHAR(50) NOT NULL,
         FK_locationcode VARCHAR(50) NOT NULL,
         transaction_time DATETIME NOT NULL,

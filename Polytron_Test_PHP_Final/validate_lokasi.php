@@ -1,7 +1,7 @@
 <?php
     require_once 'koneksi.php';
 
-    $kode_lokasi = $_POST['lokasi'];
+    $kode_lokasi = strtoupper($_POST['lokasi']);
     $sql = "SELECT * FROM locations
             WHERE location_code = '$kode_lokasi'
     ";

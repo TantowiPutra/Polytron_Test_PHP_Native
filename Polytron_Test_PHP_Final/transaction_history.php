@@ -82,6 +82,7 @@ if (!$result) {
                     <td>Jam</td>
                     <td>Lokasi</td>
                     <td>Kode Barang</td>
+                    <td>Nama Barang</td>
                     <td>Tgl Masuk</td>
                     <td>Qty Trn</td>
                     <td>Prog</td>
@@ -99,6 +100,7 @@ if (!$result) {
                     $quantity = $data['quantity'];
                     $prog = $data['prog'];
                     $operator = $data['username'];
+                    $item_name = $data['item_name'];
                 ?>
                     <tr>
                         <td><?php echo $bukti ?></td>
@@ -108,6 +110,7 @@ if (!$result) {
                         </td>
                         <td><?php echo $lokasi ?></td>
                         <td><?php echo $item_code ?></td>
+                        <td><?php echo $item_name?></td>
                         <td>
                             <?php echo date('d/m/Y', strtotime($date_input)) ?>
                         </td>
