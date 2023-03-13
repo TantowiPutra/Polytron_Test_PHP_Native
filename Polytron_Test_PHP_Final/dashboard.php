@@ -38,6 +38,19 @@ $result2 = mysqli_query($connect, $sql);
         <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
+    <?php
+    if (isset($_SESSION['isInvalid'])) {
+        if (strlen($_SESSION['isInvalid']) > 0) {
+    ?>
+            <div class="alert alert-warning alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: 100px; z-index: 2; top: 20%;" role="alert">
+                <?php echo $_SESSION['isInvalid'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    <?php
+        }
+    }
+    $_SESSION['isInvalid'] = "";
+    ?>
 
     <form action="stock_process.php" method="POST">
         <div style="
@@ -47,17 +60,6 @@ $result2 = mysqli_query($connect, $sql);
             padding: 20px;
         " class="shadow card">
             <h2 class="text-align-center">Maintenance Stock</h2>
-            <?php
-            if (isset($_SESSION['isInvalid'])) {
-                if (strlen($_SESSION['isInvalid']) > 0) {
-            ?>
-                    <h4 class="text-align-center" style="color: orangered;">
-                        <?php echo $_SESSION['isInvalid'] ?>
-                    </h4>
-
-            <?php }
-            }
-            $_SESSION['isInvalid'] = ""; ?>
             <table style="border: none;" cellpadding="10px">
                 <tbody>
                     <tr style="border: none;">

@@ -17,7 +17,7 @@ $sql = "SELECT * FROM
                 JOIN locations c
                     ON th.FK_locationcode = c.id
                 JOIN users u
-                    ON th.FK_user = u.id 
+                    ON th.FK_user = u.id
     ";
 
 if (isset($_POST['search_bukti'])) {

@@ -11,12 +11,12 @@ nama produk tidak perlu unique
 *validasi panjang karakter yang di input menyesuaikan dengan ukuran varchar pada database
 *bug number format tidak boleh negatif
 *seluruh field secara default uppercase agar konsisten
-tabel Stok Produk Total berubah mengikuti filter yang diberikan
+*tabel Stok Produk Total berubah mengikuti filter yang diberikan
 tambahkan approvement apabila melakukan penambahan produk baru
-tambahkan filter sesuai dengan kriteria soal
+!1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
 tambahkan pagination
 jika salah input ataupun ketika sukses input, data pada form tidak hilang
-error message dibuat position fixed agar tidak merubah tampilan form
+*error message dibuat position fixed agar tidak merubah tampilan form
 
 IMPORTANT: 
 menampilkan error yang jelas
