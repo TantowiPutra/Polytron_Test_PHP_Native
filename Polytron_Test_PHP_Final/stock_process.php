@@ -117,13 +117,12 @@ if ($transaction_type == "TAMBAH") {
     } else {
         $sql = "SELECT * 
                     FROM items WHERE item_code = '$item_code' 
-                               OR item_name = '$item_name'
             ";
         $result = mysqli_query($connect, $sql);
         $flag = true;
         if (mysqli_num_rows($result) > 0) {
             // Fail apabila salah satu dari nama produk ataupun id produk ada yang sama
-            $_SESSION['isInvalid'] = "Format Tidak Valid! Pastikan Penambahan Produk Baru Harus Unik Baik Kode dan Nama Produk!";
+            $_SESSION['isInvalid'] = "Format Tidak Valid! Pastikan Penambahan Kode Produk Baru harus Unique!";
             header('Location: dashboard.php');
         } else {
             // Karena unique, produk dapat masuk tanpa perlu melewati validasi
@@ -139,7 +138,6 @@ if ($transaction_type == "TAMBAH") {
 
             $sql = "SELECT * 
                     FROM items WHERE item_code = '$item_code' 
-                               AND item_name = '$item_name'
                     LIMIT 1;
             ";
             $result = mysqli_query($connect, $sql);

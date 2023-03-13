@@ -60,7 +60,7 @@ if (!$result) {
 $sql = "CREATE TABLE items(
         id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE PRIMARY KEY,
         item_code VARCHAR(50) UNIQUE,
-        item_name VARCHAR(50) UNIQUE,
+        item_name VARCHAR(50),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
