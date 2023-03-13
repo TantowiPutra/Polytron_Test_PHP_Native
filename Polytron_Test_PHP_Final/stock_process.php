@@ -14,25 +14,28 @@ $item_name = $_POST['namabarang'];
 $transaction_time = date('Y-m-d H:i:s', strtotime($_POST['tanggal_transaksi']));
 $quantity = $_POST['quantity'];
 
-$transaction_time = addslashes($transaction_time);
-$proof = addslashes($proof);
-$location = addslashes($location);
-$item_code = addslashes($item_code);
-$item_name = addslashes($item_name);
-$transaction_time = addslashes($transaction_time);
-$quantity = addslashes($quantity);
+$transaction_time = strtoupper(trim(addslashes($transaction_time)));
+$proof = strtoupper(trim(addslashes($proof)));
+$location = strtoupper(trim(addslashes($location)));
+$item_code = strtoupper(trim(addslashes($item_code)));
+$item_name = strtoupper(trim(addslashes($item_name)));
+$transaction_time = trim(addslashes($transaction_time));
+$quantity = strtoupper(trim(addslashes($quantity)));
 
 // Cek apakah kode bukti sudah ada atau belum (harus unique)
 $sql = "SELECT * FROM transaction_history
             WHERE bukti = '$proof'
     ";
 
+echo "$proof";
+
 $result = mysqli_query($connect, $sql);
 
 // Jika ada, redirect
-if (mysqli_num_rows($result)) {
+if (mysqli_num_rows($result) > 0) {
     $_SESSION['isInvalid'] = "Kode Bukti Sudah Terdaftar!";
     header('Location: dashboard.php');
+    die();
 }
 
 // Print debug 
@@ -101,7 +104,7 @@ if ($transaction_type == "T") {
                                OR item_name = '$item_name'
             ";
         $result = mysqli_query($connect, $sql);
-
+        $flag = true;
         if (mysqli_num_rows($result) > 0) {
             // Fail apabila salah satu dari nama produk ataupun id produk ada yang sama
             $_SESSION['isInvalid'] = "Format Tidak Valid! Pastikan Penambahan Produk Baru Harus Unik Baik Kode dan Nama Produk!";
@@ -115,6 +118,7 @@ if ($transaction_type == "T") {
             $result = mysqli_query($connect, $sql);
             if (!$result) {
                 echo "Query Gagal1";
+                $flag = false;
             }
 
             // Query insert ke tabel item stocks
@@ -124,6 +128,7 @@ if ($transaction_type == "T") {
             $result = mysqli_query($connect, $sql);
             if (!$result) {
                 echo "Query Gagal2";
+                $flag = false;
             }
 
             // Insert ke Transaction History
@@ -134,10 +139,16 @@ if ($transaction_type == "T") {
             $result = mysqli_query($connect, $sql);
             if (!$result) {
                 echo "Query Gagal3";
+                $flag = false;
             }
 
-            $_SESSION['isInvalid'] = "Produk Baru Berhasil di Input!";
-            header('Location: dashboard.php');
+            if($flag == true){
+                $_SESSION['isInvalid'] = "Produk Baru Berhasil di Input!";
+                header('Location: dashboard.php');
+            }else{
+                $_SESSION['isInvalid'] = "Produk Gagal di Input! terdapat perubahan pada database!";
+                header('Location: dashboard.php');
+            }
         }
     }
 } else if ($transaction_type == "K") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
@@ -175,7 +186,7 @@ if ($transaction_type == "T") {
                             FK_locationcode = '$location' AND
                             FK_itemcode = '$item_code' AND
                             item_name = '$item_name' AND
-                            saldo != '0'
+                            saldo > '0'
                     ORDER BY tgl_masuk ASC
             ";
 

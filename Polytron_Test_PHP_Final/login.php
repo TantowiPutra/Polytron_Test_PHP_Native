@@ -45,12 +45,13 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="center fit-content" style="margin-top: 10%; padding: 50px;">
-        <h1>Welcome to Polytron Product Management!</h1>
-        <h2 class="text-align-center fw-normal">Login page</h2>
+    <div class="center card shadow center fit-content" style="margin-top: 10%; padding: 50px;">
+        <h1><i>Welcome to Polytron Product Management!</i></h1>
+        <h2 class="text-align-center fw-normal mb-4 mt-4">Login page</h2>
         <?php
         if (strlen($isInvalid) > 0) {
         ?>
@@ -60,30 +61,32 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
         }
         ?>
 
-        <form action="login.php?op=login_attempt" method="POST" class="center">
+        <form action="login.php?op=login_attempt" method="POST">
             <table cellpadding="10px" class="center">
                 <tr>
                     <td>
-                        Username :
+                        Username
                     </td>
                     <td>
-                        <input type="text" name="name" id="name">
+                        : <input type="text" name="name" id="name" max="255" placeholder="ex. Tantowi">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Password :
+                        Password
                     </td>
                     <td>
-                        <input type="password" name="password" id="password">
+                        : <input type="password" name="password" id="password" max="255" placeholder="ex. towi123">
                     </td>
                 </tr>
             </table>
             <button type="submit" style="margin-left: 46%; margin-top: 10px;">LOGIN</button>
         </form>
 
-        <h5 class="text-align-center">Made with &#10084; by Tantowi</h2>
+        <h5 class="text-align-center mt-4 mb-4">Made with &#10084; by Tantowi</h2>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>

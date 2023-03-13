@@ -12,18 +12,18 @@ $connect->query('SET foreign_key_checks = 1');
 
 // Create Table User
 $sql = "CREATE TABLE users (
-        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(50) NOT NULL UNIQUE,
         password VARCHAR(50) NOT NULL,
         address VARCHAR(50) NOT NULL,
         gender VARCHAR(2) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 1";
 }
 
 $sql = "INSERT INTO users (username, password, address, gender)
@@ -34,41 +34,41 @@ $sql = "INSERT INTO users (username, password, address, gender)
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 2";
 }
 
 // Create Table Location
 $sql = "CREATE TABLE locations(
-        id INT(11) AUTO_INCREMENT UNIQUE,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
         location_code VARCHAR(50) NOT NULL PRIMARY KEY,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 3";
 }
 
 $sql = "INSERT INTO locations(location_code) VALUES ('GBJ01'), ('GBJ02'), ('GBJ03')";
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 4";
 }
 
 // Create Table Items
 $sql = "CREATE TABLE items(
-        id INT(11) AUTO_INCREMENT UNIQUE,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE,
         item_code VARCHAR(50) PRIMARY KEY,
         item_name VARCHAR(50) UNIQUE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
 ";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 5";
 }
 
 $sql = "INSERT INTO items(item_code, item_name) 
@@ -78,25 +78,25 @@ $sql = "INSERT INTO items(item_code, item_name)
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 6";
 }
 
 // Create Table Item Stock
 $sql = "CREATE TABLE item_stocks (
-        id INT(11) AUTO_INCREMENT UNIQUE, 
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT UNIQUE, 
         FK_locationcode VARCHAR(50) NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
         saldo BIGINT(50) NOT NULL,
         tgl_masuk DATETIME NOT NULL,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP ,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 7";
 }
 
 $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo) 
@@ -111,21 +111,21 @@ $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, tgl_masuk, saldo)
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 8";
 }
 
 // Create Table Transaction History
 $sql = "CREATE TABLE transaction_history(
-        id INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE,
+        id BIGINT(50) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         bukti VARCHAR(50) NOT NULL,
         FK_locationcode VARCHAR(50) NOT NULL,
         transaction_time DATETIME NOT NULL,
         FK_itemcode VARCHAR(50) NOT NULL,
         tgl_masuk DATE NOT NULL,
         quantity BIGINT(50) NOT NULL,
-        prog VARCHAR(50) NOT NULL,
-        FK_user INT(11) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        prog VARCHAR(25) NOT NULL,
+        FK_user BIGINT(50) UNSIGNED NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY(`FK_itemcode`) REFERENCES items(`item_code`),
         FOREIGN KEY(`FK_locationcode`) REFERENCES locations(`location_code`),
@@ -135,19 +135,19 @@ $sql = "CREATE TABLE transaction_history(
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 9";
 }
 
 $sql = "INSERT INTO transaction_history(bukti, transaction_time, FK_locationcode, FK_itemcode, tgl_masuk, quantity, prog, FK_user) VALUES
-        ('TAMBAH01','2018-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 60, 'T', '1'),
-        ('KURANG02','2019-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 30, 'K', '2'),
-        ('TAMBAH03','2018-05-16 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 60, 'T', '3'),
-        ('KURANG04','2019-05-09 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 30, 'K', '4'),
-        ('TAMBAH05','2018-05-16 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 60, 'T', '1'),
-        ('KURANG06','2019-05-03 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 30, 'K', '2')
+        ('TAMBAH01','2018-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 60, 'TAMBAH', '1'),
+        ('KURANG02','2019-05-16 10:00:00', 'GBJ01', 'PS-PLD24T500', '2018-05-16', 30, 'KURANG', '2'),
+        ('TAMBAH03','2018-05-16 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 60, 'TAMBAH', '3'),
+        ('KURANG04','2019-05-09 10:00:00', 'GBJ02', 'PS-PLD24T600', '2018-05-16', 30, 'KURANG', '4'),
+        ('TAMBAH05','2018-05-16 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 60, 'TAMBAH', '1'),
+        ('KURANG06','2019-05-03 10:00:00', 'GBJ03', 'PS-PLD24T700', '2018-05-16', 30, 'KURANG', '2')
         ";
 
 $result = mysqli_query($connect, $sql);
 if (!$result) {
-    echo "Failed to run query";
+    echo "Failed to run query 10";
 }
