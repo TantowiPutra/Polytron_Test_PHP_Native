@@ -125,7 +125,7 @@ if (!$result) {
                         <td><?php echo $data['location_code'] ?></td>
                         <td><?php echo $data['item_code'] ?></td>
                         <td><?php echo $data['item_name'] ?></td>
-                        <td><?php echo $data['saldo'] ?></td>
+                        <td style="text-align: right;"><?php echo $data['saldo'] ?></td>
                         <td><?php echo date('d/m/Y', strtotime($data['tgl_masuk'])) ?></td>
                     </tr>
                 <?php } ?>
@@ -150,7 +150,7 @@ if (!$result) {
                         <td><?php echo $data['FK_locationcode'] ?></td>
                         <td><?php echo $data['FK_itemcode'] ?></td>
                         <td><?php echo $data['item_name'] ?></td>
-                        <td><?php echo $data['total_stock'] ?></td>
+                        <td style="text-align: right;"><?php echo $data['total_stock'] ?></td>
                     </tr>
                 <?php } ?>
             </tbody>

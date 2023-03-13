@@ -8,11 +8,16 @@ $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 
 require_once 'koneksi.php';
+
 $sql = "SELECT * FROM locations";
 $result = mysqli_query($connect, $sql);
 
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
+
+// while($data = mysqli_fetch_array($result2)){
+//     echo $data['item_code'];
+// }
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +35,8 @@ $result2 = mysqli_query($connect, $sql);
 <body>
     <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
+    <div style="display: flex; justify-content: space-between; max-width: 40%; margin: auto;">
+        <a href="add_location.php"><button style="padding: 10px;">TAMBAH LOKASI</button></a>
         <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
         <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
@@ -74,7 +80,7 @@ $result2 = mysqli_query($connect, $sql);
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required value="TAMBAH00">
+                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required placeholder="TAMBAH00" max="255">
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -86,7 +92,7 @@ $result2 = mysqli_query($connect, $sql);
                                 <?php
                                 while ($data = mysqli_fetch_array($result)) {
                                 ?>
-                                    <option value="<?php echo $data['location_code'] ?>" selected><?php echo $data['location_code'] ?></option>
+                                    <option value="<?php echo $data['location_code'] ?>"><?php echo $data['location_code'] ?></option>
                                 <?php
                                 }
                                 ?>
@@ -98,13 +104,11 @@ $result2 = mysqli_query($connect, $sql);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required value="PS-PLD24T500">
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="255">
                             <datalist id="itemcode">
-                                <?php while ($data = mysqli_fetch_array($result2)) { ?>
+                                <?php while ($data = mysqli_fetch_array($result2)) { echo $data['item_code']?>
                                     <option value="<?php echo $data['item_code'] ?>"><?php echo $data['item_code'] ?></option>
-                                <?php
-                                }
-                                ?>
+                                <?php } ?>
                             </datalist>
                         </td>
                     </tr>
@@ -113,13 +117,11 @@ $result2 = mysqli_query($connect, $sql);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="item_name" name="namabarang" id="namabarang" required value="CINEMAX LED">
-                            <datalist id="item_name">
+                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="255">
+                            <datalist id="itemname">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
-                                    <option value="<?php echo $data['item_name'] ?>"><?php echo $data['item_name'] ?></option>
-                                <?php
-                                }
-                                ?>
+                                    <option value="<?php echo $data['item_name'] ?>">
+                                <?php } ?>
                             </datalist>
                         </td>
                     </tr>
@@ -136,7 +138,7 @@ $result2 = mysqli_query($connect, $sql);
                             Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1" required value="10">
+                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="255">
                         </td>
                     </tr>
                 </tbody>
