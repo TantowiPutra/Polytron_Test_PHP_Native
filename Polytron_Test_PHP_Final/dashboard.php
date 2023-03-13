@@ -104,7 +104,7 @@ $result2 = mysqli_query($connect, $sql);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="255">
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50">
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) { echo $data['item_code']?>
                                     <option value="<?php echo $data['item_code'] ?>"><?php echo $data['item_code'] ?></option>
@@ -117,7 +117,7 @@ $result2 = mysqli_query($connect, $sql);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="255">
+                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50">
                             <datalist id="itemname">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_name'] ?>">
