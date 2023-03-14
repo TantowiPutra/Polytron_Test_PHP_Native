@@ -34,36 +34,4 @@ list kata indo:
 3. saldo
 
 Pagination compontent (transaction history)
-
-$batas = 5;
-                $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
-                $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
-    
-                $previous = $halaman - 1;
-                $next = $halaman + 1;
-                
-                $data = mysqli_query($connect, $sql);
-                $jumlah_data = mysqli_num_rows($data);
-                $total_halaman = ceil($jumlah_data / $batas);
-    
-                $data_paginate = mysqli_query($connect, $sql . "LIMIT $halaman_awal, $batas");
-                $nomor = $halaman_awal+1;
-
-
-<nav>
-			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
-				</li>
-				<?php 
-				for($x=1;$x<=$total_halaman;$x++){
-					?> 
-					<li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
-					<?php
-				}
-				?>				
-				<li class="page-item">
-					<a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
-				</li>
-			</ul>
-		</nav>
+Note: Bisa menggunakan DataTables (library jQuery untuk pembuatan pagination)
