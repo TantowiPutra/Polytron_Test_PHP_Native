@@ -14,6 +14,16 @@ $result = mysqli_query($connect, $sql);
 
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
+
+// Mendapatkan total tambah
+   $sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
+   $sql_tambah_query = mysqli_query($connect, $sql_tambah);
+   $sql_tambah_fetch_assoc = mysqli_fetch_assoc($sql_tambah_query);
+
+// Mendapatkan total kurang
+   $sql_kurang = "SELECT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
+   $sql_kurang_query = mysqli_query($connect, $sql_kurang);
+   $sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
 ?>
 
 <!DOCTYPE html>
@@ -67,18 +77,10 @@ $result2 = mysqli_query($connect, $sql);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required 
-                            <?php
-                                if(isset($_REQUEST['transaction_type'])){
-                                    if(strlen($_REQUEST['transaction_type']) > 0 && strlen($_REQUEST['transaction_type']) == "TAMBAH"){
-                                        echo 'checked="checked"';
-                                        $_REQUEST['transaction_type'] = "";
-                                    }
-                                }
-                            ?>
-                            >
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()">
                             <label for="masuk">Masuk</label>
-                            <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required>
+                            <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required
+                            onchange="setProof()">
                             <label for="keluar">Keluar</label>
                         </td>
                     </tr>
@@ -87,7 +89,7 @@ $result2 = mysqli_query($connect, $sql);
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" onchange="formatCheck()" required placeholder="TAMBAH00" max="50">
+                            <input type="text" name="bukti" id="bukti" required placeholder="TAMBAH00" max="50" disabled>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -159,16 +161,17 @@ $result2 = mysqli_query($connect, $sql);
     </form>
 
     <script>
-        function formatCheck() {
+        function setProof() {
             if (document.getElementById('masuk').checked || document.getElementById('keluar').checked) {
                 if (document.getElementById('masuk').checked) {
-                    document.getElementById('bukti').pattern = "[tT][aA][mM][bB][aA][hH][0-9][0-9]{1,}";
-                } else {
-                    document.getElementById('bukti').pattern = "[kK][uU][rR][aA][nN][gG][0-9][0-9]{1,}";
+                    document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $sql_tambah_fetch_assoc['total_tambah'] + 1; ?>");
+                } else if(document.getElementById('keluar').checked){
+                    document.getElementById('bukti').value = "KURANG0".concat("<?php echo $sql_kurang_fetch_assoc['total_kurang'] + 1; ?>");
                 }
             }
         }
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 

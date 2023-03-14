@@ -4,7 +4,7 @@
 *column pada datase harus menggunakan bahasa yang konsisten
 *validasi kode bukti belum sesuai
 format validasi tanggal dan input harus dalam dmY
-kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
+*kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 *nama produk tidak perlu unique
 *prog dibuat komplit (bukan inisial dari proses)
 *ignore extra space pada akhir dan awal kata
@@ -14,7 +14,7 @@ kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 *tabel Stok Produk Total berubah mengikuti filter yang diberikan
 tambahkan approvement apabila melakukan penambahan produk baru
 !1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
-!1/2 (baru halaman transaction history) tambahkan pagination
+!1/2 (baru halaman transaction history dan masih error) tambahkan pagination
 jika salah input ataupun ketika sukses input, data pada form tidak hilang
 *error message dibuat position fixed agar tidak merubah tampilan form
 
