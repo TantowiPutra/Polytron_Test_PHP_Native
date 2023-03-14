@@ -14,11 +14,12 @@ kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 *tabel Stok Produk Total berubah mengikuti filter yang diberikan
 tambahkan approvement apabila melakukan penambahan produk baru
 !1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
-tambahkan pagination
+!1/2 (baru halaman transaction history) tambahkan pagination
 jika salah input ataupun ketika sukses input, data pada form tidak hilang
 *error message dibuat position fixed agar tidak merubah tampilan form
 
-- Bug insert data melewati validasi
+(Fixed) Bug insert data melewati validasi
+(Fixed) Bug kode bukti tidak unique (tembus validasi)
 
 IMPORTANT: 
 menampilkan error yang jelas

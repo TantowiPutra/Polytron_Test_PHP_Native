@@ -54,7 +54,16 @@ $user_id = $_SESSION['id'];
 // Redirect user apabila terdapat kesalahan pada input / notifikasi apapun
 function redirect($message)
 {
+    global $transaction_type, $proof, $location, $item_code, $item_name, $transaction_time, $quantity;
+
     $_SESSION['isInvalid'] = "$message";
+    $_SESSION['transaction_type'] = "$transaction_type";
+    $_SESSION['proof'] = "$proof";
+    $_SESSION['item_code'] = "$item_code";
+    $_SESSION['item_name'] = "$item_name";
+    $_SESSION['transaction_time'] = "$transaction_time";
+    $_SESSION['quantity'] = "$quantity";
+
     header('Location: dashboard.php');
 }
 

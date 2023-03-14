@@ -67,6 +67,7 @@ if (!$result) {
         <table cellpadding="30px" class="center table table-striped shadow" style="max-width: 80%;">
             <thead>
                 <tr>
+                    <td>No. </td>
                     <td>Bukti</td>
                     <td>Tgl</td>
                     <td>Jam</td>
@@ -81,7 +82,21 @@ if (!$result) {
             </thead>
             <tbody>
                 <?php
-                while ($data = mysqli_fetch_array($result)) {
+                $batas = 5;
+                $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
+                $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;	
+    
+                $previous = $halaman - 1;
+                $next = $halaman + 1;
+                
+                $data = mysqli_query($connect, $sql);
+                $jumlah_data = mysqli_num_rows($data);
+                $total_halaman = ceil($jumlah_data / $batas);
+    
+                $data_paginate = mysqli_query($connect, $sql . "LIMIT $halaman_awal, $batas");
+                $nomor = $halaman_awal+1;
+
+                while ($data = mysqli_fetch_array($data_paginate)) {
                     $bukti = $data['proof'];
                     $time = $data['transaction_time'];
                     $lokasi = $data['location_code'];
@@ -93,6 +108,7 @@ if (!$result) {
                     $item_name = $data['item_name'];
                 ?>
                     <tr>
+                        <td><?php echo $nomor++; ?></td>
                         <td><?php echo $bukti ?></td>
                         <td><?php echo date("d/m/Y", strtotime($time)); ?></td>
                         <td>
@@ -121,6 +137,23 @@ if (!$result) {
                 ?>
             </tbody>
         </table>
+        <nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item">
+					<a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
+				</li>
+				<?php 
+				for($x=1;$x<=$total_halaman;$x++){
+					?> 
+					<li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
+					<?php
+				}
+				?>				
+				<li class="page-item">
+					<a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
+				</li>
+			</ul>
+		</nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 

@@ -67,7 +67,16 @@ $result2 = mysqli_query($connect, $sql);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required checked="checked">
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required 
+                            <?php
+                                if(isset($_REQUEST['transaction_type'])){
+                                    if(strlen($_REQUEST['transaction_type']) > 0 && strlen($_REQUEST['transaction_type']) == "TAMBAH"){
+                                        echo 'checked="checked"';
+                                        $_REQUEST['transaction_type'] = "";
+                                    }
+                                }
+                            ?>
+                            >
                             <label for="masuk">Masuk</label>
                             <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required>
                             <label for="keluar">Keluar</label>
