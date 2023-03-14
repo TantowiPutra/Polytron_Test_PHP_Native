@@ -25,27 +25,62 @@ $sql = "SELECT * FROM
 $counter = 0;
 $array_kalimat = array();
 
+if(isset($_REQUEST['session']) && $_REQUEST['session'] == "reset"){
+    $_SESSION['search_proof'] = "";
+    $_SESSION['transaction_date'] = "";
+    $_SESSION['search_location'] = "";
+    $_SESSION['search_item'] = "";
+}
+
 if(isset($_POST['search_proof']) && strlen($_POST['search_proof']) > 0){
     $counter++;
     $proof = $_POST['search_proof'];
+    $_SESSION['search_proof'] = $proof;
+    array_push($array_kalimat, " proof LIKE '%$proof%' ");
+}
+
+if(isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0){
+    $counter++;
+    $proof = $_SESSION['search_proof'];
     array_push($array_kalimat, " proof LIKE '%$proof%' ");
 }
 
 if(isset($_POST['transaction_date']) && strlen($_POST['transaction_date']) > 0){
     $counter++;
     $transaction_date = date("Y-m-d", strtotime($_POST['transaction_date']));
+    $_SESSION['transaction_date'] = $transaction_date;
+    array_push($array_kalimat, " transaction_time LIKE '%$transaction_date%' ");
+}
+
+if(isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0){
+    $counter++;
+    $transaction_date = $_SESSION['transaction_date'];
     array_push($array_kalimat, " transaction_time LIKE '%$transaction_date%' ");
 }
 
 if(isset($_POST['search_location']) && strlen($_POST['search_location']) > 0){
     $counter++;
     $location = $_POST['search_location'];
+    $_SESSION['search_location'] = $location;
+    array_push($array_kalimat, " location_code LIKE '%$location%' ");
+}
+
+if(isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) > 0){
+    $counter++;
+    $location = $_SESSION['search_location'];
     array_push($array_kalimat, " location_code LIKE '%$location%' ");
 }
 
 if(isset($_POST['search_item']) && strlen($_POST['search_item']) > 0){
     $counter++;
     $item = $_POST['search_item'];
+    $_SESSION['search_item'] = $item;
+    array_push($array_kalimat, " item_code LIKE '%$item%' ");
+}
+
+if(isset($_SESSION['search_item']) && strlen($_SESSION['search_item']) > 0){
+    $counter++;
+    $item = $_SESSION['search_item'];
     array_push($array_kalimat, " item_code LIKE '%$item%' ");
 }
 
@@ -60,8 +95,6 @@ for($i = 0; $i < $counter; $i++){
         $sql = $sql . " AND ";
     }
 }
-
-echo $sql;
 
 $result = mysqli_query($connect, $sql);
 
@@ -121,7 +154,8 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
                     <input type="text" name="search_item" id="search_item">
                 </div>
             </table>
-            <button type="submit" class="mt-3">CARI BUKTI</button>
+            <button type="submit" class="mt-3">CARI</button>
+            <a href="transaction_history.php?session=reset" style="margin-left: 20px;"><button type="button">RESET PENCARIAN</button></a>
         </form>
     </div>
 
