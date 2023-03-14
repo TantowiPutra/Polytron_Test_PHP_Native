@@ -15,7 +15,7 @@ format validasi tanggal dan input harus dalam dmY
 tambahkan approvement apabila melakukan penambahan produk baru
 !1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
 !1/2 (baru halaman transaction history dan masih error) tambahkan pagination
-jika salah input ataupun ketika sukses input, data pada form tidak hilang
+*jika salah input ataupun ketika sukses input, data pada form tidak hilang
 *error message dibuat position fixed agar tidak merubah tampilan form
 
 (Fixed) Bug insert data melewati validasi

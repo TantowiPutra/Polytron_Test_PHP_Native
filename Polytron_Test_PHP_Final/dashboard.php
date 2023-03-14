@@ -15,6 +15,7 @@ $result = mysqli_query($connect, $sql);
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
 
+
 // Mendapatkan total tambah
    $sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
    $sql_tambah_query = mysqli_query($connect, $sql_tambah);
@@ -77,10 +78,28 @@ $result2 = mysqli_query($connect, $sql);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()">
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()"
+                            <?php
+                                if(isset($_SESSION['transaction_type'])){
+                                    if($_SESSION['transaction_type'] == "TAMBAH"){
+                                        echo "checked";
+                                    }
+                                }
+                                $_SESSION['transaction_type'] = "";
+                            ?> 
+                            >
                             <label for="masuk">Masuk</label>
                             <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required
-                            onchange="setProof()">
+                            onchange="setProof()"
+                                <?php
+                                    if(isset($_SESSION['transaction_type'])){
+                                        if($_SESSION['transaction_type'] == "KURANG"){
+                                            echo "checked";
+                                        }
+                                    }
+                                    $_SESSION['transaction_type'] = "";
+                                ?> 
+                            >
                             <label for="keluar">Keluar</label>
                         </td>
                     </tr>
@@ -89,7 +108,14 @@ $result2 = mysqli_query($connect, $sql);
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" required placeholder="TAMBAH00" max="50" disabled>
+                            <input type="text" name="bukti" id="bukti" required placeholder="TAMBAH00" max="50" readonly
+                            <?php
+                                if(isset($_SESSION['proof'])){
+                                    echo "value=\"" . $_SESSION['proof'] . "\"";
+                                }
+                                $_SESSION['proof'] = "";
+                            ?> 
+                            >
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -101,7 +127,9 @@ $result2 = mysqli_query($connect, $sql);
                                 <?php
                                 while ($data = mysqli_fetch_array($result)) {
                                 ?>
-                                    <option value="<?php echo $data['id'] ?>"><?php echo $data['location_code'] ?></option>
+                                    <option value="<?php echo $data['id'] ?>">
+                                        <?php echo $data['location_code'] ?>
+                                    </option>
                                 <?php
                                 }
                                 ?>
@@ -113,7 +141,14 @@ $result2 = mysqli_query($connect, $sql);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50">
+                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50"
+                            <?php
+                                if(isset($_SESSION['item_code'])){
+                                    echo "value=\"" . $_SESSION['item_code'] . "\"";
+                                }
+                                $_SESSION['item_code'] = "";
+                            ?>  
+                            >
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) {
                                     echo $data['item_code'] ?>
@@ -127,7 +162,14 @@ $result2 = mysqli_query($connect, $sql);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50">
+                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50" 
+                            <?php
+                                if(isset($_SESSION['item_name'])){
+                                    echo "value=\"" . $_SESSION['item_name'] . "\"";
+                                }
+                                $_SESSION['item_name'] = "";
+                            ?>        
+                            >
                             <datalist id="itemname">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_name'] ?>">
@@ -140,7 +182,13 @@ $result2 = mysqli_query($connect, $sql);
                             Tgl Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required>
+                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required
+                            <?php
+                                if(isset($_SESSION['transaction_time'])){
+                                    echo "value=\"" . $_SESSION['transaction_time'] . "\"";
+                                }
+                                $_SESSION['transaction_time'] = "";
+                            ?> >
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -148,7 +196,14 @@ $result2 = mysqli_query($connect, $sql);
                             Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="9999999">
+                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="9999999"
+                            <?php
+                                if(isset($_SESSION['quantity'])){
+                                    echo "value=\"" . $_SESSION['quantity'] . "\"";
+                                }
+                                $_SESSION['quantity'] = "";
+                            ?> 
+                            >
                         </td>
                     </tr>
                 </tbody>

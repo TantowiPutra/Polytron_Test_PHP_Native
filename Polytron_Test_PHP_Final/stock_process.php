@@ -59,6 +59,7 @@ function redirect($message)
     $_SESSION['isInvalid'] = "$message";
     $_SESSION['transaction_type'] = "$transaction_type";
     $_SESSION['proof'] = "$proof";
+    $_SESSION['location'] = "$location";
     $_SESSION['item_code'] = "$item_code";
     $_SESSION['item_name'] = "$item_name";
     $_SESSION['transaction_time'] = "$transaction_time";
@@ -98,11 +99,6 @@ if ($transaction_type == "TAMBAH") {
         $date_db = date('Y-m-d', strtotime($transaction_time_db));
         $date_input = date('Y-m-d', strtotime($transaction_time));
         if ($date_input > $date_db) {
-            echo "Masuk sini <br>";
-            echo $date_input . "<br>";
-            echo $date_db . "<br>";
-
-            die();
             // Jika date input lebih besar dari date input data yang pernah dilakukan untuk lokasi tersebut 
             // dengan data produk yang sama, maka dapat input
 
