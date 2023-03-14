@@ -50,12 +50,24 @@ if (mysqli_num_rows($result) > 0) {
 // Tangkap user_id untuk pendataan setiap transaksi
 $user_id = $_SESSION['id'];
 
+
+// Redirect user apabila terdapat kesalahan pada input / notifikasi apapun
+function redirect($message)
+{
+    $_SESSION['isInvalid'] = "$message";
+    header('Location: dashboard.php');
+}
+
 if ($transaction_type == "TAMBAH") {
     // Cek apakah brang yang akan di input sudah ada sebelumnya atau belum
     $sql = "SELECT * 
                 FROM items WHERE item_code = '$item_code' 
                            AND item_name = '$item_name'
+                LIMIT 1;
         ";
+    $result = mysqli_query($connect, $sql);
+    $mysqli_assoc = mysqli_fetch_assoc($result);
+    $item_id = $mysqli_assoc['id'];
 
     $result = mysqli_query($connect, $sql);
     if (!$result) {
@@ -63,13 +75,12 @@ if ($transaction_type == "TAMBAH") {
     }
 
     if (mysqli_num_rows($result) > 0) { // Barang Terdaftar
-        echo "Here";
         // Cek tanggal terakhir produk yang sama pernah ditambah untuk lokasi tersebut
         $sql = "SELECT MAX(date_input) AS tanggal
                     FROM item_stocks 
                     WHERE 
                         FK_locationcode = '$location' AND
-                        FK_itemcode = '$item_code'
+                        FK_itemcode = '$item_id'
             ";
 
         $result = mysqli_query($connect, $sql);
@@ -78,19 +89,15 @@ if ($transaction_type == "TAMBAH") {
         $date_db = date('Y-m-d', strtotime($transaction_time_db));
         $date_input = date('Y-m-d', strtotime($transaction_time));
         if ($date_input > $date_db) {
+            echo "Masuk sini <br>";
+            echo $date_input . "<br>";
+            echo $date_db . "<br>";
+
+            die();
             // Jika date input lebih besar dari date input data yang pernah dilakukan untuk lokasi tersebut 
             // dengan data produk yang sama, maka dapat input
 
             // Query untuk mendapatkan id inputan
-            $sql = "SELECT * 
-                    FROM items WHERE item_code = '$item_code' 
-                               AND item_name = '$item_name'
-                    LIMIT 1;
-            ";
-            $result = mysqli_query($connect, $sql);
-            $mysqli_assoc = mysqli_fetch_assoc($result);
-            $item_id = $mysqli_assoc['id'];
-
             $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
                         VALUES('$location', '$item_id', '$quantity', '$transaction_time')
                 ";
@@ -108,11 +115,9 @@ if ($transaction_type == "TAMBAH") {
             if (!$result) {
                 echo "Query Gagal3";
             }
-            $_SESSION['isInvalid'] = "Sukses Menambah Stok!";
-            header('Location: dashboard.php');
+            redirect("Sukses Menambah Stok Produk!");
         } else {
-            $_SESSION['isInvalid'] = "Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)";
-            header('Location: dashboard.php');
+            redirect("Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)");
         }
     } else {
         $sql = "SELECT * 
@@ -122,8 +127,7 @@ if ($transaction_type == "TAMBAH") {
         $flag = true;
         if (mysqli_num_rows($result) > 0) {
             // Fail apabila salah satu dari nama produk ataupun id produk ada yang sama
-            $_SESSION['isInvalid'] = "Format Tidak Valid! Pastikan Penambahan Kode Produk Baru harus Unique!";
-            header('Location: dashboard.php');
+            redirect("Format Tidak Valid! Pastikan Penambahan Kode Produk Baru harus memiliki Kode Barang Unik! (Kode '$item_code' sudah terdaftar)");
         } else {
             // Karena unique, produk dapat masuk tanpa perlu melewati validasi
             // Query Insert ke tabel items
@@ -166,11 +170,9 @@ if ($transaction_type == "TAMBAH") {
             }
 
             if ($flag == true) {
-                $_SESSION['isInvalid'] = "Produk Baru Berhasil di Input!";
-                header('Location: dashboard.php');
+                redirect("Produk Baru Berhasil di Input!");
             } else {
-                $_SESSION['isInvalid'] = "Produk Gagal di Input! terdapat perubahan pada database!";
-                header('Location: dashboard.php');
+                redirect("Produk Gagal di Input! terdapat perubahan pada database!");
             }
         }
     }
@@ -282,14 +284,11 @@ if ($transaction_type == "TAMBAH") {
                 }
             }
 
-            $_SESSION['isInvalid'] = "Produk Berhasil Dikurangi!";
-            header('Location: dashboard.php');
+            redirect("Produk Berhasil Dikurangi!");
         } else {
-            $_SESSION['isInvalid'] = "Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)";
-            header('Location: dashboard.php');
+            redirect("Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)");
         }
     } else {
-        $_SESSION['isInvalid'] = "Barang yang diminta tidak tersedia atau stok tidak mencukupi. Sisa stok saat ini: " . $fetch_array['total_item'] . " " . 'Total Quantity Diminta: ' . $quantity;
-        header('Location: dashboard.php');
+        redirect("Barang yang diminta tidak tersedia atau stok tidak mencukupi. Sisa stok saat ini: " . $fetch_array['total_item'] . " " . 'Total Quantity Diminta: ' . $quantity);
     }
 }

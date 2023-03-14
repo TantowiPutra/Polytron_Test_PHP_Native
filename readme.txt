@@ -18,6 +18,8 @@ tambahkan pagination
 jika salah input ataupun ketika sukses input, data pada form tidak hilang
 *error message dibuat position fixed agar tidak merubah tampilan form
 
+- Bug insert data melewati validasi
+
 IMPORTANT: 
 menampilkan error yang jelas
 query dibuat lebih efektif
