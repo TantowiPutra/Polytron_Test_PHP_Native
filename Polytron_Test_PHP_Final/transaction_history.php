@@ -9,6 +9,7 @@ $password = $_SESSION['password'];
 
 require_once 'koneksi.php';
 
+
 // Tangkap Data Stock Product
 $sql = "SELECT * FROM
             transaction_history th 
@@ -20,16 +21,59 @@ $sql = "SELECT * FROM
                     ON th.FK_user = u.id
     ";
 
-if (isset($_POST['search_bukti'])) {
-    $search = addslashes($_POST['search_bukti']);
-    $sql = $sql . "WHERE proof LIKE '%$search%'";
-}   
+// Hitung ada berapa banyak field yang akan di search
+$counter = 0;
+$array_kalimat = array();
+
+if(isset($_POST['search_proof']) && strlen($_POST['search_proof']) > 0){
+    $counter++;
+    $proof = $_POST['search_proof'];
+    array_push($array_kalimat, " proof LIKE '%$proof%' ");
+}
+
+if(isset($_POST['transaction_date']) && strlen($_POST['transaction_date']) > 0){
+    $counter++;
+    $transaction_date = date("Y-m-d", strtotime($_POST['transaction_date']));
+    array_push($array_kalimat, " transaction_time LIKE '%$transaction_date%' ");
+}
+
+if(isset($_POST['search_location']) && strlen($_POST['search_location']) > 0){
+    $counter++;
+    $location = $_POST['search_location'];
+    array_push($array_kalimat, " location_code LIKE '%$location%' ");
+}
+
+if(isset($_POST['search_item']) && strlen($_POST['search_item']) > 0){
+    $counter++;
+    $item = $_POST['search_item'];
+    array_push($array_kalimat, " item_code LIKE '%$item%' ");
+}
+
+if($counter > 0){
+    $sql = $sql . "WHERE ";
+}
+
+for($i = 0; $i < $counter; $i++){
+    $sql = $sql . $array_kalimat[$i];
+
+    if($i < $counter - 1){
+        $sql = $sql . " AND ";
+    }
+}
+
+echo $sql;
 
 $result = mysqli_query($connect, $sql);
 
 if (!$result) {
     echo "Query Gagal";
 }
+
+$sql_bukti = "SELECT DISTINCT proof FROM transaction_history";
+$sql_lokasi = "SELECT * FROM location";
+
+$result_sql_bukti = mysqli_query($connect, $sql_bukti);
+$result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
 ?>
 
 <!DOCTYPE html>
@@ -56,8 +100,28 @@ if (!$result) {
 
     <div class="center mb-4" style="text-align: center;">
         <form action="transaction_history.php" method="POST">
-            <input type="text" name="search_bukti" id="search_bukti">
-            <button type="submit">CARI BUKTI</button>
+            <table>
+                <div class="mt-3">
+                    <label for="search_proof" style="margin-right: 8%; text-align: left;">Bukti</label>
+                    <input type="text" name="search_proof" id="search_proof">
+                </div>
+
+                <div class="mt-3">
+                    <label for="transaction_date" style="margin-right: 2%; text-align: left;">Tanggal Transaksi: </label>
+                    <input type="date" name="transaction_date" id="transaction_date">
+                </div>
+
+                <div class="mt-3">
+                    <label for="search_location" style="margin-right: 7.5%; text-align: left;">Lokasi</label>
+                    <input type="text" name="search_location" id="search_location">
+                </div>
+
+                <div class="mt-3">
+                    <label for="search_item" style="margin-right: 4.5%; text-align: left;">Kode Barang: </label>
+                    <input type="text" name="search_item" id="search_item">
+                </div>
+            </table>
+            <button type="submit" class="mt-3">CARI BUKTI</button>
         </form>
     </div>
 

@@ -128,7 +128,7 @@ $result2 = mysqli_query($connect, $sql);
                                 while ($data = mysqli_fetch_array($result)) {
                                 ?>
                                     <option value="<?php echo $data['id'] ?>">
-                                        <?php echo $data['location_code'] ?>
+                                            <?php echo $data['location_code'] ?>
                                     </option>
                                 <?php
                                 }
@@ -162,7 +162,7 @@ $result2 = mysqli_query($connect, $sql);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50" 
+                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50" 
                             <?php
                                 if(isset($_SESSION['item_name'])){
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";

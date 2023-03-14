@@ -3,7 +3,6 @@
 *field id menggunakan bigint dan atribute unsigned
 *column pada datase harus menggunakan bahasa yang konsisten
 *validasi kode bukti belum sesuai
-format validasi tanggal dan input harus dalam dmY
 *kode bukti terisi secara otomatis (ketika mengklik salah satu proses bukti)
 *nama produk tidak perlu unique
 *prog dibuat komplit (bukan inisial dari proses)
@@ -12,18 +11,21 @@ format validasi tanggal dan input harus dalam dmY
 *bug number format tidak boleh negatif
 *seluruh field secara default uppercase agar konsisten
 *tabel Stok Produk Total berubah mengikuti filter yang diberikan
-tambahkan approvement apabila melakukan penambahan produk baru
-!1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
-!1/2 (baru halaman transaction history dan masih error) tambahkan pagination
 *jika salah input ataupun ketika sukses input, data pada form tidak hilang
 *error message dibuat position fixed agar tidak merubah tampilan form
 
 (Fixed) Bug insert data melewati validasi
 (Fixed) Bug kode bukti tidak unique (tembus validasi)
 
+ON PROGRESS:
+format validasi tanggal dan input harus dalam dmY
+tambahkan approvement apabila melakukan penambahan produk baru
+!1/2 (halaman transaction history belum) tambahkan filter sesuai dengan kriteria soal
+!1/2 (baru halaman transaction history dan masih error) tambahkan pagination
+
 IMPORTANT: 
-menampilkan error yang jelas
-query dibuat lebih efektif
+*menampilkan error yang jelas
+*query dibuat lebih efektif
 
 list kata indo:
 1. bukti
