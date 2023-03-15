@@ -18,18 +18,46 @@ require_once 'koneksi.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Lokasi</title>
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .btn-yellow{
+        font-weight: 600!important;
+        font-size: 14px!important;
+        color: #000000;
+        background-color: #eaff00!important;
+        padding: 10px 30px!important;
+        border: solid #e2f200 2px;
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px!important;
+        border-radius: 50px!important;
+        transition : 1265ms!important;
+        transform: translateY(0)!important;
+        display: flex!important;
+        flex-direction: row!important;
+        align-items: center!important;
+        cursor: pointer!important;
+
+        }
+
+        .btn-yellow:hover{
+        transition : 1265ms!important;
+        padding: 10px 26px!important;
+        transform : translateY(-0px)!important;
+        background-color: #fff!important;
+        color: #ff8c00!important;
+        border: solid 2px #ff8c00!important;
+        }
+    </style>
 </head>
 
 <body>
     <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 40%; margin: auto;">
-        <a href="dashboard.php"><button style="padding: 10px;">DASHBOARD</button></a>
-        <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
-        <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
-        <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
+    <div style="display: flex; justify-content: space-between; max-width: 55%; margin: auto;">
+        <a style="text-decoration: none;" href="dashboard.php"><button style="padding: 10px;" class="btn-yellow">DASHBOARD</button></a>
+        <a style="text-decoration: none;" href="transaction_history.php"><button style="padding: 10px;" class="btn-yellow">CEK HISTORY TRANSAKSI</button></a>
+        <a style="text-decoration: none;" href="product_stock.php"><button style="padding: 10px;" class="btn-yellow">CEK STOK BARANG</button></a>
+        <a style="text-decoration: none;" href="logout.php"><button style="padding: 10px;" class="btn-yellow">LOGOUT</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
 
@@ -51,7 +79,7 @@ require_once 'koneksi.php';
                         Kode Lokasi:
                     </td>
                     <td style="border: none;">
-                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[G][B][J][0-9]{1,}">
+                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[Gg][Bb][Jj][0-9]{1,}">
                     </td>
                 </tr>
             </tbody>

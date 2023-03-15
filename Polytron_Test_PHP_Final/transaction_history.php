@@ -118,15 +118,44 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
     <title>Transaction History</title>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .btn-yellow{
+        font-weight: 600!important;
+        font-size: 14px!important;
+        color: #000000;
+        background-color: #eaff00!important;
+        padding: 10px 30px!important;
+        border: solid #e2f200 2px;
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px!important;
+        border-radius: 50px!important;
+        transition : 1265ms!important;
+        transform: translateY(0)!important;
+        display: flex!important;
+        flex-direction: row!important;
+        align-items: center!important;
+        cursor: pointer!important;
+
+        }
+
+        .btn-yellow:hover{
+        transition : 1265ms!important;
+        padding: 10px 26px!important;
+        transform : translateY(-0px)!important;
+        background-color: #fff!important;
+        color: #ff8c00!important;
+        border: solid 2px #ff8c00!important;
+        }
+    </style>
+    
 </head>
 
 <body>
     <h1 class="text-align-center mb-4">Transaction History</h1>
     <h3 class="text-align-center mb-4">Sejarah Transaksi</h3>
     <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
-        <a href="product_stock.php"><button style="padding: 10px;">CEK STOK BARANG</button></a>
-        <a href="dashboard.php"><button style="padding: 10px;">KEMBALI</button></a>
-        <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
+        <a href="product_stock.php"  style="text-decoration: none;"><button style="padding: 10px;" class="btn-yellow">CEK STOK BARANG</button></a>
+        <a href="dashboard.php" style="text-decoration: none;"><button style="padding: 10px;" class="btn-yellow">KEMBALI</button></a>
+        <a href="logout.php" style="text-decoration: none;"><button style="padding: 10px;" class="btn-yellow">LOGOUT</button></a>
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
 

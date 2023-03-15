@@ -102,15 +102,44 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
     <title>Product Stock</title>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <style>
+        .btn-yellow{
+        font-weight: 600!important;
+        font-size: 14px!important;
+        color: #000000;
+        background-color: #eaff00!important;
+        padding: 10px 30px!important;
+        border: solid #e2f200 2px;
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px!important;
+        border-radius: 50px!important;
+        transition : 1265ms!important;
+        transform: translateY(0)!important;
+        display: flex!important;
+        flex-direction: row!important;
+        align-items: center!important;
+        cursor: pointer!important;
+
+        }
+
+        .btn-yellow:hover{
+        transition : 1265ms!important;
+        padding: 10px 26px!important;
+        transform : translateY(-0px)!important;
+        background-color: #fff!important;
+        color: #ff8c00!important;
+        border: solid 2px #ff8c00!important;
+        }
+    </style>
 </head>
 
 <body>
     <h1 class="text-align-center mb-4">Product Stock</h1>
     <h3 class="text-align-center mb-4">Stok Produk</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 30%; margin: auto;">
-        <a href="transaction_history.php"><button style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
-        <a href="dashboard.php"><button style="padding: 10px;">KEMBALI</button></a>
-        <a href="logout.php"><button style="padding: 10px;">LOGOUT</button></a>
+    <div style="display: flex; justify-content: space-between; max-width: 35%; margin: auto;">
+        <a style="text-decoration: none;"href="transaction_history.php"><button style="padding: 10px;" class="btn-yellow">CEK HISTORY TRANSAKSI</button></a>
+        <a style="text-decoration: none;"href="dashboard.php"><button style="padding: 10px;" class="btn-yellow">KEMBALI</button></a>
+        <a style="text-decoration: none;"href="logout.php"><button style="padding: 10px;" class="btn-yellow">LOGOUT</button></a>
     </div>
 
     <hr style="margin-bottom: 30px; margin-top: 30px;">

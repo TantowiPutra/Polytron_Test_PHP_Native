@@ -23,3 +23,29 @@
 .fw-red{
     color: red;
 }
+
+.btn-yellow{
+    font-weight: 600!important;
+    font-size: 14px!important;
+    color: #000000;
+    background-color: #eaff00!important;
+    padding: 10px 30px!important;
+    border: solid #e2f200 2px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px!important;
+    border-radius: 50px!important;
+    transition : 1265ms!important;
+    transform: translateY(0)!important;
+    display: flex!important;
+    flex-direction: row!important;
+    align-items: center!important;
+    cursor: pointer!important;    
+}
+    
+.btn-yellow:hover{
+transition : 1265ms!important;
+padding: 10px 26px!important;
+transform : translateY(-0px)!important;
+background-color: #fff!important;
+color: #ff8c00!important;
+border: solid 2px #ff8c00!important;
+}
