@@ -164,38 +164,42 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
             <table>
                 <div class="mt-3">
                     <label for="search_proof" style="margin-right: 8%; text-align: left;">Bukti</label>
-                    <input type="text" name="search_proof" id="search_proof" <?php
-                                                                                if (isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0) {
-                                                                                    echo "value=\"" . $_SESSION['search_proof'] . "\"";
-                                                                                }
-                                                                                ?>>
+                    <input type="text" name="search_proof" id="search_proof" 
+                    <?php
+                        if (isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0) {
+                            echo "value=\"" . $_SESSION['search_proof'] . "\"";
+                        }
+                    ?>>
                 </div>
 
                 <div class="mt-3">
                     <label for="transaction_date" style="margin-right: 2%; text-align: left;">Tanggal Transaksi: </label>
-                    <input type="text" name="transaction_date" id="transaction_date" <?php
-                                                                                        if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0) {
-                                                                                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['transaction_date'])) . "\"";
-                                                                                        }
-                                                                                        ?>>
+                    <input type="text" name="transaction_date" id="transaction_date" 
+                    <?php
+                        if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0) {
+                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['transaction_date'])) . "\"";
+                        }
+                    ?>>
                 </div>
 
                 <div class="mt-3">
                     <label for="search_location" style="margin-right: 7.5%; text-align: left;">Lokasi</label>
-                    <input type="text" name="search_location" id="search_location" <?php
-                                                                                    if (isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) > 0) {
-                                                                                        echo "value=\"" . $_SESSION['search_location'] . "\"";
-                                                                                    }
-                                                                                    ?>>
+                    <input type="text" name="search_location" id="search_location" 
+                    <?php
+                        if (isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) > 0) {
+                            echo "value=\"" . $_SESSION['search_location'] . "\"";
+                        }
+                    ?>>
                 </div>
 
                 <div class="mt-3">
                     <label for="search_item" style="margin-right: 4.5%; text-align: left;">Kode Barang: </label>
-                    <input type="text" name="search_item" id="search_item" <?php
-                                                                            if (isset($_SESSION['search_item']) && strlen($_SESSION['search_item']) > 0) {
-                                                                                echo "value=\"" . $_SESSION['search_item'] . "\"";
-                                                                            }
-                                                                            ?>>
+                    <input type="text" name="search_item" id="search_item" 
+                    <?php
+                        if (isset($_SESSION['search_item']) && strlen($_SESSION['search_item']) > 0) {
+                            echo "value=\"" . $_SESSION['search_item'] . "\"";
+                        }
+                    ?>>
                 </div>
             </table>
             <button type="submit" class="mt-3">CARI</button>
