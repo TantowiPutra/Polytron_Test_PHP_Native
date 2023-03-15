@@ -133,23 +133,26 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()" <?php
-                                                                                                                                if (isset($_SESSION['transaction_type'])) {
-                                                                                                                                    if ($_SESSION['transaction_type'] == "TAMBAH") {
-                                                                                                                                        echo "checked";
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                                $_SESSION['transaction_type'] = "";
-                                                                                                                                ?>>
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()" 
+                            <?php
+                                if (isset($_SESSION['transaction_type'])) {
+                                    if ($_SESSION['transaction_type'] == "TAMBAH") {
+                                        echo "checked";
+                                    }
+                                }
+                                $_SESSION['transaction_type'] = "";
+                            ?>>
+
                             <label for="masuk">Masuk</label>
-                            <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required onchange="setProof()" <?php
-                                                                                                                                if (isset($_SESSION['transaction_type'])) {
-                                                                                                                                    if ($_SESSION['transaction_type'] == "KURANG") {
-                                                                                                                                        echo "checked";
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                                $_SESSION['transaction_type'] = "";
-                                                                                                                                ?>>
+                            <input type="radio" name="tipe_transaksi" id="keluar" value="KURANG" required onchange="setProof()" 
+                            <?php
+                                if (isset($_SESSION['transaction_type'])) {
+                                    if ($_SESSION['transaction_type'] == "KURANG") {
+                                        echo "checked";
+                                    }
+                                }
+                                $_SESSION['transaction_type'] = "";
+                            ?>>
                             <label for="keluar">Keluar</label>
                         </td>
                     </tr>
@@ -158,12 +161,13 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Bukti:
                         </td>
                         <td style="border: none;">
-                            <input type="text" name="bukti" id="bukti" required placeholder="TAMBAH00" max="50" readonly <?php
-                                                                                                                            if (isset($_SESSION['proof'])) {
-                                                                                                                                echo "value=\"" . $_SESSION['proof'] . "\"";
-                                                                                                                            }
-                                                                                                                            $_SESSION['proof'] = "";
-                                                                                                                            ?>>
+                            <input type="text" name="bukti" id="bukti" required placeholder="TAMBAH00" max="50" readonly 
+                            <?php
+                                if (isset($_SESSION['proof'])) {
+                                    echo "value=\"" . $_SESSION['proof'] . "\"";
+                                }
+                                $_SESSION['proof'] = "";
+                            ?>>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -189,12 +193,13 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[Pp][Ss]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()" style="text-transform:uppercase" <?php
-                                                                                                                                                                                                                        if (isset($_SESSION['item_code'])) {
-                                                                                                                                                                                                                            echo "value=\"" . $_SESSION['item_code'] . "\"";
-                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                        $_SESSION['item_code'] = "";
-                                                                                                                                                                                                                        ?>>
+                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[Pp][Ss]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()" style="text-transform:uppercase" 
+                            <?php
+                                if (isset($_SESSION['item_code'])) {
+                                    echo "value=\"" . $_SESSION['item_code'] . "\"";
+                                }
+                                $_SESSION['item_code'] = "";
+                            ?>>
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) {
                                     echo $data['item_code'] ?>
@@ -208,12 +213,13 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" maxlength="50" style="text-transform:uppercase" <?php
-                                                                                                                                                                                            if (isset($_SESSION['item_name'])) {
-                                                                                                                                                                                                echo "value=\"" . $_SESSION['item_name'] . "\"";
-                                                                                                                                                                                            }
-                                                                                                                                                                                            $_SESSION['item_name'] = "";
-                                                                                                                                                                                            ?>>
+                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" maxlength="50" style="text-transform:uppercase" 
+                            <?php
+                                if (isset($_SESSION['item_name'])) {
+                                    echo "value=\"" . $_SESSION['item_name'] . "\"";
+                                }
+                                $_SESSION['item_name'] = "";
+                            ?>>
                             <datalist id="itemname">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_name'] ?>">
@@ -226,12 +232,13 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Tgl Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required <?php
-                                                                                                                            if (isset($_SESSION['transaction_time'])) {
-                                                                                                                                echo "value=\"" . $_SESSION['transaction_time'] . "\"";
-                                                                                                                            }
-                                                                                                                            $_SESSION['transaction_time'] = "";
-                                                                                                                            ?>>
+                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required 
+                            <?php
+                                if (isset($_SESSION['transaction_time'])) {
+                                    echo "value=\"" . $_SESSION['transaction_time'] . "\"";
+                                }
+                                $_SESSION['transaction_time'] = "";
+                            ?>>
                         </td>
                     </tr>
                     <tr style="border: none;">
@@ -239,12 +246,13 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Quantity:
                         </td>
                         <td style="border: none;">
-                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="9999999" <?php
-                                                                                                                                if (isset($_SESSION['quantity'])) {
-                                                                                                                                    echo "value=\"" . $_SESSION['quantity'] . "\"";
-                                                                                                                                }
-                                                                                                                                $_SESSION['quantity'] = "";
-                                                                                                                                ?>>
+                            <input type="number" name="quantity" id="quantity" min="1" required placeholder="10" max="9999999" 
+                        <?php
+                            if (isset($_SESSION['quantity'])) {
+                            echo "value=\"" . $_SESSION['quantity'] . "\"";
+                            }
+                            $_SESSION['quantity'] = "";
+                        ?>>
                         </td>
                     </tr>
                 </tbody>

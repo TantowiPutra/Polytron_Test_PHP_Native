@@ -38,19 +38,19 @@ $sql2 = "SELECT FK_locationcode,
 $search_array = array();
 $counter = 0;
 
-if(isset($_POST['search_location']) && strlen($_POST['search_location'])){
+if (isset($_POST['search_location']) && strlen($_POST['search_location'])) {
     $location = $_POST['search_location'];
     array_push($search_array, " location_code = '$location' ");
     $counter++;
 }
 
-if(isset($_POST['search_item_code']) && strlen($_POST['search_item_code'])){
+if (isset($_POST['search_item_code']) && strlen($_POST['search_item_code'])) {
     $item_code = $_POST['search_item_code'];
     array_push($search_array, " item_code = '$item_code' ");
     $counter++;
 }
 
-if(isset($_POST['start_date']) && strlen($_POST['start_date'])){
+if (isset($_POST['start_date']) && strlen($_POST['start_date'])) {
     $_SESSION['start_date'] = $_POST['start_date'];
     $_SESSION['end_date'] = $_POST['end_date'];
     $start_date = date("Y-m-d", strtotime($_POST['start_date']));
@@ -59,17 +59,16 @@ if(isset($_POST['start_date']) && strlen($_POST['start_date'])){
     $counter++;
 }
 
-if($counter > 0)
-{
+if ($counter > 0) {
     $sql = $sql . " WHERE ";
     $sql2 = $sql2 . " WHERE ";
 }
 
-for($i = 0; $i < $counter; $i ++){
+for ($i = 0; $i < $counter; $i++) {
     $sql = $sql . $search_array[$i];
     $sql2 = $sql2 . $search_array[$i];
 
-    if($i != $counter - 1){
+    if ($i != $counter - 1) {
         $sql = $sql . " AND ";
         $sql2 = $sql2 . " AND ";
     }
