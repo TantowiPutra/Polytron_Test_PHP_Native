@@ -16,13 +16,13 @@
 *tambahkan filter sesuai dengan kriteria soal
 *tambahkan pagination
 *nama produk terisi otomatis ketika melakukan seleksi pada kode item
+*tambahkan approvement apabila melakukan penambahan produk baru
 
 (Fixed) Bug insert data melewati validasi
 (Fixed) Bug kode bukti tidak unique (tembus validasi)
 
 ON PROGRESS:
 (1/2, halaman transaction_history) format validasi tanggal dan input harus dalam dmY
-tambahkan approvement apabila melakukan penambahan produk baru
 
 IMPORTANT: 
 *menampilkan error yang jelas

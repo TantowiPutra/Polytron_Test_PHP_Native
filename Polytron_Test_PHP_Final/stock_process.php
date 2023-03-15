@@ -136,49 +136,16 @@ if ($transaction_type == "TAMBAH") {
         } else {
             // Karena unique, produk dapat masuk tanpa perlu melewati validasi
             // Query Insert ke tabel items
-            $sql = "INSERT INTO items(item_code, item_name)
-                        VALUES('$item_code', '$item_name')
-                ";
-            $result = mysqli_query($connect, $sql);
-            if (!$result) {
-                echo "Query Gagal1";
-                $flag = false;
-            }
+            $_SESSION['new_item_code'] = $item_code;
+            $_SESSION['new_item_name'] = $item_name;
+            $_SESSION['new_proof'] = $proof;
+            $_SESSION['new_location'] = $location;
+            $_SESSION['new_transaction_time'] = $transaction_time;
+            $_SESSION['new_transaction_type'] = $transaction_type;
+            $_SESSION['new_quantity'] = $quantity;
 
-            $sql = "SELECT * 
-                    FROM items WHERE item_code = '$item_code' 
-                    LIMIT 1;
-            ";
-            $result = mysqli_query($connect, $sql);
-            $mysqli_assoc = mysqli_fetch_assoc($result);
-            $item_id = $mysqli_assoc['id'];
-
-            // Query insert ke tabel item stocks
-            $sql = "INSERT INTO item_stocks(FK_locationcode, FK_itemcode, balance, date_input)
-                        VALUES('$location', '$item_id', '$quantity', '$transaction_time')
-                ";
-            $result = mysqli_query($connect, $sql);
-            if (!$result) {
-                echo "Query Gagal2";
-                $flag = false;
-            }
-
-            // Insert ke Transaction History
-            $sql = "INSERT INTO transaction_history(proof, FK_locationcode, transaction_time, FK_itemcode, date_input,   quantity, prog, FK_user)
-                VALUES('$proof', '$location', '$transaction_time', '$item_id', '$transaction_time', '$quantity', '$transaction_type', '$user_id')
-                ";
-
-            $result = mysqli_query($connect, $sql);
-            if (!$result) {
-                echo "Query Gagal3";
-                $flag = false;
-            }
-
-            if ($flag == true) {
-                redirect("Produk Baru Berhasil di Input!");
-            } else {
-                redirect("Produk Gagal di Input! terdapat perubahan pada database!");
-            }
+            header("Location: confirmation.php");
+            die();
         }
     }
 } else if ($transaction_type == "KURANG") { // Melakukan pengurangan jumlah produk yang sudah ada dan memiliki stok yang tersisa
