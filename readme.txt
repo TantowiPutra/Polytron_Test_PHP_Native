@@ -1,4 +1,5 @@
 Revisi: 13-03-2023 (Done)
+==========================
 *updated_at dan created_at menggunakan DATETIME
 *primary key set menggunakan id
 *field id menggunakan bigint dan atribute unsigned
@@ -24,8 +25,9 @@ Revisi: 13-03-2023 (Done)
 (Fixed) Bug kode bukti tidak unique (tembus validasi)
 
 Revisi: 15-03-2023
+====================
 - Pencatatan waktu secara real-time
-- Kalau batal data input produk baru nya tidak hilang
+*Kalau batal data input produk baru nya tidak hilang
 - Fitur input barang baru dipisah, tidak pada form yang sama untuk menambah stok barang
 *Tambahkan searching menggunakan tanggal pada halaman Product Stock
 *Fix notification (masih belum sesuai)

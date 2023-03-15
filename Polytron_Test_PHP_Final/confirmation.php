@@ -19,11 +19,12 @@ $sql = "SELECT * FROM locations WHERE id = '$location' LIMIT 1;";
 $execute_query = mysqli_query($connect, $sql);
 $result = mysqli_fetch_assoc($execute_query);
 
-function redirect($message)
+function redirect()
 {
     global $transaction_type, $proof, $location, $item_code, $item_name, $transaction_time, $quantity;
 
-    $_SESSION['isInvalid'] = "$message";
+    $_SESSION['isSuccess'] = "F";
+    $_SESSION['isInvalid'] = "Penambahan Produk Baru Telah Dibatalkan!";
     $_SESSION['transaction_type'] = "$transaction_type";
     $_SESSION['proof'] = "$proof";
     $_SESSION['location'] = "$location";
@@ -83,6 +84,8 @@ if (isset($_REQUEST['input']) && $_REQUEST['input'] == "true") {
     } else {
         redirect("Produk Gagal di Input! terdapat perubahan pada database!");
     }
+}else if (isset($_REQUEST['input']) && $_REQUEST['input'] == "false"){
+    redirect();
 }
 ?>
 
@@ -143,7 +146,7 @@ if (isset($_REQUEST['input']) && $_REQUEST['input'] == "true") {
                 </tbody>
             </table>
             </p>
-            <a href="dashboard.php" class="btn btn-primary">BATAL</a>
+            <a href="confirmation.php?input=false" class="btn btn-primary">BATAL</a>
             <a href="confirmation.php?input=true" class="btn btn-primary">TAMBAH</a>
         </div>
     </div>
