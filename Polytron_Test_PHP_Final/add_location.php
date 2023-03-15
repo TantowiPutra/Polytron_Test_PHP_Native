@@ -20,6 +20,7 @@ require_once 'koneksi.php';
     <title>Tambah Lokasi</title>
     <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         .btn-yellow{
         font-weight: 600!important;
@@ -61,7 +62,7 @@ require_once 'koneksi.php';
     </div>
     <hr style="margin-bottom: 30px; margin-top: 30px;">
 
-    <form action="validate_lokasi.php" method="POST">
+    <form action="validate_lokasi.php" method="POST" data-aos="fade-up" data-aos-duration="1800">
         <div style="
             border: 1px solid black;
             max-width: fit-content;
@@ -89,6 +90,10 @@ require_once 'koneksi.php';
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>

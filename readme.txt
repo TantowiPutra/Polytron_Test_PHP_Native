@@ -22,7 +22,7 @@
 (Fixed) Bug kode bukti tidak unique (tembus validasi)
 
 ON PROGRESS:
-(1/2, halaman transaction_history) format validasi tanggal dan input harus dalam dmY
+(1/2, halaman transaction_history baru jadi) format validasi tanggal dan input harus dalam dmY
 
 IMPORTANT: 
 *menampilkan error yang jelas

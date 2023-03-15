@@ -23,6 +23,10 @@ $result2 = mysqli_query($connect, $sql);
    $sql_kurang = "SELECT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
    $sql_kurang_query = mysqli_query($connect, $sql_kurang);
    $sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
+
+// Mendapatkan data nama admin
+$sql_user = "SELECT * FROM users";
+$execute_user = mysqli_query($connect, $sql_user);
 ?>
 
 <script>
@@ -45,6 +49,7 @@ $result2 = mysqli_query($connect, $sql);
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="/Polytron_Test_PHP_Final/css/dashboard.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         .btn-yellow{
         font-weight: 600!important;
@@ -78,7 +83,10 @@ $result2 = mysqli_query($connect, $sql);
 <body>
     <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 50%; margin: auto;">
+    <div style="display: flex; justify-content: space-between; max-width: 70%; margin: auto;">
+        <button type="button" class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            DAFTAR ADMIN
+        </button>
         <a style="text-decoration: none;" href="add_location.php"><button class="btn-yellow" style="padding: 10px;">TAMBAH LOKASI</button></a>
         <a style="text-decoration: none;" href="transaction_history.php"><button class="btn-yellow" style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a style="text-decoration: none;" href="product_stock.php"><button class="btn-yellow" style="padding: 10px;">CEK STOK BARANG</button></a>
@@ -99,7 +107,7 @@ $result2 = mysqli_query($connect, $sql);
     $_SESSION['isInvalid'] = "";
     ?>
 
-    <form action="stock_process.php" method="POST">
+    <form action="stock_process.php" method="POST" data-aos="fade-up" data-aos-duration="1500">
         <div style="
             border: 1px solid black;
             max-width: fit-content;
@@ -280,6 +288,47 @@ $result2 = mysqli_query($connect, $sql);
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel"><b>Daftar Admin Stock</b></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Tanggal Bergabung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($data = mysqli_fetch_array($execute_user)) {?>
+                        <tr>
+                            <td><?php echo $data['username']?></td>
+                            <td><?php echo $data['address']?></td>
+                            <td><?php echo $data['gender']?></td>
+                            <td><?php echo $data['created_at']?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
 </body>
 
 </html>

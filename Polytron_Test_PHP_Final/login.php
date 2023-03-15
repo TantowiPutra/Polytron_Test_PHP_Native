@@ -46,10 +46,11 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="center card shadow center fit-content" style="margin-top: 10%; padding: 50px;">
+    <div class="center card shadow center fit-content" style="margin-top: 10%; padding: 50px;" data-aos="fade-in" data-aos-duration="2500">
         <h1><i>Welcome to Polytron Product Management!</i></h1>
         <h2 class="text-align-center fw-normal mb-4 mt-4">Login page</h2>
         <?php
@@ -87,6 +88,10 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>
