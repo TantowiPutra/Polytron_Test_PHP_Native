@@ -15,14 +15,14 @@
 *error message dibuat position fixed agar tidak merubah tampilan form
 *tambahkan filter sesuai dengan kriteria soal
 *tambahkan pagination
+*nama produk terisi otomatis ketika melakukan seleksi pada kode item
 
 (Fixed) Bug insert data melewati validasi
 (Fixed) Bug kode bukti tidak unique (tembus validasi)
 
 ON PROGRESS:
-format validasi tanggal dan input harus dalam dmY
+(1/2, halaman transaction_history) format validasi tanggal dan input harus dalam dmY
 tambahkan approvement apabila melakukan penambahan produk baru
-nama produk terisi otomatis ketika melakukan seleksi pada kode item
 
 IMPORTANT: 
 *menampilkan error yang jelas

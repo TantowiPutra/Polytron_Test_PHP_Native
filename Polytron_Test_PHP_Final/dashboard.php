@@ -14,8 +14,6 @@ $result = mysqli_query($connect, $sql);
 
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
-
-
 // Mendapatkan total tambah
    $sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
    $sql_tambah_query = mysqli_query($connect, $sql_tambah);
@@ -26,6 +24,16 @@ $result2 = mysqli_query($connect, $sql);
    $sql_kurang_query = mysqli_query($connect, $sql_kurang);
    $sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
 ?>
+
+<script>
+    const item_code = [];
+    const item_name = [];
+
+    <?php while($data = mysqli_fetch_array($result2)) {?>
+        item_code.push("<?php echo $data['item_code']?>");
+        item_name.push("<?php echo $data['item_name']?>");
+    <?php } ?>
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +149,7 @@ $result2 = mysqli_query($connect, $sql);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50"
+                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()"
                             <?php
                                 if(isset($_SESSION['item_code'])){
                                     echo "value=\"" . $_SESSION['item_code'] . "\"";
@@ -216,12 +224,28 @@ $result2 = mysqli_query($connect, $sql);
     </form>
 
     <script>
-        function setProof() {
+        function setProof() 
+        {
             if (document.getElementById('masuk').checked || document.getElementById('keluar').checked) {
                 if (document.getElementById('masuk').checked) {
                     document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $sql_tambah_fetch_assoc['total_tambah'] + 1; ?>");
                 } else if(document.getElementById('keluar').checked){
                     document.getElementById('bukti').value = "KURANG0".concat("<?php echo $sql_kurang_fetch_assoc['total_kurang'] + 1; ?>");
+                }
+            }
+        }
+    </script>
+
+    <script>
+
+        function findItemName()
+        {
+            let item_code_find = document.getElementById("kodebarang1").value;
+            for(let i = 0; i < item_code.length; i++)
+            {   
+                if(item_code_find == item_code[i])
+                {
+                    document.getElementById('namabarang').value = item_name[i];
                 }
             }
         }

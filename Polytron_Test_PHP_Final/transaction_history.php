@@ -9,7 +9,6 @@ $password = $_SESSION['password'];
 
 require_once 'koneksi.php';
 
-
 // Tangkap Data Stock Product
 $sql = "SELECT * FROM
             transaction_history th 
@@ -136,22 +135,46 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
             <table>
                 <div class="mt-3">
                     <label for="search_proof" style="margin-right: 8%; text-align: left;">Bukti</label>
-                    <input type="text" name="search_proof" id="search_proof">
+                    <input type="text" name="search_proof" id="search_proof"
+                    <?php
+                        if(isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0){
+                            echo "value=\"" . $_SESSION['search_proof'] . "\"";
+                        }
+                    ?>
+                    >
                 </div>
 
                 <div class="mt-3">
                     <label for="transaction_date" style="margin-right: 2%; text-align: left;">Tanggal Transaksi: </label>
-                    <input type="date" name="transaction_date" id="transaction_date">
+                    <input type="text" name="transaction_date" id="transaction_date"
+                    <?php
+                        if(isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0){
+                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['transaction_date'])) . "\"";
+                        }
+                    ?>
+                    >
                 </div>
 
                 <div class="mt-3">
                     <label for="search_location" style="margin-right: 7.5%; text-align: left;">Lokasi</label>
-                    <input type="text" name="search_location" id="search_location">
+                    <input type="text" name="search_location" id="search_location"
+                    <?php
+                        if(isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) > 0){
+                            echo "value=\"" . $_SESSION['search_location'] . "\"";
+                        }
+                    ?>
+                    >
                 </div>
 
                 <div class="mt-3">
                     <label for="search_item" style="margin-right: 4.5%; text-align: left;">Kode Barang: </label>
-                    <input type="text" name="search_item" id="search_item">
+                    <input type="text" name="search_item" id="search_item"
+                    <?php
+                        if(isset($_SESSION['search_item']) && strlen($_SESSION['search_item']) > 0){
+                            echo "value=\"" . $_SESSION['search_item'] . "\"";
+                        }
+                    ?>
+                    >
                 </div>
             </table>
             <button type="submit" class="mt-3">CARI</button>
@@ -221,7 +244,7 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
                         <td style="text-align: right;"><?php echo number_format(($prog == "KURANG") ? "-$quantity" : "$quantity") ?></td>
                         <td>
                             <?php
-                            if ($prog == "T") {
+                            if ($prog == "TAMBAH") {
                                 echo "TAMBAH";
                             } else {
                                 echo "KURANG";
@@ -254,7 +277,21 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
 		</nav>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-
+    <link type="text/css" href=
+"https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        rel="stylesheet" />
+    <script type="text/javascript" 
+        src="https://code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src=
+        "https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+    </script>
+    <script type="text/javascript">
+            $(function () {
+                $("#transaction_date").datepicker({ 
+                    dateFormat: 'dd-mm-yy' 
+                });
+            });
+    </script>
 </body>
-
 </html>
