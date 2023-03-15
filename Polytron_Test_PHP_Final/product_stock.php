@@ -35,40 +35,44 @@ $sql2 = "SELECT FK_locationcode,
                     ON ist.FK_itemcode = i.id 
     ";
 
-$isAlready = false;
-// Query untuk search
-if (isset($_POST['search_location'])) {
-    if ($_POST['search_location'] != null) {
-        $search = $_POST['search_location'];
+$search_array = array();
+$counter = 0;
 
-        $sql = $sql . "WHERE location_code = '$search'";
-        $sql2 = $sql2 . "WHERE location_code = '$search'";
-    }
-
-    if (isset($_POST['search_item_code'])) {
-        if ($_POST['search_item_code'] != null) {
-            $search = $_POST['search_item_code'];
-
-            $sql = $sql . "AND item_code = '$search'";
-            $sql2 = $sql2 . "AND item_code = '$search'";
-            $isAlready = true;
-        }
-    }
+if(isset($_POST['search_location']) && strlen($_POST['search_location'])){
+    $location = $_POST['search_location'];
+    array_push($search_array, " location_code = '$location' ");
+    $counter++;
 }
 
-if ($isAlready == false) {
-    if (isset($_POST['search_item_code'])) {
-        if ($_POST['search_item_code'] != null) {
-            $search = $_POST['search_item_code'];
-
-            $sql = $sql . "WHERE item_code = '$search'";
-            $sql2 = $sql2 . "WHERE item_code = '$search'";
-        }
-    }
+if(isset($_POST['search_item_code']) && strlen($_POST['search_item_code'])){
+    $item_code = $_POST['search_item_code'];
+    array_push($search_array, " item_code = '$item_code' ");
+    $counter++;
 }
 
-if (isset($_POST['search_item_code']) || isset($_POST['search_location'])) {
-    $sql = $sql . "AND balance > '0'";
+if(isset($_POST['start_date']) && strlen($_POST['start_date'])){
+    $_SESSION['start_date'] = $_POST['start_date'];
+    $_SESSION['end_date'] = $_POST['end_date'];
+    $start_date = date("Y-m-d", strtotime($_POST['start_date']));
+    $end_date = date("Y-m-d", strtotime($_POST['end_date']));
+    array_push($search_array, " (date_input BETWEEN '$start_date' AND '$end_date 23:59:59') ");
+    $counter++;
+}
+
+if($counter > 0)
+{
+    $sql = $sql . " WHERE ";
+    $sql2 = $sql2 . " WHERE ";
+}
+
+for($i = 0; $i < $counter; $i ++){
+    $sql = $sql . $search_array[$i];
+    $sql2 = $sql2 . $search_array[$i];
+
+    if($i != $counter - 1){
+        $sql = $sql . " AND ";
+        $sql2 = $sql2 . " AND ";
+    }
 }
 
 $sql = $sql . "ORDER BY i.item_name, ist.date_input ASC";
@@ -104,31 +108,31 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <style>
-        .btn-yellow{
-        font-weight: 600!important;
-        font-size: 14px!important;
-        color: #000000;
-        background-color: #eaff00!important;
-        padding: 10px 30px!important;
-        border: solid #e2f200 2px;
-        box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px!important;
-        border-radius: 50px!important;
-        transition : 1265ms!important;
-        transform: translateY(0)!important;
-        display: flex!important;
-        flex-direction: row!important;
-        align-items: center!important;
-        cursor: pointer!important;
+        .btn-yellow {
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            color: #000000;
+            background-color: #eaff00 !important;
+            padding: 10px 30px !important;
+            border: solid #e2f200 2px;
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px !important;
+            border-radius: 50px !important;
+            transition: 1265ms !important;
+            transform: translateY(0) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            cursor: pointer !important;
 
         }
 
-        .btn-yellow:hover{
-        transition : 1265ms!important;
-        padding: 10px 26px!important;
-        transform : translateY(-0px)!important;
-        background-color: #fff!important;
-        color: #ff8c00!important;
-        border: solid 2px #ff8c00!important;
+        .btn-yellow:hover {
+            transition: 1265ms !important;
+            padding: 10px 26px !important;
+            transform: translateY(-0px) !important;
+            background-color: #fff !important;
+            color: #ff8c00 !important;
+            border: solid 2px #ff8c00 !important;
         }
     </style>
 </head>
@@ -137,9 +141,9 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
     <h1 class="text-align-center mb-4">Product Stock</h1>
     <h3 class="text-align-center mb-4">Stok Produk</h3>
     <div style="display: flex; justify-content: space-between; max-width: 35%; margin: auto;">
-        <a style="text-decoration: none;"href="transaction_history.php"><button style="padding: 10px;" class="btn-yellow">CEK HISTORY TRANSAKSI</button></a>
-        <a style="text-decoration: none;"href="dashboard.php"><button style="padding: 10px;" class="btn-yellow">KEMBALI</button></a>
-        <a style="text-decoration: none;"href="logout.php"><button style="padding: 10px;" class="btn-yellow">LOGOUT</button></a>
+        <a style="text-decoration: none;" href="transaction_history.php"><button style="padding: 10px;" class="btn-yellow">CEK HISTORY TRANSAKSI</button></a>
+        <a style="text-decoration: none;" href="dashboard.php"><button style="padding: 10px;" class="btn-yellow">KEMBALI</button></a>
+        <a style="text-decoration: none;" href="logout.php"><button style="padding: 10px;" class="btn-yellow">LOGOUT</button></a>
     </div>
 
     <hr style="margin-bottom: 30px; margin-top: 30px;">
@@ -160,7 +164,7 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
             </div>
             <div class="mt-3">
                 <label for="search_location">Cari Kode Barang: </label>
-                <select name="search_item_code" id="search_item_coded">
+                <select name="search_item_code" id="search_item_code">
                     <option value="">Search All</option>
                     <?php
                     while ($data = mysqli_fetch_array($search_result_code)) {
@@ -170,6 +174,12 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
                     }
                     ?>
                 </select>
+            </div>
+            <div class="mt-3">
+                <label for="search_location">Range Tanggal: </label>
+                <input type="text" name="start_date" id="start_date">
+                <span>~</span>
+                <input type="text" name="end_date" id="end_date">
             </div>
             <button type="submit" class="mt-3">SUBMIT</button>
         </form>
@@ -225,6 +235,38 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
             </tbody>
         </table>
     </div>
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script>
+        const form = document.querySelector('form');
+        const field1 = document.getElementById('start_date');
+        const field2 = document.getElementById('end_date');
+        form.addEventListener('submit', (event) => {
+            if (start_date.value && !end_date.value) {
+                event.preventDefault(); // Prevent form submission
+                alert('Tolong isi tanggal akhir!');
+            } else if (!start_date.value && end_date.value) {
+                event.preventDefault(); // Prevent form submission
+                alert('Tolong isi tanggal awal!');
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#start_date").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+
+            $("#end_date").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+        });
+    </script>
 </body>
 
 </html>
