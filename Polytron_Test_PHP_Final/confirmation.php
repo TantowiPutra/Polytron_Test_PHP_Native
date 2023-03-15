@@ -126,7 +126,7 @@
                         <tr>
                             <td style="max-width: 400px;">Waktu Transaksi</td>
                             <td style="max-width: 400px;">: </td>
-                            <td><?php echo $transaction_time?></td>
+                            <td><?php echo date('d-m-Y ', strtotime($transaction_time))?></td>
                         </tr>
                         <tr>
                             <td style="max-width: 400px;">Lokasi: </td>

@@ -31,9 +31,7 @@ $result = mysqli_query($connect, $sql);
 
 // Jika ada, redirect
 if (mysqli_num_rows($result) > 0) {
-    $_SESSION['isInvalid'] = "Kode Bukti Sudah Terdaftar!";
-    header('Location: dashboard.php');
-    die();
+    redirect("Kode Bukti Sudah Terdaftar!", "F");
 }
 
 // Print debug 
@@ -52,10 +50,11 @@ $user_id = $_SESSION['id'];
 
 
 // Redirect user apabila terdapat kesalahan pada input / notifikasi apapun
-function redirect($message)
+function redirect($message, $parameter)
 {
     global $transaction_type, $proof, $location, $item_code, $item_name, $transaction_time, $quantity;
 
+    $_SESSION['isSuccess'] = "$parameter";
     $_SESSION['isInvalid'] = "$message";
     $_SESSION['transaction_type'] = "$transaction_type";
     $_SESSION['proof'] = "$proof";
@@ -120,9 +119,9 @@ if ($transaction_type == "TAMBAH") {
             if (!$result) {
                 echo "Query Gagal3";
             }
-            redirect("Sukses Menambah Stok Produk!");
+            redirect("Sukses Menambah Stok Produk!", "T");
         } else {
-            redirect("Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)");
+            redirect("Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)", "F");
         }
     } else {
         $sql = "SELECT * 
@@ -132,7 +131,7 @@ if ($transaction_type == "TAMBAH") {
         $flag = true;
         if (mysqli_num_rows($result) > 0) {
             // Fail apabila salah satu dari nama produk ataupun id produk ada yang sama
-            redirect("Format Tidak Valid! Pastikan Penambahan Kode Produk Baru harus memiliki Kode Barang Unik! (Kode '$item_code' sudah terdaftar)");
+            redirect("Format Tidak Valid! Pastikan Penambahan Kode Produk Baru harus memiliki Kode Barang Unik! (Kode '$item_code' sudah terdaftar)", "F");
         } else {
             // Karena unique, produk dapat masuk tanpa perlu melewati validasi
             // Query Insert ke tabel items
@@ -256,11 +255,11 @@ if ($transaction_type == "TAMBAH") {
                 }
             }
 
-            redirect("Produk Berhasil Dikurangi!");
+            redirect("Produk Berhasil Dikurangi!", "T");
         } else {
-            redirect("Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)");
+            redirect("Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)", "F");
         }
     } else {
-        redirect("Barang yang diminta tidak tersedia atau stok tidak mencukupi. Sisa stok saat ini: " . $fetch_array['total_item'] . " " . 'Total Quantity Diminta: ' . $quantity);
+        redirect("Barang yang diminta tidak tersedia atau stok tidak mencukupi. Sisa stok saat ini: " . $fetch_array['total_item'] . " " . 'Total Quantity Diminta: ' . $quantity, "F");
     }
 }

@@ -159,7 +159,7 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
                 </select>
             </div>
             <div class="mt-3">
-                <label for="search_location">Cari Item Code: </label>
+                <label for="search_location">Cari Kode Barang: </label>
                 <select name="search_item_code" id="search_item_coded">
                     <option value="">Search All</option>
                     <?php
@@ -177,7 +177,7 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
 
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 30px;">
-        <h1 class="text-align-center mt-4">Product Stock</h1>
+        <h1 class="text-align-center mt-4">Product Stock Transaction</h1>
         <table cellpadding="30px" class="center shadow table-striped table" style="max-width: 80%;">
             <thead>
                 <tr>

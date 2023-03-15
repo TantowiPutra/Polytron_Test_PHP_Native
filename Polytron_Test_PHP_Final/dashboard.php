@@ -9,11 +9,14 @@ $password = $_SESSION['password'];
 
 require_once 'koneksi.php';
 
+// Query Daftar Lokasi
 $sql = "SELECT * FROM locations";
 $result = mysqli_query($connect, $sql);
 
+// Query Daftar Barang
 $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
+
 // Mendapatkan total tambah
    $sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
    $sql_tambah_query = mysqli_query($connect, $sql_tambah);
@@ -97,7 +100,15 @@ $execute_user = mysqli_query($connect, $sql_user);
     if (isset($_SESSION['isInvalid'])) {
         if (strlen($_SESSION['isInvalid']) > 0) {
     ?>
-            <div class="alert alert-warning alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: 100px; z-index: 2; top: 20%;" role="alert">
+            <div class="alert <?php 
+                if(isset($_SESSION['isSuccess'])){
+                    if($_SESSION['isSuccess'] == "T"){
+                        echo "alert-success";
+                    }else{
+                        echo "alert-danger";
+                    }
+                }
+            ?> alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: 100px; z-index: 2; top: 20%;" role="alert">
                 <?php echo $_SESSION['isInvalid'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -185,7 +196,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[P][S]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()"
+                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[Pp][Ss]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()" style="text-transform:uppercase"
                             <?php
                                 if(isset($_SESSION['item_code'])){
                                     echo "value=\"" . $_SESSION['item_code'] . "\"";
@@ -206,7 +217,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" max="50" 
+                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" maxlength="50" style="text-transform:uppercase"
                             <?php
                                 if(isset($_SESSION['item_name'])){
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";
@@ -254,7 +265,7 @@ $execute_user = mysqli_query($connect, $sql_user);
             </table>
             <div style="text-align: center;">
                 <button type="submit">POSTING</button>
-                <a href="dashboard.php"><button type="button">EXIT</button></a>
+                <a href="dashboard.php"><button type="button">RESET</button></a>
             </div>
         </div>
     </form>

@@ -318,7 +318,7 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
     <script type="text/javascript">
         $(function () {
             $("#transaction_date").datepicker({ 
-                dateFormat: 'd-m-Y' 
+                dateFormat: 'dd-mm-yy' 
             });
         });
     </script>
