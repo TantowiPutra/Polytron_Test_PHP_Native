@@ -221,10 +221,6 @@ $execute_user = mysqli_query($connect, $sql_user);
                             ?>>
                         </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td><p class="text text-danger" id="found_product"></p></td>
-                    </tr>
                     <tr style="border: none;">
                         <td style="border: none;">
                             Tgl Transaksi:
@@ -278,17 +274,18 @@ $execute_user = mysqli_query($connect, $sql_user);
         function findItemName() {
             const flag = "false";
             let item_code_find = document.getElementById("kodebarang1").value;
-            const item_not_found = document.getElementById("found_product");
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];
+                    alert("Barang Ditemukan!")
                     flag = "true";
+                    break;
                 }
             }
 
             if(flag == "false"){
                 document.getElementById('namabarang').value = "";
-                item_not_found.innerHTML("Barang Tidak Tersedia!");
+                alert("Barang Tidak Ditemukan!");
             }
         }
     </script>
