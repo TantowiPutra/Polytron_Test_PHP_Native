@@ -133,7 +133,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Jenis Transaksi:
                         </td>
                         <td style="border: none;">
-                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()" 
+                            <input type="radio" name="tipe_transaksi" id="masuk" value="TAMBAH" required onchange="setProof()"
                             <?php
                                 if (isset($_SESSION['transaction_type'])) {
                                     if ($_SESSION['transaction_type'] == "TAMBAH") {
@@ -193,7 +193,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Kode Barang:
                         </td>
                         <td style="border: none;">
-                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[Pp][Ss]-.{1,}" required placeholder="PS-PLD24T500" max="50" onchange="findItemName()" style="text-transform:uppercase" 
+                            <input list="itemcode" name="kodebarang" id="kodebarang1" pattern="[Pp][Ss]-.{1,}" required placeholder="~ KODE BARANG ~" max="50" onchange="findItemName()" style="text-transform:uppercase" 
                             <?php
                                 if (isset($_SESSION['item_code'])) {
                                     echo "value=\"" . $_SESSION['item_code'] . "\"";
@@ -201,8 +201,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 $_SESSION['item_code'] = "";
                             ?>>
                             <datalist id="itemcode">
-                                <?php while ($data = mysqli_fetch_array($result2)) {
-                                    echo $data['item_code'] ?>
+                                <?php while ($data = mysqli_fetch_array($result2)) { ?>
                                     <option value="<?php echo $data['item_code'] ?>"><?php echo $data['item_code'] ?></option>
                                 <?php } ?>
                             </datalist>
@@ -213,19 +212,18 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input class="datepicker" list="itemname" name="namabarang" id="namabarang" required placeholder="CINEMAX LED" maxlength="50" style="text-transform:uppercase" 
+                            <input type="text" list="itemname" name="namabarang" id="namabarang" required placeholder="~ Nama Barang ~" maxlength="50" style="text-transform:uppercase" readonly 
                             <?php
                                 if (isset($_SESSION['item_name'])) {
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";
                                 }
                                 $_SESSION['item_name'] = "";
                             ?>>
-                            <datalist id="itemname">
-                                <?php while ($data = mysqli_fetch_array($result2)) { ?>
-                                    <option value="<?php echo $data['item_name'] ?>">
-                                    <?php } ?>
-                            </datalist>
                         </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><p class="text text-danger" id="found_product"></p></td>
                     </tr>
                     <tr style="border: none;">
                         <td style="border: none;">
@@ -278,11 +276,19 @@ $execute_user = mysqli_query($connect, $sql_user);
 
     <script>
         function findItemName() {
+            const flag = "false";
             let item_code_find = document.getElementById("kodebarang1").value;
+            const item_not_found = document.getElementById("found_product");
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];
+                    flag = "true";
                 }
+            }
+
+            if(flag == "false"){
+                document.getElementById('namabarang').value = "";
+                item_not_found.innerHTML("Barang Tidak Tersedia!");
             }
         }
     </script>
