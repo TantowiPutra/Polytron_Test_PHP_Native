@@ -33,7 +33,7 @@ if (isset($_REQUEST['session']) && $_REQUEST['session'] == "reset") {
 
 if (isset($_POST['search_proof']) && strlen($_POST['search_proof']) > 0) {
     $counter++;
-    $proof = $_POST['search_proof'];
+    $proof = addslashes(trim(strtoupper($_POST['search_proof'])));
     $_SESSION['search_proof'] = $proof;
     array_push($array_kalimat, " proof LIKE '%$proof%' ");
 }
@@ -46,7 +46,7 @@ if (isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0) {
 
 if (isset($_POST['transaction_date']) && strlen($_POST['transaction_date']) > 0) {
     $counter++;
-    $transaction_date = date("Y-m-d", strtotime($_POST['transaction_date']));
+    $transaction_date = strtoupper(addslashes(trim(date("Y-m-d", strtotime($_POST['transaction_date'])))));
     $_SESSION['transaction_date'] = $transaction_date;
     array_push($array_kalimat, " transaction_time LIKE '%$transaction_date%' ");
 }
@@ -59,7 +59,7 @@ if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']
 
 if (isset($_POST['search_location']) && strlen($_POST['search_location']) > 0) {
     $counter++;
-    $location = $_POST['search_location'];
+    $location = strtoupper(trim(addslashes($_POST['search_location'])));
     $_SESSION['search_location'] = $location;
     array_push($array_kalimat, " location_code LIKE '%$location%' ");
 }
@@ -72,7 +72,7 @@ if (isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) 
 
 if (isset($_POST['search_item']) && strlen($_POST['search_item']) > 0) {
     $counter++;
-    $item = $_POST['search_item'];
+    $item = strtoupper(addslashes(trim($_POST['search_item'])));
     $_SESSION['search_item'] = $item;
     array_push($array_kalimat, " item_code LIKE '%$item%' ");
 }

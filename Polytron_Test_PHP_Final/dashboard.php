@@ -10,7 +10,7 @@ $password = $_SESSION['password'];
 require_once 'koneksi.php';
 
 // Query Daftar Lokasi
-$sql = "SELECT * FROM locations";
+$sql = "SELECT * FROM locations ORDER BY location_code";
 $result = mysqli_query($connect, $sql);
 
 // Query Daftar Barang
@@ -86,10 +86,11 @@ $execute_user = mysqli_query($connect, $sql_user);
 <body>
     <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 70%; margin: auto;">
+    <div style="display: flex; justify-content: space-between; max-width: 80%; margin: auto;">
         <button type="button" class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             DAFTAR ADMIN
         </button>
+        <a style="text-decoration: none;" href="add_product.php"><button class="btn-yellow" style="padding: 10px;">TAMBAH PRODUK BARU</button></a>
         <a style="text-decoration: none;" href="add_location.php"><button class="btn-yellow" style="padding: 10px;">TAMBAH LOKASI</button></a>
         <a style="text-decoration: none;" href="transaction_history.php"><button class="btn-yellow" style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a style="text-decoration: none;" href="product_stock.php"><button class="btn-yellow" style="padding: 10px;">CEK STOK BARANG</button></a>
@@ -188,6 +189,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             </select>
                         </td>
                     </tr>
+                    
                     <tr style="border: none;">
                         <td style="border: none;">
                             Kode Barang:
@@ -273,7 +275,8 @@ $execute_user = mysqli_query($connect, $sql_user);
     <script>
         function findItemName() {
             const flag = "false";
-            let item_code_find = document.getElementById("kodebarang1").value;
+            var item_code_find = document.getElementById("kodebarang1").value;
+            item_code_find = item_code_find.toUpperCase();
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];

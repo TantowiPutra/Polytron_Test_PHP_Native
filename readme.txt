@@ -30,7 +30,7 @@ Revisi: 15-03-2023
   tanggal barang keluar > tanggal barang masuk terakhir kali
   
 *Kalau batal data input produk baru nya tidak hilang
-- Fitur input barang baru dipisah, tidak pada form yang sama untuk menambah stok barang
+*Fitur input barang baru dipisah, tidak pada form yang sama untuk menambah stok barang
 *Tambahkan searching menggunakan tanggal pada halaman Product Stock
 *Fix notification (masih belum sesuai)
 

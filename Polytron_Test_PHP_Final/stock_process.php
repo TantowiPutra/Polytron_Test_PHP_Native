@@ -123,7 +123,8 @@ if ($transaction_type == "TAMBAH") {
         } else {
             redirect("Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)", "F");
         }
-    } else {
+    } else { 
+        // Barang Baru (Revisi: Tidak masuk kesini karena produk baru akan ditambahkan pada form yang berbeda)
         $sql = "SELECT * 
                     FROM items WHERE item_code = '$item_code' 
             ";

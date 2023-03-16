@@ -71,7 +71,13 @@ require_once 'koneksi.php';
         " class="shadow card"> 
         <h2 class="text-align-center">Tambah Lokasi</h2>
         <?php if(isset($_SESSION['isInvalid'])) { ?>
-            <h5 class="text text-warning center"><?php echo $_SESSION['isInvalid']; $_SESSION['isInvalid'] = "";?></h5>
+            <h5 class="text 
+                <?php
+                    echo $_SESSION['isTrue'] == "T" ? " text-success " : " text-danger ";
+                ?>
+            center">
+                <?php echo $_SESSION['isInvalid']; unset($_SESSION['isInvalid']); unset($_SESSION['isTrue']);?>
+            </h5>
         <?php } ?>
         <table style="border: none;" cellpadding="20px">
             <tbody style="border: none;">
@@ -80,7 +86,7 @@ require_once 'koneksi.php';
                         Kode Lokasi:
                     </td>
                     <td style="border: none;">
-                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[Gg][Bb][Jj][0-9]{1,}">
+                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[Gg][Bb][Jj][0-9]{1,}" style="text-transform:uppercase">
                     </td>
                 </tr>
             </tbody>
