@@ -119,7 +119,7 @@ $execute_user = mysqli_query($connect, $sql_user);
     $_SESSION['isInvalid'] = "";
     ?>
 
-    <form action="stock_process.php" method="POST" data-aos="fade-up" data-aos-duration="1500">
+    <form action="stock_process.php" method="POST" data-aos="fade-up" data-aos-duration="1500" id="inputForm">
         <div style="
             border: 1px solid black;
             max-width: fit-content;
@@ -214,29 +214,16 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input type="text" list="itemname" name="namabarang" id="namabarang" required placeholder="~ Nama Barang ~" maxlength="50" style="text-transform:uppercase" readonly 
+                            <input type="text" list="itemname" name="namabarang" id="namabarang" maxlength="50" style="text-transform:uppercase" required
                             <?php
-                                if (isset($_SESSION['item_name'])) {
+                                if (isset($_SESSION['item_name']) && $_SESSION['item_name'] != null) {
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";
                                 }
-                                $_SESSION['item_name'] = "";
-                            ?>>
+                            ?>
+                            >
                         </td>
                     </tr>
-                    <tr style="border: none;">
-                        <td style="border: none;">
-                            Tgl Transaksi:
-                        </td>
-                        <td style="border: none;">
-                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required 
-                            <?php
-                                if (isset($_SESSION['transaction_time'])) {
-                                    echo "value=\"" . $_SESSION['transaction_time'] . "\"";
-                                }
-                                $_SESSION['transaction_time'] = "";
-                            ?>>
-                        </td>
-                    </tr>
+
                     <tr style="border: none;">
                         <td style="border: none;">
                             Quantity:
@@ -254,7 +241,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="submit">POSTING</button>
+                <button type="submit">TAMBAH</button>
                 <a href="dashboard.php"><button type="button">RESET</button></a>
             </div>
         </div>
@@ -273,14 +260,16 @@ $execute_user = mysqli_query($connect, $sql_user);
     </script>
 
     <script>
-        function findItemName() {
+        function findItemName() 
+        {
             const flag = "false";
             var item_code_find = document.getElementById("kodebarang1").value;
             item_code_find = item_code_find.toUpperCase();
+
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];
-                    alert("Barang Ditemukan!")
+                    document.getElementById('namabarang').readOnly = true;
                     flag = "true";
                     break;
                 }
@@ -288,7 +277,7 @@ $execute_user = mysqli_query($connect, $sql_user);
 
             if(flag == "false"){
                 document.getElementById('namabarang').value = "";
-                alert("Barang Tidak Ditemukan!");
+                document.getElementById('namabarang').readOnly = false;
             }
         }
     </script>

@@ -1,5 +1,6 @@
 <?php
-// Tes Commit
+date_default_timezone_set("Asia/Jakarta");
+$date = date("Y-m-d H:i:s");
 
 //  Drop All Table
 $connect->query('SET foreign_key_checks = 0');
