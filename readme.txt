@@ -26,7 +26,7 @@ Revisi: 13-03-2023 (Done)
 
 Revisi: 15-03-2023
 ====================
-? Pencatatan waktu secara real-time -> AMBIGU, tidak bisa input data karena adanya validasi 
+* Pencatatan waktu secara real-time -> AMBIGU, tidak bisa input data karena adanya validasi 
   tanggal barang keluar > tanggal barang masuk terakhir kali
   
 *Kalau batal data input produk baru nya tidak hilang

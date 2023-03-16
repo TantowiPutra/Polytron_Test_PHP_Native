@@ -23,7 +23,7 @@ $sql_tambah_query = mysqli_query($connect, $sql_tambah);
 $sql_tambah_fetch_assoc = mysqli_fetch_assoc($sql_tambah_query);
 
 // Mendapatkan total kurang
-$sql_kurang = "SELECT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
+$sql_kurang = "SELECT DISTINCT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
 $sql_kurang_query = mysqli_query($connect, $sql_kurang);
 $sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
 
@@ -141,7 +141,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                         echo "checked";
                                     }
                                 }
-                                $_SESSION['transaction_type'] = "";
+                                unset($_SESSION['transaction_type']);
                             ?>>
 
                             <label for="masuk">Masuk</label>
@@ -152,7 +152,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                         echo "checked";
                                     }
                                 }
-                                $_SESSION['transaction_type'] = "";
+                                unset($_SESSION['transaction_type']);
                             ?>>
                             <label for="keluar">Keluar</label>
                         </td>
@@ -167,7 +167,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 if (isset($_SESSION['proof'])) {
                                     echo "value=\"" . $_SESSION['proof'] . "\"";
                                 }
-                                $_SESSION['proof'] = "";
+                                unset($_SESSION['proof']);
                             ?>>
                         </td>
                     </tr>
@@ -200,7 +200,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 if (isset($_SESSION['item_code'])) {
                                     echo "value=\"" . $_SESSION['item_code'] . "\"";
                                 }
-                                $_SESSION['item_code'] = "";
+                                unset($_SESSION['item_code']);
                             ?>>
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
@@ -219,6 +219,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 if (isset($_SESSION['item_name']) && $_SESSION['item_name'] != null) {
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";
                                 }
+                                unset($_SESSION['item_name']);
                             ?>
                             >
                         </td>
@@ -234,14 +235,14 @@ $execute_user = mysqli_query($connect, $sql_user);
                             if (isset($_SESSION['quantity'])) {
                             echo "value=\"" . $_SESSION['quantity'] . "\"";
                             }
-                            $_SESSION['quantity'] = "";
+                            unset($_SESSION['quantity']);
                         ?>>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="submit">TAMBAH</button>
+                <button type="submit">EXECUTE</button>
                 <a href="dashboard.php"><button type="button">RESET</button></a>
             </div>
         </div>
