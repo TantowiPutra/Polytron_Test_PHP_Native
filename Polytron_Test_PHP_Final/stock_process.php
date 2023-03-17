@@ -12,7 +12,7 @@ $proof = $_POST['bukti'];
 $location = $_POST['lokasi'];
 $item_code = $_POST['kodebarang'];
 $item_name = $_POST['namabarang'];
-$transaction_time = date('Y-m-d H:i:s');
+$transaction_time = date("Y-m-d", strtotime($_POST['transaction_date'])) . " " . date("H:i:s");
 $quantity = $_POST['quantity'];
 
 $transaction_time = strtoupper(trim(addslashes($transaction_time)));
@@ -63,7 +63,7 @@ function redirect($message, $parameter)
     $_SESSION['location'] = "$location";
     $_SESSION['item_code'] = "$item_code";
     $_SESSION['item_name'] = "$item_name";
-    $_SESSION['transaction_time'] = "$transaction_time";
+    $_SESSION['transaction_date'] = date("d-m-Y", $transaction_time);
     $_SESSION['quantity'] = "$quantity";
 
     header('Location: dashboard.php');

@@ -239,6 +239,24 @@ $execute_user = mysqli_query($connect, $sql_user);
                         ?>>
                         </td>
                     </tr>
+                    
+                    <tr style="border: none;">
+                        <td style="border:none;">
+                            Tangggal Transaksi:
+                        </td>
+                        <td style="border: none;">
+                            <input type="text" name="transaction_date" id="transaction_date" required
+
+                            <?php
+                                if (isset($_SESSION['transaction_date'])) {
+                                echo "value=\"" . $_SESSION['transaction_date'] . "\"";
+                                }
+                                unset($_SESSION['transaction_date']);
+                            ?>
+                            >
+                        </td>
+                    </td>
+                    </tr>
                 </tbody>
             </table>
             <div style="text-align: center;">
@@ -325,6 +343,18 @@ $execute_user = mysqli_query($connect, $sql_user);
         </div>
     </div>
 
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#transaction_date").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+        });
+    </script>
 </body>
 
 </html>
