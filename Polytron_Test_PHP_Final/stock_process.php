@@ -13,7 +13,9 @@ $location = $_POST['lokasi'];
 $item_code = $_POST['kodebarang'];
 $item_name = $_POST['namabarang'];
 $transaction_time = date("Y-m-d", strtotime($_POST['transaction_date'])) . " " . date("H:i:s");
+$temp_transaction_time = date("d-m-Y", strtotime($_POST['transaction_date']));
 $quantity = $_POST['quantity'];
+$temp_quantity = $_POST['quantity'];
 
 $transaction_time = strtoupper(trim(addslashes($transaction_time)));
 $proof = strtoupper(trim(addslashes($proof)));
@@ -54,7 +56,7 @@ $user_id = $_SESSION['id'];
 // Redirect user apabila terdapat kesalahan pada input / notifikasi apapun
 function redirect($message, $parameter)
 {
-    global $transaction_type, $proof, $location, $item_code, $item_name, $transaction_time, $quantity;
+    global $transaction_type, $proof, $location, $item_code, $item_name, $temp_transaction_time, $temp_quantity;
 
     $_SESSION['isSuccess'] = "$parameter";
     $_SESSION['isInvalid'] = "$message";
@@ -63,8 +65,8 @@ function redirect($message, $parameter)
     $_SESSION['location'] = "$location";
     $_SESSION['item_code'] = "$item_code";
     $_SESSION['item_name'] = "$item_name";
-    $_SESSION['transaction_date'] = date("d-m-Y", $transaction_time);
-    $_SESSION['quantity'] = "$quantity";
+    $_SESSION['transaction_date'] = $temp_transaction_time;
+    $_SESSION['quantity'] = "$temp_quantity";
 
     header('Location: dashboard.php');
 }

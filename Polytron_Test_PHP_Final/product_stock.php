@@ -184,6 +184,30 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
         </form>
     </div>
 
+    <div class="center">
+        <h1 class="text-align-center">Stok Produk Total</h1>
+        <table cellpadding="30px" class="center shadow table-striped table" style="max-width: 80%;">
+            <thead>
+                <tr>
+                    <td>Kode Lokasi</td>
+                    <td>Kode Produk</td>
+                    <td>Nama Produk</td>
+                    <td>Stok Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($data = mysqli_fetch_array($result_count)) { ?>
+                    <tr>
+                        <td><?php echo $data['location_code'] ?></td>
+                        <td><?php echo $data['item_code'] ?></td>
+                        <td><?php echo $data['item_name'] ?></td>
+                        <td style="text-align: right;"><?php echo number_format($data['total_stock']) ?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 30px;">
         <h1 class="text-align-center mt-4">Product Stock Transaction</h1>
@@ -211,29 +235,6 @@ $search_result_code = mysqli_query($connect, $sql_item_code);
         </table>
     </div>
 
-    <div class="center" style="margin-bottom: 200px;">
-        <h1 class="text-align-center">Stok Produk Total</h1>
-        <table cellpadding="30px" class="center shadow table-striped table" style="max-width: 80%;">
-            <thead>
-                <tr>
-                    <td>Kode Lokasi</td>
-                    <td>Kode Produk</td>
-                    <td>Nama Produk</td>
-                    <td>Stok Total</td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($data = mysqli_fetch_array($result_count)) { ?>
-                    <tr>
-                        <td><?php echo $data['location_code'] ?></td>
-                        <td><?php echo $data['item_code'] ?></td>
-                        <td><?php echo $data['item_name'] ?></td>
-                        <td style="text-align: right;"><?php echo number_format($data['total_stock']) ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
     <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
 
     <script>

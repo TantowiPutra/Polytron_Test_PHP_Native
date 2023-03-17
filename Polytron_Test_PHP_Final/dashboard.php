@@ -18,14 +18,14 @@ $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
 
 // Mendapatkan total tambah
-$sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
-$sql_tambah_query = mysqli_query($connect, $sql_tambah);
-$sql_tambah_fetch_assoc = mysqli_fetch_assoc($sql_tambah_query);
+$sql_add = "SELECT DISTINCT(proof) FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
+$sql_add_query = mysqli_query($connect, $sql_add);
+$total_add = mysqli_num_rows($sql_add_query);
 
 // Mendapatkan total kurang
-$sql_kurang = "SELECT DISTINCT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
-$sql_kurang_query = mysqli_query($connect, $sql_kurang);
-$sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
+$sql_min = "SELECT DISTINCT(proof) FROM transaction_history WHERE proof LIKE 'KURANG%'";
+$sql_min_query = mysqli_query($connect, $sql_min);
+$total_min = mysqli_num_rows($sql_min_query);
 
 // Mendapatkan data nama admin
 $sql_user = "SELECT * FROM users";
@@ -109,7 +109,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                         echo " alert-danger ";
                                     }
                                 }
-                                ?> alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: 100px; z-index: 2; top: 20%;" role="alert">
+                                ?> alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: fit-content; z-index: 2; top: 20%; text-align: justify;" role="alert">
                 <?php echo $_SESSION['isInvalid'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -270,9 +270,9 @@ $execute_user = mysqli_query($connect, $sql_user);
         function setProof() {
             if (document.getElementById('masuk').checked || document.getElementById('keluar').checked) {
                 if (document.getElementById('masuk').checked) {
-                    document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $sql_tambah_fetch_assoc['total_tambah'] + 1; ?>");
+                    document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $total_add + 1; ?>");
                 } else if (document.getElementById('keluar').checked) {
-                    document.getElementById('bukti').value = "KURANG0".concat("<?php echo $sql_kurang_fetch_assoc['total_kurang'] + 1; ?>");
+                    document.getElementById('bukti').value = "KURANG0".concat("<?php echo $total_min + 1; ?>");
                 }
             }
         }
