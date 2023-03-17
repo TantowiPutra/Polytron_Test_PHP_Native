@@ -86,7 +86,14 @@ require_once 'koneksi.php';
                         Kode Lokasi:
                     </td>
                     <td style="border: none;">
-                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[Gg][Bb][Jj][0-9]{1,}" style="text-transform:uppercase">
+                        <input type="text" name="lokasi" id="lokasi" max="255" required pattern="[Gg][Bb][Jj][0-9]{1,}" style="text-transform:uppercase"
+                        <?php
+                            if(isset($_SESSION['location_code'])){
+                                echo 'value="' . $_SESSION['location_code'] . '"';
+                                unset($_SESSION['location_code']);
+                            }
+                        ?>
+                        >
                     </td>
                 </tr>
             </tbody>

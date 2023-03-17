@@ -138,7 +138,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             <?php
                                 if (isset($_SESSION['transaction_type'])) {
                                     if ($_SESSION['transaction_type'] == "TAMBAH") {
-                                        echo "checked";
+                                        echo " checked ";
                                     }
                                 }
                                 unset($_SESSION['transaction_type']);
@@ -149,7 +149,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             <?php
                                 if (isset($_SESSION['transaction_type'])) {
                                     if ($_SESSION['transaction_type'] == "KURANG") {
-                                        echo "checked";
+                                        echo " checked ";
                                     }
                                 }
                                 unset($_SESSION['transaction_type']);
