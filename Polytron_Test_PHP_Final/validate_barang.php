@@ -1,5 +1,9 @@
 <?php
     session_start();
+    if (!isset($_SESSION['isLogin'])) {
+        header('Location: login.php');
+    }
+    
     $item_code = trim(strtoupper(addslashes($_POST['item_code'])));
     $item_name = trim(strtoupper(addslashes($_POST['item_name'])));
     require_once 'koneksi.php';
