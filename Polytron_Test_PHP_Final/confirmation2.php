@@ -43,7 +43,7 @@ if(isset($_REQUEST['input'])){
 
 <body style="text-align: center;">
     <div class="card mx-auto mt-5 shadow" style="width: 400px;">
-        <img src="image/thinking.jpg" class="card-img-top" alt="..." style="height: 200px; object-fit: cover; object-position: top;">
+        <img src="./image/thinking.jpg" class="card-img-top" alt="..." style="height: 200px; object-fit: cover; object-position: top;">
         <div class="card-body">
             <h5 class="card-title" style="font-weight: bolder; text-align: center;">Konfirmasi Input Produk Baru</h5>
             <p class="card-text">
