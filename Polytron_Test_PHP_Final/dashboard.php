@@ -10,7 +10,7 @@ $password = $_SESSION['password'];
 require_once 'koneksi.php';
 
 // Query Daftar Lokasi
-$sql = "SELECT * FROM locations";
+$sql = "SELECT * FROM locations ORDER BY location_code";
 $result = mysqli_query($connect, $sql);
 
 // Query Daftar Barang
@@ -18,14 +18,14 @@ $sql = "SELECT * FROM items";
 $result2 = mysqli_query($connect, $sql);
 
 // Mendapatkan total tambah
-$sql_tambah = "SELECT COUNT(id) AS total_tambah FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
-$sql_tambah_query = mysqli_query($connect, $sql_tambah);
-$sql_tambah_fetch_assoc = mysqli_fetch_assoc($sql_tambah_query);
+$sql_add = "SELECT DISTINCT(proof) FROM transaction_history WHERE proof LIKE 'TAMBAH%'";
+$sql_add_query = mysqli_query($connect, $sql_add);
+$total_add = mysqli_num_rows($sql_add_query);
 
 // Mendapatkan total kurang
-$sql_kurang = "SELECT COUNT(id) AS total_kurang FROM transaction_history WHERE proof LIKE 'KURANG%'";
-$sql_kurang_query = mysqli_query($connect, $sql_kurang);
-$sql_kurang_fetch_assoc = mysqli_fetch_assoc($sql_kurang_query);
+$sql_min = "SELECT DISTINCT(proof) FROM transaction_history WHERE proof LIKE 'KURANG%'";
+$sql_min_query = mysqli_query($connect, $sql_min);
+$total_min = mysqli_num_rows($sql_min_query);
 
 // Mendapatkan data nama admin
 $sql_user = "SELECT * FROM users";
@@ -86,10 +86,11 @@ $execute_user = mysqli_query($connect, $sql_user);
 <body>
     <h1 class="text-align-center mb-4">Polytron Product Stock Management System</h1>
     <h3 class="text-align-center mb-4">Welcome Back, <?php echo $username ?> &#128513;</h3>
-    <div style="display: flex; justify-content: space-between; max-width: 70%; margin: auto;">
+    <div style="display: flex; justify-content: space-between; max-width: 80%; margin: auto;">
         <button type="button" class="btn btn-yellow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             DAFTAR ADMIN
         </button>
+        <a style="text-decoration: none;" href="add_product.php"><button class="btn-yellow" style="padding: 10px;">TAMBAH PRODUK BARU</button></a>
         <a style="text-decoration: none;" href="add_location.php"><button class="btn-yellow" style="padding: 10px;">TAMBAH LOKASI</button></a>
         <a style="text-decoration: none;" href="transaction_history.php"><button class="btn-yellow" style="padding: 10px;">CEK HISTORY TRANSAKSI</button></a>
         <a style="text-decoration: none;" href="product_stock.php"><button class="btn-yellow" style="padding: 10px;">CEK STOK BARANG</button></a>
@@ -108,7 +109,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                         echo " alert-danger ";
                                     }
                                 }
-                                ?> alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: 100px; z-index: 2; top: 20%;" role="alert">
+                                ?> alert-dismissible fade show position-fixed justify-content-center box-shadow-template mb-3" style="left: 33%; width: 500px; height: fit-content; z-index: 2; top: 20%; text-align: justify;" role="alert">
                 <?php echo $_SESSION['isInvalid'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -118,7 +119,7 @@ $execute_user = mysqli_query($connect, $sql_user);
     $_SESSION['isInvalid'] = "";
     ?>
 
-    <form action="stock_process.php" method="POST" data-aos="fade-up" data-aos-duration="1500">
+    <form action="stock_process.php" method="POST" data-aos="fade-up" data-aos-duration="1500" id="inputForm">
         <div style="
             border: 1px solid black;
             max-width: fit-content;
@@ -137,10 +138,10 @@ $execute_user = mysqli_query($connect, $sql_user);
                             <?php
                                 if (isset($_SESSION['transaction_type'])) {
                                     if ($_SESSION['transaction_type'] == "TAMBAH") {
-                                        echo "checked";
+                                        echo " checked ";
                                     }
                                 }
-                                $_SESSION['transaction_type'] = "";
+                                unset($_SESSION['transaction_type']);
                             ?>>
 
                             <label for="masuk">Masuk</label>
@@ -148,10 +149,10 @@ $execute_user = mysqli_query($connect, $sql_user);
                             <?php
                                 if (isset($_SESSION['transaction_type'])) {
                                     if ($_SESSION['transaction_type'] == "KURANG") {
-                                        echo "checked";
+                                        echo " checked ";
                                     }
                                 }
-                                $_SESSION['transaction_type'] = "";
+                                unset($_SESSION['transaction_type']);
                             ?>>
                             <label for="keluar">Keluar</label>
                         </td>
@@ -166,7 +167,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 if (isset($_SESSION['proof'])) {
                                     echo "value=\"" . $_SESSION['proof'] . "\"";
                                 }
-                                $_SESSION['proof'] = "";
+                                unset($_SESSION['proof']);
                             ?>>
                         </td>
                     </tr>
@@ -188,6 +189,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                             </select>
                         </td>
                     </tr>
+                    
                     <tr style="border: none;">
                         <td style="border: none;">
                             Kode Barang:
@@ -198,7 +200,7 @@ $execute_user = mysqli_query($connect, $sql_user);
                                 if (isset($_SESSION['item_code'])) {
                                     echo "value=\"" . $_SESSION['item_code'] . "\"";
                                 }
-                                $_SESSION['item_code'] = "";
+                                unset($_SESSION['item_code']);
                             ?>>
                             <datalist id="itemcode">
                                 <?php while ($data = mysqli_fetch_array($result2)) { ?>
@@ -212,29 +214,17 @@ $execute_user = mysqli_query($connect, $sql_user);
                             Nama Barang:
                         </td>
                         <td style="border: none;">
-                            <input type="text" list="itemname" name="namabarang" id="namabarang" required placeholder="~ Nama Barang ~" maxlength="50" style="text-transform:uppercase" readonly 
+                            <input type="text" list="itemname" name="namabarang" id="namabarang" maxlength="50" style="text-transform:uppercase" required
                             <?php
-                                if (isset($_SESSION['item_name'])) {
+                                if (isset($_SESSION['item_name']) && $_SESSION['item_name'] != null) {
                                     echo "value=\"" . $_SESSION['item_name'] . "\"";
                                 }
-                                $_SESSION['item_name'] = "";
-                            ?>>
+                                unset($_SESSION['item_name']);
+                            ?>
+                            >
                         </td>
                     </tr>
-                    <tr style="border: none;">
-                        <td style="border: none;">
-                            Tgl Transaksi:
-                        </td>
-                        <td style="border: none;">
-                            <input type="datetime-local" step="1" name="tanggal_transaksi" id="tanggal_transaksi" required 
-                            <?php
-                                if (isset($_SESSION['transaction_time'])) {
-                                    echo "value=\"" . $_SESSION['transaction_time'] . "\"";
-                                }
-                                $_SESSION['transaction_time'] = "";
-                            ?>>
-                        </td>
-                    </tr>
+
                     <tr style="border: none;">
                         <td style="border: none;">
                             Quantity:
@@ -245,14 +235,32 @@ $execute_user = mysqli_query($connect, $sql_user);
                             if (isset($_SESSION['quantity'])) {
                             echo "value=\"" . $_SESSION['quantity'] . "\"";
                             }
-                            $_SESSION['quantity'] = "";
+                            unset($_SESSION['quantity']);
                         ?>>
                         </td>
+                    </tr>
+                    
+                    <tr style="border: none;">
+                        <td style="border:none;">
+                            Tangggal Transaksi:
+                        </td>
+                        <td style="border: none;">
+                            <input type="text" name="transaction_date" id="transaction_date" required
+
+                            <?php
+                                if (isset($_SESSION['transaction_date'])) {
+                                echo "value=\"" . $_SESSION['transaction_date'] . "\"";
+                                }
+                                unset($_SESSION['transaction_date']);
+                            ?>
+                            >
+                        </td>
+                    </td>
                     </tr>
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="submit">POSTING</button>
+                <button type="submit">EXECUTE</button>
                 <a href="dashboard.php"><button type="button">RESET</button></a>
             </div>
         </div>
@@ -262,22 +270,25 @@ $execute_user = mysqli_query($connect, $sql_user);
         function setProof() {
             if (document.getElementById('masuk').checked || document.getElementById('keluar').checked) {
                 if (document.getElementById('masuk').checked) {
-                    document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $sql_tambah_fetch_assoc['total_tambah'] + 1; ?>");
+                    document.getElementById('bukti').value = "TAMBAH0".concat("<?php echo $total_add + 1; ?>");
                 } else if (document.getElementById('keluar').checked) {
-                    document.getElementById('bukti').value = "KURANG0".concat("<?php echo $sql_kurang_fetch_assoc['total_kurang'] + 1; ?>");
+                    document.getElementById('bukti').value = "KURANG0".concat("<?php echo $total_min + 1; ?>");
                 }
             }
         }
     </script>
 
     <script>
-        function findItemName() {
+        function findItemName() 
+        {
             const flag = "false";
-            let item_code_find = document.getElementById("kodebarang1").value;
+            var item_code_find = document.getElementById("kodebarang1").value;
+            item_code_find = item_code_find.toUpperCase();
+
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];
-                    alert("Kode Barang Ditemukan!")
+                    document.getElementById('namabarang').readOnly = true;
                     flag = "true";
                     break;
                 }
@@ -285,7 +296,7 @@ $execute_user = mysqli_query($connect, $sql_user);
 
             if(flag == "false"){
                 document.getElementById('namabarang').value = "";
-                alert("Kode Barang Tidak Ditemukan!");
+                document.getElementById('namabarang').readOnly = false;
             }
         }
     </script>
@@ -332,6 +343,18 @@ $execute_user = mysqli_query($connect, $sql_user);
         </div>
     </div>
 
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#transaction_date").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+        });
+    </script>
 </body>
 
 </html>
