@@ -277,7 +277,7 @@ $execute_user = mysqli_query($connect, $sql_user);
             for (let i = 0; i < item_code.length; i++) {
                 if (item_code_find == item_code[i]) {
                     document.getElementById('namabarang').value = item_name[i];
-                    alert("Barang Ditemukan!")
+                    alert("Kode Barang Ditemukan!")
                     flag = "true";
                     break;
                 }
@@ -285,7 +285,7 @@ $execute_user = mysqli_query($connect, $sql_user);
 
             if(flag == "false"){
                 document.getElementById('namabarang').value = "";
-                alert("Barang Tidak Ditemukan!");
+                alert("Kode Barang Tidak Ditemukan!");
             }
         }
     </script>
