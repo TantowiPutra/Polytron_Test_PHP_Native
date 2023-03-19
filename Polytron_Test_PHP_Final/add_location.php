@@ -73,7 +73,9 @@ require_once 'koneksi.php';
         <?php if(isset($_SESSION['isInvalid'])) { ?>
             <h5 class="text 
                 <?php
-                    echo $_SESSION['isTrue'] == "T" ? " text-success " : " text-danger ";
+                    if(isset($_SESSION['isTrue'])){
+                        echo $_SESSION['isTrue'] == "T" ? " text-success " : " text-danger ";
+                    }
                 ?>
             center">
                 <?php echo $_SESSION['isInvalid']; unset($_SESSION['isInvalid']); unset($_SESSION['isTrue']);?>
