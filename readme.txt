@@ -26,11 +26,12 @@ Revisi: 13-03-2023 (Done)
 
 Revisi: 15-03-2023
 ====================
-? Pencatatan waktu secara real-time -> AMBIGU, tidak bisa input data karena adanya validasi 
+* Pencatatan waktu secara real-time -> AMBIGU, tidak bisa input data karena adanya validasi 
   tanggal barang keluar > tanggal barang masuk terakhir kali
+  Fix: Tanggal secara manual, tapi jam secara real time
   
 *Kalau batal data input produk baru nya tidak hilang
-- Fitur input barang baru dipisah, tidak pada form yang sama untuk menambah stok barang
+*Fitur input barang baru dipisah, tidak pada form yang sama untuk menambah stok barang
 *Tambahkan searching menggunakan tanggal pada halaman Product Stock
 *Fix notification (masih belum sesuai)
 

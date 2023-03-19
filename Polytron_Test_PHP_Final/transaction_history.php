@@ -33,9 +33,11 @@ if (isset($_REQUEST['session']) && $_REQUEST['session'] == "reset") {
 
 if (isset($_POST['search_proof']) && strlen($_POST['search_proof']) > 0) {
     $counter++;
-    $proof = $_POST['search_proof'];
+    $proof = addslashes(trim(strtoupper($_POST['search_proof'])));
     $_SESSION['search_proof'] = $proof;
     array_push($array_kalimat, " proof LIKE '%$proof%' ");
+}else{
+    $_SESSION['search_proof'] = "";
 }
 
 if (isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0) {
@@ -44,11 +46,16 @@ if (isset($_SESSION['search_proof']) && strlen($_SESSION['search_proof']) > 0) {
     array_push($array_kalimat, " proof LIKE '%$proof%' ");
 }
 
-if (isset($_POST['transaction_date']) && strlen($_POST['transaction_date']) > 0) {
+if (isset($_POST['start_date']) && strlen($_POST['start_date']) > 0) {
     $counter++;
-    $transaction_date = date("Y-m-d", strtotime($_POST['transaction_date']));
-    $_SESSION['transaction_date'] = $transaction_date;
-    array_push($array_kalimat, " transaction_time LIKE '%$transaction_date%' ");
+    $start_date = strtoupper(addslashes(trim(date("Y-m-d", strtotime($_POST['start_date'])))));
+    $end_date = strtoupper(addslashes(trim(date("Y-m-d", strtotime($_POST['end_date'])))));
+    $_SESSION['start_date'] = $start_date;
+    $_SESSION['end_date'] = $end_date;
+    array_push($array_kalimat, " (transaction_time BETWEEN '$start_date' AND '$end_date 23:59:59') ");
+}else{
+    $_SESSION['start_date'] = "";
+    $_SESSION['end_date'] = "";
 }
 
 if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0) {
@@ -59,9 +66,11 @@ if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']
 
 if (isset($_POST['search_location']) && strlen($_POST['search_location']) > 0) {
     $counter++;
-    $location = $_POST['search_location'];
+    $location = strtoupper(trim(addslashes($_POST['search_location'])));
     $_SESSION['search_location'] = $location;
     array_push($array_kalimat, " location_code LIKE '%$location%' ");
+}else{
+    $_SESSION['search_location'] = "";
 }
 
 if (isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) > 0) {
@@ -72,9 +81,11 @@ if (isset($_SESSION['search_location']) && strlen($_SESSION['search_location']) 
 
 if (isset($_POST['search_item']) && strlen($_POST['search_item']) > 0) {
     $counter++;
-    $item = $_POST['search_item'];
+    $item = strtoupper(addslashes(trim($_POST['search_item'])));
     $_SESSION['search_item'] = $item;
     array_push($array_kalimat, " item_code LIKE '%$item%' ");
+}else{
+    $_SESSION['search_item'] = "";
 }
 
 if (isset($_SESSION['search_item']) && strlen($_SESSION['search_item']) > 0) {
@@ -173,13 +184,21 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
                 </div>
 
                 <div class="mt-3">
-                    <label for="transaction_date" style="margin-right: 2%; text-align: left;">Tanggal Transaksi: </label>
-                    <input type="text" name="transaction_date" id="transaction_date" 
+                    <label for="start_date" style="margin-right: 2%; text-align: left;">Range Tanggal: </label>
+                    <input type="text" name="start_date" id="start_date" 
                     <?php
-                        if (isset($_SESSION['transaction_date']) && strlen($_SESSION['transaction_date']) > 0) {
-                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['transaction_date'])) . "\"";
+                        if (isset($_SESSION['start_date']) && strlen($_SESSION['start_date']) > 0) {
+                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['start_date'])) . "\"";
                         }
                     ?>>
+                    <span> ~ </span>
+                    <input type="text" name="end_date" id="end_date" 
+                    <?php
+                        if (isset($_SESSION['end_date']) && strlen($_SESSION['end_date']) > 0) {
+                            echo "value=\"" . date("d-m-Y", strtotime($_SESSION['end_date'])) . "\"";
+                        }
+                    ?>>
+                    
                 </div>
 
                 <div class="mt-3">
@@ -209,7 +228,7 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
 
     <!-- Menampilkan data Transaksi -->
     <div class="center" style="margin-bottom: 300px;">
-        <h1 class="text-align-center">Transaction History</h1>
+        <h1 class="text-align-center">History Transaksi</h1>
         <table cellpadding="30px" class="center table table-striped shadow" style="max-width: 80%;">
             <thead>
                 <tr>
@@ -228,7 +247,7 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
             </thead>
             <tbody>
                 <?php
-                $batas = 5;
+                $batas = 7;
                 $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
                 $halaman_awal = ($halaman > 1) ? ($halaman * $batas) - $batas : 0;
 
@@ -305,6 +324,21 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
             </ul>
         </nav>
     </div>
+    <script>
+        const form = document.querySelector('form');
+        const field1 = document.getElementById('start_date');
+        const field2 = document.getElementById('end_date');
+        form.addEventListener('submit', (event) => {
+            if (start_date.value && !end_date.value) {
+                event.preventDefault(); // Prevent form submission
+                alert('Tolong isi tanggal akhir!');
+            } else if (!start_date.value && end_date.value) {
+                event.preventDefault(); // Prevent form submission
+                alert('Tolong isi tanggal awal!');
+            }
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js">
@@ -313,7 +347,10 @@ $result_sql_lokasi = mysqli_query($connect, $sql_lokasi);
     </script>
     <script type="text/javascript">
         $(function() {
-            $("#transaction_date").datepicker({
+            $("#start_date").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+            $("#end_date").datepicker({
                 dateFormat: 'dd-mm-yy'
             });
         });

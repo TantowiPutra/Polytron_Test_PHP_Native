@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Asia/Jakarta");
 if (!isset($_SESSION['isLogin'])) {
     header('Location: login.php');
 }
@@ -11,8 +12,10 @@ $proof = $_POST['bukti'];
 $location = $_POST['lokasi'];
 $item_code = $_POST['kodebarang'];
 $item_name = $_POST['namabarang'];
-$transaction_time = date('Y-m-d H:i:s', strtotime($_POST['tanggal_transaksi']));
+$transaction_time = date("Y-m-d", strtotime($_POST['transaction_date'])) . " " . date("H:i:s");
+$temp_transaction_time = date("d-m-Y", strtotime($_POST['transaction_date']));
 $quantity = $_POST['quantity'];
+$temp_quantity = $_POST['quantity'];
 
 $transaction_time = strtoupper(trim(addslashes($transaction_time)));
 $proof = strtoupper(trim(addslashes($proof)));
@@ -32,6 +35,7 @@ $result = mysqli_query($connect, $sql);
 // Jika ada, redirect
 if (mysqli_num_rows($result) > 0) {
     redirect("Kode Bukti Sudah Terdaftar!", "F");
+    die();
 }
 
 // Print debug 
@@ -52,7 +56,7 @@ $user_id = $_SESSION['id'];
 // Redirect user apabila terdapat kesalahan pada input / notifikasi apapun
 function redirect($message, $parameter)
 {
-    global $transaction_type, $proof, $location, $item_code, $item_name, $transaction_time, $quantity;
+    global $transaction_type, $proof, $location, $item_code, $item_name, $temp_transaction_time, $temp_quantity;
 
     $_SESSION['isSuccess'] = "$parameter";
     $_SESSION['isInvalid'] = "$message";
@@ -61,8 +65,8 @@ function redirect($message, $parameter)
     $_SESSION['location'] = "$location";
     $_SESSION['item_code'] = "$item_code";
     $_SESSION['item_name'] = "$item_name";
-    $_SESSION['transaction_time'] = "$transaction_time";
-    $_SESSION['quantity'] = "$quantity";
+    $_SESSION['transaction_date'] = $temp_transaction_time;
+    $_SESSION['quantity'] = "$temp_quantity";
 
     header('Location: dashboard.php');
 }
@@ -95,9 +99,8 @@ if ($transaction_type == "TAMBAH") {
         $result = mysqli_query($connect, $sql);
         $date_db = mysqli_fetch_assoc($result);
         $transaction_time_db = $date_db['tanggal'];
-        $date_db = date('Y-m-d', strtotime($transaction_time_db));
-        $date_input = date('Y-m-d', strtotime($transaction_time));
-        if ($date_input > $date_db) {
+        $date_db = date('Y-m-d H:i:s', strtotime($transaction_time_db));
+        if ($transaction_time > $date_db) {
             // Jika date input lebih besar dari date input data yang pernah dilakukan untuk lokasi tersebut 
             // dengan data produk yang sama, maka dapat input
 
@@ -120,10 +123,13 @@ if ($transaction_type == "TAMBAH") {
                 echo "Query Gagal3";
             }
             redirect("Sukses Menambah Stok Produk!", "T");
+            die();
         } else {
             redirect("Format tanggal tidak sesuai! produk yang akan ditambahkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)", "F");
+            die();
         }
-    } else {
+    } else { 
+        // Barang Baru (Revisi: Tidak masuk kesini karena produk baru akan ditambahkan pada form yang berbeda)
         $sql = "SELECT * 
                     FROM items WHERE item_code = '$item_code' 
             ";
@@ -135,15 +141,7 @@ if ($transaction_type == "TAMBAH") {
         } else {
             // Karena unique, produk dapat masuk tanpa perlu melewati validasi
             // Query Insert ke tabel items
-            $_SESSION['new_item_code'] = $item_code;
-            $_SESSION['new_item_name'] = $item_name;
-            $_SESSION['new_proof'] = $proof;
-            $_SESSION['new_location'] = $location;
-            $_SESSION['new_transaction_time'] = $transaction_time;
-            $_SESSION['new_transaction_type'] = $transaction_type;
-            $_SESSION['new_quantity'] = $quantity;
-
-            header("Location: confirmation.php");
+            redirect("Produk Tidak Tersedia! Insert Produk Dibatalkan!", "F");
             die();
         }
     }
@@ -177,9 +175,8 @@ if ($transaction_type == "TAMBAH") {
         $result = mysqli_query($connect, $sql);
         $date_db = mysqli_fetch_assoc($result);
         $transaction_time_db = $date_db['tanggal'];
-        $date_db = date('Y-m-d', strtotime($transaction_time_db));
-        $date_input = date('Y-m-d', strtotime($transaction_time));
-        if ($date_input > $date_db) {
+        $date_db = date('Y-m-d H:i:s', strtotime($transaction_time_db));
+        if ($transaction_time > $date_db) {
             // Tangkap keseluruhan data stok produk yang diminta dan juga lokasi yang sesuai.
             // Barang akan dikurangi secara FIFO (First in First Out), oleh karenanya data stok produk
             // Akan didapatkan secara ascending (menaik) dan stok akan dikurangi dari stock yang paling
@@ -256,10 +253,13 @@ if ($transaction_type == "TAMBAH") {
             }
 
             redirect("Produk Berhasil Dikurangi!", "T");
+            die();
         } else {
             redirect("Format tanggal tidak sesuai! produk yang akan dikurangkan harus memperhatikan tanggal terakhir produk tersebut ditambahkan (tanggal harus lebih besar dari $date_db)", "F");
+            die();
         }
     } else {
         redirect("Barang yang diminta tidak tersedia atau stok tidak mencukupi. Sisa stok saat ini: " . $fetch_array['total_item'] . " " . 'Total Quantity Diminta: ' . $quantity, "F");
+        die();
     }
 }
